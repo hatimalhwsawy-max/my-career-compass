@@ -657,6 +657,34 @@ pre.code .c{color:#8fb9a8}pre.code .k{color:#ffb27a}pre.code .s{color:#9be7d8}
 .rs-l li{background:var(--badt);border-radius:8px;padding:4px 10px;font-size:.9rem}
 .rs-go{border-color:var(--bad);color:var(--bad)}
 .rs-go:not(:disabled){background:var(--bad);color:#fff}
+/* v8: simple, clear font everywhere (no decorative display face) */
+:root{--f-d:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif}
+h1,h2,h3,h4,.brand b{font-family:var(--f-b);font-weight:700;letter-spacing:0}
+body{font-size:16px;line-height:1.85}
+.pghead h1,.hero h1{font-weight:700}
+.mt-h h3,.trk-h h3,.res-hero h2{font-family:var(--f-b);font-weight:700}
+/* dropdowns */
+.fsel select{min-height:40px;padding:6px 10px;font-size:.95rem;min-width:200px}
+.specpick{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-top:10px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);padding:10px 12px}
+.specnote{color:var(--mute);font-size:.88rem;flex:1;min-width:220px}
+.libbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:12px;border:1.5px solid var(--sig);border-radius:12px;background:var(--sigt);padding:10px 12px}
+.ec-b .ben{background:var(--okt);border-inline-start:4px solid var(--ok);border-radius:8px;padding:6px 10px}
+.ec-b .ben b{display:block;font-size:.74rem;color:var(--ok)}
+.sym .bn{display:block;font-size:.68rem;color:var(--ok);margin-top:3px;line-height:1.5}
+/* v8: accounts */
+.accbtn{border:1.5px solid var(--sig);border-radius:999px;background:var(--sigt);color:var(--ink);font-weight:700;padding:3px 12px;cursor:pointer;white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis}
+.accbtn:hover{background:var(--sig);color:#fff}
+.acc .subt.acct{margin:8px 0 4px}
+.acc label{display:block}
+.accmsg{margin:10px 0 0;padding:8px 10px;border-radius:8px;font-size:.88rem;font-weight:600}
+.accmsg.no{background:var(--badt);color:var(--bad)}.accmsg.ok{background:var(--okt);color:var(--ok)}.accmsg.info{background:var(--sigt);color:var(--sig)}
+.acc-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
+.acc-g>div{border:1.5px solid var(--line);border-radius:10px;padding:8px;text-align:center;background:var(--bg)}
+.acc-g b{display:block}.acc-g small{color:var(--mute)}
+.adm-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:14px}
+.adm-b h3{font-size:1rem;margin-bottom:6px}
+.adm-b .bar i{background:var(--sig)}
+@media (max-width:620px){.accbtn span{display:none}}
 </style>
 <header id="topbar" class="topbar"></header>
 <main class="wrap"><div id="app"></div></main>
@@ -852,7 +880,7 @@ function paintTop(){const v=ST.v=='course'?'courses':ST.v;
   $('#topbar').innerHTML=`<div class="tb-in"><button type="button" class="brand" data-go="v:home" aria-label="بوصلتي المهنية، الصفحة الرئيسية"><span class="logo">${COMPASS}</span><span><b>بوصلتي المهنية</b><small class="mono">My Career Compass</small></span></button><nav class="tnav" aria-label="صفحات التطبيق">${NAV.map(n=>`<button type="button" data-go="v:${n[0]}" class="${v==n[0]?'on':''}"${v==n[0]?' aria-current="page"':''}>${n[1]}</button>`).join('')}</nav><button type="button" class="xpchip" id="xpc" data-go="v:prog" title="نقاط الخبرة ومستواك">⭐ <span>${xpOf()}</span> XP · ${lvlOf(xpOf()).t}</button></div>`}
 
 /* ---------- shared pieces ---------- */
-const specSeg=()=>`<div class="specgrid" role="group" aria-label="اختر تخصصك">${FAMS.map(f=>`<div class="sg"><span class="sgl">${f.em} ${f.ar}</span><div class="chipr">${DEPTS.filter(d=>d.f==f.id).map(d=>`<button type="button" class="chip ${specOf()==d.id?'on':''}" data-spec="${d.id}" aria-pressed="${specOf()==d.id}">${d.em} ${d.ar}</button>`).join('')}</div></div>`).join('')}</div>`;
+const specSeg=()=>{const D=deptOf(specOf());return `<div class="specpick"><label class="fsel"><span class="lbl">تخصصي</span><select id="specsel" aria-label="اختر تخصصك">${specOpts(specOf())}</select></label><span class="specnote">${D.em} ${D.d}</span></div>`};
 const instHtml=ids=>`<div class="inst">${ids.map(k=>{const I=INSTS[k];return I?`<div class="instc"><span class="ty">${I.ty}</span><b>${I.n}</b><small class="mut">${I.o}</small><p>${I.d}</p></div>`:''}).join('')}</div>`;
 const DISC=`<p class="disc">ℹ️ الجهات والبرامج تتغير من سنة إلى أخرى، وتختلف التخصصات المتاحة من مدينة إلى أخرى. قبل التقديم تأكد من التخصص وشروط القبول والمواعيد في الموقع الرسمي للجهة نفسها.</p>`;
 const careerHtml=D=>`<div class="car" style="--c:var(--${D.c})"><div><h5>ماذا يعمل؟</h5><p style="margin:0;font-size:.88rem">${D.sum}</p></div><div><h5>مهارات ستتقنها</h5><ul>${D.skills.map(s=>`<li>${s}</li>`).join('')}</ul></div><div><h5>وظائف تنتظرك</h5><ul>${D.roles.map(s=>`<li>${s}</li>`).join('')}</ul></div></div>`;
@@ -892,7 +920,7 @@ function courseGrid(){const q=ST.q.trim().toLowerCase(),L=CATALOG.filter(x=>(ST.
   return L.length?`<div class="grid">${L.map(cardHtml).join('')}</div>`:`<div class="empty">لا توجد مادة بهذا الاسم. جرّب كلمة أخرى.</div>`}
 function pgCourses(){
   return `<header class="pghead"><span class="eyebrow">الكتالوج</span><h1>المواد</h1><p>${COURSES.length} مادة متاحة، وكل مادة لوحات تفاعلية وامتحان شامل. ابحث باسم المادة أو رمزها، أو صفِّ حسب التخصص.</p></header>
-  <div class="filt"><input type="search" id="csearch" class="srch" placeholder="ابحث: محركات، PLC، اهتزاز…" value="${esc(ST.q)}" aria-label="بحث في المواد"><div class="chipr" role="group" aria-label="تصفية حسب التخصص">${[['all','الكل']].concat(DEPTS.map(d=>[d.id,d.s])).map(f=>`<button type="button" class="chip ${ST.f==f[0]?'on':''}" data-f="${f[0]}" aria-pressed="${ST.f==f[0]}">${f[1]}</button>`).join('')}</div></div><div id="cgrid">${courseGrid()}</div>`}
+  <div class="filt"><input type="search" id="csearch" class="srch" placeholder="ابحث: محركات، PLC، اهتزاز…" value="${esc(ST.q)}" aria-label="بحث في المواد"><label class="fsel"><span class="lbl">التخصص</span><select id="cfsel" aria-label="تصفية حسب التخصص">${specOpts(ST.f,'كل التخصصات')}</select></label></div><div id="cgrid">${courseGrid()}</div>`}
 
 /* ---------- page: library ---------- */
 let SYMUSE=null;
@@ -903,27 +931,37 @@ const symSvg=id=>`<svg viewBox="0 0 100 68" role="img" aria-label="رمز ${SYMS
 const shortPins=p=>p.length>90?p.slice(0,86).replace(/\s\S*$/,'')+'…':p;
 const libGroups=()=>{const seen=new Set(),G=SYMGRP.map(g=>[g[0],g[1].filter(id=>SYMS[id])]);G.forEach(g=>g[1].forEach(id=>seen.add(id)));const rest=Object.keys(SYMS).filter(id=>!seen.has(id));if(rest.length)G.push(['رموز أخرى',rest]);return G};
 const matchQ=(id,q)=>{if(!q)return true;const s=SYMS[id],x=SYMX[id]||{};return (s.n+' '+s.u+' '+id+' '+(x.e||'')+' '+(x.p||'')+' '+(x.f||'')).toLowerCase().includes(q)};
-function symGroups(){const q=ST.sq.trim().toLowerCase(),U=symUse(),seen=new Set();let n=0;
-  const h=libGroups().map(g=>{const ids=g[1].filter(id=>!seen.has(id)&&matchQ(id,q));ids.forEach(id=>seen.add(id));n+=ids.length;
-    return ids.length?`<section class="sgrp"><h3>${g[0]} <small class="mono">${ids.length}</small></h3><div class="symrow">${ids.map(id=>{const s=SYMS[id],x=SYMX[id],u=U[id]||[];return `<figure class="sym">${symSvg(id)}<b>${s.n}</b><span class="en">${enOf(id)}</span>${x&&x.p?`<span class="pn">${shortPins(x.p)}</span>`:`<small>${s.u}</small>`}${u.length?`<span class="use">${u.slice(0,3).map(c=>catOf(c).code).join(' · ')}</span>`:''}</figure>`}).join('')}</div></section>`:''}).join('');
-  return n?h:`<div class="empty">لا يوجد رمز بهذا الاسم.</div>`}
-function libSym(){return `<p class="lead">${Object.keys(SYMS).length} رمزًا بالعربية والإنجليزية، ومع كل رمز أطرافه وقطبيته باختصار. للشرح الكامل وطريقة الفحص افتح تبويب «العناصر». الرمز البرتقالي أسفل البطاقة يدل على المواد المرتبطة.</p><div class="filt"><input type="search" id="ssearch" class="srch" placeholder="ابحث بالعربية أو الإنجليزية: مكثف، MOSFET، 555، صمام…" value="${esc(ST.sq)}" aria-label="بحث في الرموز"></div><div id="sgrps">${symGroups()}</div>`}
+/* v8: library filtered by specialty (dropdown) + practical benefit for each element */
+const ALLD='*';
+const GRPDEPT={'العناصر الأساسية':ALLD,'أشباه الموصلات':['elec','elnx','mech','inst','hvac','auto','ren','net','ai'],'الدوائر المتكاملة ICs':['elnx','inst','mech','auto','net','sw','ai','ren'],'الدوائر الرقمية':['elnx','inst','mech','net','sw','ai'],'التحكم و PLC':['elec','elnx','mech','inst','hvac','prod'],'القوى والمحركات':['elec','mech','inst','hvac','prod','ren','auto'],'التبريد والتكييف':['hvac','elec','mech'],'المركبات':['auto','elnx'],'الطاقة الشمسية':['ren','elec','elnx'],'الحاسب والشبكات':['net','sw','ai','inst','elnx'],'اللحام':['weld','prod','mech'],'السلامة':ALLD,'العمليات و SCADA':['inst','mech','elec','ai'],'المعدات الدوارة':['mech','prod','hvac','elec','inst'],'الهيدروليك والهواء المضغوط':['mech','prod','auto','inst']};
+const INSDEPT={dmm:ALLD,clamp:['elec','mech','hvac','auto','ren','inst'],megger:['elec','mech','ren','hvac'],scope:['elnx','inst','auto','ai','mech'],fgen:['elnx','inst'],psu:['elnx','inst','ai','net'],lcr:['elnx'],tach:['mech','prod','elec'],thermal:['elec','mech','ren','hvac','inst'],earth:['elec','ren'],phseq:['elec','hvac','mech'],vibm:['mech','prod','ai'],gauge:['inst','mech','hvac','prod'],calib:['inst'],hart:['inst'],logic:['elnx','net','sw','ai'],spectrum:['elnx','net'],ncv:['elec','hvac','ren'],pwrm:['elec','ren'],flowm:['inst','mech'],strobe:['mech','prod'],align:['mech','prod'],dial:['prod','mech','weld'],caliper:['prod','weld','mech','auto'],torque:['mech','auto','prod','weld'],dwt:['inst'],mft:['elec','ren'],mani:['hvac'],micron:['hvac'],leak:['hvac'],obd:['auto'],cablet:['net'],irr:['ren'],micro:['prod','mech'],wgauge:['weld']};
+const grpOf=id=>{const g=libGroups().find(g=>g[1].includes(id));return g?g[0]:''};
+const forDept=(id,dep)=>{if(!dep||dep=='all')return true;const D=deptOf(dep);if(!D)return true;const P=pathIds(D),U=symUse()[id]||[];if(U.some(c=>P.includes(c)))return true;const G=GRPDEPT[grpOf(id)];return G==ALLD||(G||[]).includes(dep)};
+const insFor=(k,dep)=>{if(!dep||dep=='all')return true;const m=INSDEPT[k];if(m==ALLD||(m||[]).includes(dep))return true;const P=pathIds(deptOf(dep));return COURSES.some(c=>P.includes(c.id)&&c.lessons.some(l=>((l.pr&&l.pr.ins)||[]).some(o=>o.id==k)))};
+const libDep=()=>ST.lf||specOf();
+const specOpts=(cur,all)=>(all?`<option value="all"${cur=='all'?' selected':''}>${all}</option>`:'')+FAMS.map(f=>`<optgroup label="${f.em} ${f.ar}">${DEPTS.filter(d=>d.f==f.id).map(d=>`<option value="${d.id}"${cur==d.id?' selected':''}>${d.em} ${d.ar}</option>`).join('')}</optgroup>`).join('');
+const libBar=()=>{const d=libDep(),D=deptOf(d);return `<div class="libbar"><label class="fsel"><span class="lbl">اعرض ما يخص تخصص</span><select id="libspec">${specOpts(d,'كل التخصصات (كل العناصر)')}</select></label>${D?`<span class="pill ok">${D.em} مخصّصة لتخصص ${D.ar}</span>`:''}</div>`};
+function symGroups(){const q=ST.sq.trim().toLowerCase(),U=symUse(),dep=libDep(),seen=new Set();let n=0;
+  const h=libGroups().map(g=>{const ids=g[1].filter(id=>!seen.has(id)&&matchQ(id,q)&&forDept(id,dep));ids.forEach(id=>seen.add(id));n+=ids.length;
+    return ids.length?`<section class="sgrp"><h3>${g[0]} <small class="mono">${ids.length}</small></h3><div class="symrow">${ids.map(id=>{const s=SYMS[id],x=SYMX[id],u=U[id]||[];return `<figure class="sym">${symSvg(id)}<b>${s.n}</b><span class="en">${enOf(id)}</span>${BEN[id]?`<span class="bn">${BEN[id]}</span>`:''}${x&&x.p?`<span class="pn">${shortPins(x.p)}</span>`:`<small>${s.u}</small>`}${u.length?`<span class="use">${u.slice(0,3).map(c=>catOf(c).code).join(' · ')}</span>`:''}</figure>`}).join('')}</div></section>`:''}).join('');
+  return n?h:`<div class="empty">لا يوجد رمز بهذا الاسم لهذا التخصص. جرّب «كل التخصصات».</div>`}
+function libSym(){return `<p class="lead">رموز المخططات بالعربية والإنجليزية، مع فائدة كل عنصر وأطرافه باختصار. للشرح الكامل وطريقة الفحص افتح تبويب «العناصر».</p><div class="filt"><input type="search" id="ssearch" class="srch" placeholder="ابحث بالعربية أو الإنجليزية: مكثف، MOSFET، 555، صمام…" value="${esc(ST.sq)}" aria-label="بحث في الرموز"></div><div id="sgrps">${symGroups()}</div>`}
 const REALMAP={R:0,C:1,CE:1,DIODE:2,LED:3,FUSE:4,DC:5};
 function compCard(id,grp){const s=SYMS[id],x=SYMX[id]||{},u=symUse()[id]||[],ri=REALMAP[id],rc=ri!=null&&typeof COMPS!='undefined'?COMPS[ri]:null;
-  return `<article class="ec"><div class="ec-h"${rc?' style="grid-template-columns:150px minmax(0,1fr)"':''}>${rc?`<div class="real">${rc.real}${symSvg(id)}</div>`:symSvg(id)}<div><span class="grp">${grp}</span><h4>${s.n}</h4><small>${enOf(id)}</small></div></div><div class="ec-b">${x.p?`<div class="pins"><b>الأطراف والقطبية · Pins</b>${x.p}</div>`:''}${x.f?`<div class="row"><b>الوظيفة · Function</b>${x.f}</div>`:''}${x.t?`<div class="row"><b>الفحص والتأكد · Check</b>${x.t}</div>`:''}${rc&&rc.warn?MK('safe',rc.warn):''}${rc&&rc.cc?ccHtml():''}${u.length?`<div class="chipr"><span class="grp">مواد مرتبطة:</span>${u.map(c=>`<button type="button" class="chip" data-go="c:${c}">${catOf(c).code}</button>`).join('')}</div>`:''}</div></article>`}
+  return `<article class="ec"><div class="ec-h"${rc?' style="grid-template-columns:150px minmax(0,1fr)"':''}>${rc?`<div class="real">${rc.real}${symSvg(id)}</div>`:symSvg(id)}<div><span class="grp">${grp}</span><h4>${s.n}</h4><small>${enOf(id)}</small></div></div><div class="ec-b">${BEN[id]?`<div class="ben"><b>💡 الفائدة · Benefit</b>${BEN[id]}</div>`:''}${x.p?`<div class="pins"><b>الأطراف والقطبية · Pins</b>${x.p}</div>`:''}${x.f?`<div class="row"><b>الوظيفة · Function</b>${x.f}</div>`:''}${x.t?`<div class="row"><b>الفحص والتأكد · Check</b>${x.t}</div>`:''}${rc&&rc.warn?MK('safe',rc.warn):''}${rc&&rc.cc?ccHtml():''}${u.length?`<div class="chipr"><span class="grp">مواد مرتبطة:</span>${u.map(c=>`<button type="button" class="chip" data-go="c:${c}">${catOf(c).code}</button>`).join('')}</div>`:''}</div></article>`}
 const compGroups=()=>libGroups().filter(g=>g[0]!=INSGRP);
-function compBody(){const q=(ST.cq||'').trim().toLowerCase(),gf=ST.cg||'all',seen=new Set();let n=0;
-  const h=compGroups().filter(g=>gf=='all'||g[0]==gf).map(g=>{const ids=g[1].filter(id=>!seen.has(id)&&matchQ(id,q));ids.forEach(id=>seen.add(id));n+=ids.length;
+function compBody(){const q=(ST.cq||'').trim().toLowerCase(),gf=ST.cg||'all',dep=libDep(),seen=new Set();let n=0;
+  const h=compGroups().filter(g=>gf=='all'||g[0]==gf).map(g=>{const ids=g[1].filter(id=>!seen.has(id)&&matchQ(id,q)&&forDept(id,dep));ids.forEach(id=>seen.add(id));n+=ids.length;
     return ids.length?`<section class="sgrp"><h3>${g[0]} <small class="mono">${ids.length}</small></h3><div class="ecards">${ids.map(id=>compCard(id,g[0])).join('')}</div></section>`:''}).join('');
-  return n?h:'<div class="empty">لا يوجد عنصر بهذا الاسم.</div>'}
-function libComp(){const G=compGroups(),gf=ST.cg||'all',tot=new Set(G.flatMap(g=>g[1])).size;
-  return `<p class="lead">${tot} عنصرًا، لكل عنصر بطاقة: الاسم بالعربية والإنجليزية، والأطراف والقطبية، والوظيفة، وطريقة الفحص، والمواد المرتبطة. أجهزة القياس في تبويبها الخاص.</p><div class="filt"><input type="search" id="csym" class="srch" placeholder="ابحث: ترانزستور، 555، ريليه، MOSFET، ضاغط…" value="${esc(ST.cq||'')}" aria-label="بحث في العناصر"></div><div class="chipr" style="margin-top:8px" role="group" aria-label="تصفية حسب المجموعة">${[['all','الكل']].concat(G.map(g=>[g[0],g[0]])).map(f=>`<button type="button" class="chip ${gf==f[0]?'on':''}" data-cg="${esc(f[0])}" aria-pressed="${gf==f[0]}">${f[1]}</button>`).join('')}</div><div id="cbody">${compBody()}</div>`}
-function libIns(){const keys=Object.keys(INSTR);
-  return `<p class="lead">${keys.length} جهازًا. لكل جهاز رسم يبين التوصيل الصحيح، ولماذا تحتاجه، ونصائح الاستخدام، والمدى، وتنبيه السلامة.</p><div class="chipr" style="margin-top:8px">${keys.map(k=>`<button type="button" class="chip" data-jump="ix-${k}">${INSTR[k].ar}</button>`).join('')}</div>
+  return n?h:'<div class="empty">لا يوجد عنصر بهذا الاسم لهذا التخصص. جرّب «كل التخصصات».</div>'}
+function libComp(){const dep=libDep(),G=compGroups().filter(g=>g[1].some(id=>forDept(id,dep))),gf=ST.cg||'all',tot=new Set(G.flatMap(g=>g[1]).filter(id=>forDept(id,dep))).size;
+  return `<p class="lead">${tot} عنصرًا، ولكل عنصر بطاقة: فائدته لك، والاسم بالعربية والإنجليزية، والأطراف والقطبية، والوظيفة، وطريقة الفحص، والمواد المرتبطة.</p><div class="filt"><input type="search" id="csym" class="srch" placeholder="ابحث: ترانزستور، 555، ريليه، MOSFET، ضاغط…" value="${esc(ST.cq||'')}" aria-label="بحث في العناصر"><label class="fsel"><span class="lbl">المجموعة</span><select id="cgsel">${[['all','كل المجموعات']].concat(G.map(g=>[g[0],g[0]])).map(f=>`<option value="${esc(f[0])}"${gf==f[0]?' selected':''}>${f[1]}</option>`).join('')}</select></label></div><div id="cbody">${compBody()}</div>`}
+function libIns(){const dep=libDep(),keys=Object.keys(INSTR).filter(k=>insFor(k,dep));
+  return `<p class="lead">${keys.length} جهازًا. لكل جهاز رسم يبين التوصيل الصحيح، ولماذا تحتاجه، ونصائح الاستخدام، والمدى، وتنبيه السلامة.</p><label class="fsel" style="margin-top:8px"><span class="lbl">انتقل إلى جهاز</span><select id="insjump"><option value="">اختر جهازًا…</option>${keys.map(k=>`<option value="ix-${k}">${INSTR[k].ar}</option>`).join('')}</select></label>
   <div class="icx">${keys.map(k=>{const I=INSTR[k],X=INSTX[k];return `<article class="ix" id="ix-${k}"><div class="ix-h">${I.sy&&SYMS[I.sy]?`<svg viewBox="0 0 100 68" aria-hidden="true" ${SVA}><g transform="translate(20,34)">${SYMS[I.sy].g}</g></svg>`:''}<div><h3>${I.ar}</h3><small>${I.en}</small></div></div>
-  <div class="ix-b">${X?`<figure class="ix-fig">${X.fig}<figcaption>${X.cap}</figcaption></figure>`:'<div></div>'}<div>${X?`<h5>لماذا تحتاجه؟</h5><ul>${X.ben.map(b=>`<li>${b}</li>`).join('')}</ul><h5>نصائح للاستخدام الصحيح</h5><ul>${X.tips.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}${I.rng?`<p class="rg"><b>المدى النموذجي:</b> ${I.rng}</p>`:''}${I.safe?`<p class="isafe"><b>السلامة:</b> ${I.safe}</p>`:''}</div></div>${X?`<p class="cheer">${X.cheer}</p>`:''}</article>`}).join('')}</div>`}
+  <div class="ix-b">${X?`<figure class="ix-fig">${X.fig}<figcaption>${X.cap}</figcaption></figure>`:'<div></div>'}<div>${X?`<h5>💡 الفائدة: لماذا تحتاجه؟</h5><ul>${X.ben.map(b=>`<li>${b}</li>`).join('')}</ul><h5>نصائح للاستخدام الصحيح</h5><ul>${X.tips.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}${I.rng?`<p class="rg"><b>المدى النموذجي:</b> ${I.rng}</p>`:''}${I.safe?`<p class="isafe"><b>السلامة:</b> ${I.safe}</p>`:''}</div></div>${X?`<p class="cheer">${X.cheer}</p>`:''}</article>`}).join('')}</div>`}
 function pgLib(){const s=ST.sub.lib;
-  return `<header class="pghead"><span class="eyebrow">مرجع سريع</span><h1>المكتبة</h1><p>رموز المخططات والعناصر وأجهزة القياس في مكان واحد، بالعربية والإنجليزية. كل ما تقابله داخل اللوحات تجده هنا.</p></header>${subTabs('lib',[['sym','رموز المخططات'],['comp','العناصر'],['ins','أجهزة القياس']])}<div class="subb">${s=='comp'?libComp():s=='ins'?libIns():libSym()}</div>`}
+  return `<header class="pghead"><span class="eyebrow">مرجع سريع</span><h1>المكتبة</h1><p>رموز المخططات والعناصر وأجهزة القياس بالعربية والإنجليزية، مخصّصة لتخصصك. غيّر التخصص من القائمة لترى ما يخصه.</p></header>${libBar()}${subTabs('lib',[['sym','رموز المخططات'],['comp','العناصر'],['ins','أجهزة القياس']])}<div class="subb">${s=='comp'?libComp():s=='ins'?libIns():libSym()}</div>`}
 
 /* ---------- page: review ---------- */
 let FCP=null;
@@ -11152,6 +11190,159 @@ tLS('الاختبارات اللاإتلافية والإتلافية','Non-dest
   tQ('اختبار الثني من نوع:',['إتلافي','لا إتلافي','بصري','إشعاعي'],'العينة تُثنى حتى تُكشف العيوب.')],
  [['NDT','الاختبار اللاإتلافي','Inspection without damage'],['PT','الصبغة النافذة','Surface-breaking defects'],['MT','الجسيمات المغناطيسية','Ferromagnetic materials'],['UT','الموجات فوق الصوتية','Internal defects'],['WPS','مواصفة إجراء اللحام','Approved welding procedure']])
 ]);
+/* v8: practical benefit of each library element: why it matters to you as a technician */
+const BEN={
+R:'تضبط بها التيار والجهد في أي دائرة، وأكثر عنصر ستقابله وتستبدله.',
+POT:'تضبط بها السرعة أو الإضاءة أو نقطة العمل يدويًا دون تغيير الدائرة.',
+NTC:'حساس حرارة رخيص ودقيق تجده في المكيفات والشواحن والسيارات.',
+LDR:'يجعل الإنارة تعمل وحدها مع الغروب ويوفر الطاقة.',
+MOV:'يحمي الأجهزة من ارتفاعات الجهد المفاجئة والصواعق.',
+L:'يرشّح التشويش ويخزن الطاقة في مصادر التغذية ومحولات القدرة.',
+C:'يرشّح التشويش ويثبّت الجهد ويضبط التوقيت في الدوائر.',
+CE:'ينعّم جهد المقوّم ويخزن الطاقة؛ وتلفه سبب شائع لأعطال مصادر التغذية.',
+DC:'مصدر التغذية الأساسي للإلكترونيات والتحكم والسيارات.',
+BAT:'تخزن الطاقة لتشغيل السيارة وأنظمة الطاقة الشمسية والطوارئ.',
+AC:'شكل الكهرباء في المنازل والمصانع؛ فهمه أساس كل عمل كهربائي.',
+GND:'مرجع القياس المشترك؛ بدونه لا معنى لأي قراءة جهد.',
+SW:'أبسط وسيلة لتشغيل الحمل وإيقافه يدويًا.',
+LAMP:'حمل بسيط تختبر به الدوائر وتبين به الحالة.',
+FUSE:'يحمي الكابل والجهاز من الاحتراق عند القصر بثمن زهيد.',
+RELAY:'يشغّل حملًا كبيرًا بإشارة صغيرة مع عزل كامل بين الدائرتين.',
+BUZ:'ينبّه المستخدم صوتيًا للإنذارات وانتهاء العمليات.',
+SPK:'يحوّل الإشارة إلى صوت في أنظمة النداء والإنذار.',
+VM:'تتأكد به من وجود الجهد وصحته قبل الحكم على أي عطل.',
+AM:'تعرف به حمل الدائرة الحقيقي وتكشف الحمل الزائد.',
+WM:'تقيس به القدرة الفعلية واستهلاك الطاقة.',
+MOT:'يحوّل الكهرباء إلى حركة: مراوح ومضخات ونواقل.',
+CB:'يحسّن معامل القدرة فيقلل الفاتورة والتيار في الكابلات.',
+XFMR:'يرفع الجهد أو يخفضه ويعزل الدوائر لتغذية آمنة.',
+DIODE:'يقوّم المتردد ويحمي الدوائر من عكس القطبية.',
+ZENER:'يثبّت جهدًا مرجعيًا ويحمي المداخل الحساسة.',
+SCHOT:'يقلل الفقد والحرارة في مصادر التغذية والأنظمة الشمسية.',
+LED:'إضاءة وبيان بكفاءة عالية وعمر طويل.',
+BRG:'يحوّل المتردد إلى مستمر في كل شاحن ومصدر تغذية.',
+NPN:'مفتاح إلكتروني يشغّل ريليه أو LED من إشارة متحكم ضعيفة.',
+PNP:'مفتاح في جهة الموجب لتغذية الأحمال من مخرج متحكم.',
+NMOS:'يشغّل المحركات والأحمال الكبيرة بكفاءة وحرارة قليلة.',
+PMOS:'مفتاح قدرة في جهة الموجب، مفيد لحماية عكس القطبية.',
+IGBT:'قلب مغيّرات السرعة والعاكسات في الصناعة والطاقة الشمسية.',
+SCR:'يتحكم في القدرة الكبيرة في الشواحن والسخانات الصناعية.',
+TRIAC:'يتحكم في الإضاءة وسرعة المراوح على التيار المتردد.',
+OPTO:'يعزل دائرة التحكم الحساسة عن دائرة القدرة فيحميها.',
+HALL:'يقيس السرعة والموضع دون تلامس، كما في حساسات السيارات.',
+XTAL:'يعطي المتحكم ساعة دقيقة فيعمل التوقيت والاتصال بدقة.',
+BTN:'أبسط وسيلة إدخال أوامر للمتحكم.',
+OPAMP:'يكبّر إشارات الحساسات الضعيفة ويقارن ويرشّح.',
+T555:'يولّد وميضًا وتأخيرًا زمنيًا وPWM دون برمجة.',
+REG:'يعطي 5 V ثابتة تحمي المتحكمات والحساسات.',
+LM317:'مصدر جهد قابل للضبط لتجاربك ومشاريعك.',
+IC74:'يبني منطق التحكم الرقمي بدوائر جاهزة رخيصة.',
+SR595:'يزيد مخارج المتحكم بأسلاك قليلة لتشغيل لمبات وشاشات كثيرة.',
+ULN:'يشغّل ريليهات ومحركات خطوية مباشرة من المتحكم.',
+L293:'يشغّل محركات DC في الاتجاهين للروبوتات والنماذج.',
+LM35:'حساس حرارة خطي سهل القراءة لمشاريع المراقبة.',
+MCU:'عقل الأجهزة الذكية: يقرأ الحساسات ويتحكم في المخارج.',
+AND:'يشغّل الخرج فقط عند تحقق كل الشروط، كشروط الأمان.',
+OR:'يشغّل الخرج عند تحقق أي شرط، كإنذار من عدة حساسات.',
+NOT:'يعكس الإشارة ليتوافق منطق الحساس مع منطق التحكم.',
+NAND:'بوابة عامة تبني منها أي دائرة منطقية.',
+NOR:'بوابة عامة؛ مثالها: يعمل الخرج فقط إذا لم تصل أي إشارة إيقاف.',
+XOR:'يكشف الاختلاف بين إشارتين، ويستخدم في الجمع والتحقق من الأخطاء.',
+XNOR:'يكشف تساوي إشارتين للمقارنة.',
+HA:'يشرح كيف يجمع الحاسب الأرقام بتًا بتًا.',
+FA:'أساس الجمع الثنائي في المعالجات.',
+FFD:'يحفظ حالة بت واحد: أساس الذاكرة والمسجلات.',
+FFT:'يقسم التردد على 2 في العدادات والمؤقتات.',
+FFJK:'قلاب مرن للعدادات وآلات الحالة.',
+CNT:'يعد القطع والنبضات في خطوط الإنتاج.',
+SEG7:'يعرض الأرقام بوضوح في العدادات والأجهزة.',
+TL:'تطبيق عملي يجمع العدادات والتوقيت والمنطق.',
+NO:'تلامس تشغيل يغلق عند التفعيل، يبدأ به أي أمر.',
+NC:'تلامس إيقاف وأمان يفتح عند التفعيل.',
+COIL:'يمثّل مخرج PLC الذي يشغّل الأحمال.',
+TON:'يؤخر التشغيل زمنًا محددًا، مثل نجمة-دلتا والتهوية.',
+CTU:'يعد القطع ويوقف الخط عند الوصول للعدد المطلوب.',
+PB_NO:'زر التشغيل الآمن اللحظي في لوحات التحكم.',
+PB_NC:'زر الإيقاف الذي يوقف الآلة حتى لو انقطع سلكه.',
+ESTOP:'يوقف الآلة فورًا في الخطر ويحمي الأرواح.',
+LIM:'يوقف الحركة عند نهاية المشوار ويمنع الاصطدام.',
+PROX:'يكشف القطع دون تلامس، فلا يتآكل مع الزمن.',
+IO:'يربط حساسات المصنع ومشغّلاته بالـ PLC.',
+KM:'يشغّل المحركات والأحمال الكبيرة بأمر تحكم صغير.',
+KMC:'تحمل تيار المحرك الكبير بأمان.',
+OL:'يحمي المحرك من الاحتراق عند الحمل الزائد.',
+MCB:'يحمي الكابلات من الحمل الزائد والقصر، ويُعاد تشغيله دون استبدال.',
+M3:'أكثر المحركات انتشارًا في الصناعة؛ تشغيله وصيانته عمل يومي.',
+PL:'يبين حالة الآلة للمشغّل بنظرة واحدة.',
+STEP:'يعطي حركة دقيقة بالخطوات في الطابعات وآلات CNC.',
+SOL:'يحوّل الإشارة الكهربائية إلى حركة لفتح الصمامات والأقفال.',
+CMPH:'قلب المكيف؛ فحصه الصحيح يوفر استبدالًا مكلفًا.',
+RCAP:'سبب شائع لتوقف المكيف، وفحصه سريع ورخيص.',
+THST:'يتحكم في التشغيل حسب الحرارة فيوفر الطاقة.',
+EXV:'يضبط تدفق وسيط التبريد لأفضل تبريد وأقل استهلاك.',
+FDRY:'يحمي الدورة من الرطوبة والانسداد.',
+ALT:'يشحن البطارية ويغذي السيارة أثناء السير.',
+STRT:'يدير المحرك عند التشغيل؛ أول ما تشخّصه عند عدم الدوران.',
+AREL:'يشغّل المراوح والأبواق والإنارة بأمان من مفتاح صغير.',
+SPARK:'يشعل الوقود؛ وتلفه سبب تقطيع المحرك.',
+OBD:'بوابة التشخيص: تقرأ منها أعطال السيارة في دقائق.',
+PV:'يحوّل الشمس إلى كهرباء مجانية ونظيفة.',
+CC:'يحمي البطارية ويطيل عمرها ويستخرج أقصى طاقة من الألواح.',
+INV:'يحوّل طاقة الألواح والبطاريات إلى كهرباء منزلية.',
+DCSW:'يفصل الألواح بأمان للصيانة.',
+SPD:'يحمي النظام الشمسي والأجهزة من الصواعق.',
+PC:'الجهاز الذي تخدمه وتصونه في الدعم الفني.',
+RTR:'يوصل الشبكة بالإنترنت ويوجّه البيانات.',
+SWT:'يوصل أجهزة الشبكة المحلية بسرعة وكفاءة.',
+RJ45:'موصل الشبكة الذي ستركّبه وتفحصه يوميًا.',
+SRV:'يجمع بيانات المصنع ويحفظها ويعرضها.',
+WFIL:'تقرأ منه حجم اللحام الزاوي المطلوب في الرسم.',
+WGRV:'تعرف منه كيف تجهّز حواف الصفائح السميكة للحام.',
+WFLD:'يخبرك أن اللحام يُنفذ في الموقع لا في الورشة.',
+WALL:'يخبرك أن اللحام يدور حول الوصلة كاملة.',
+LOCK:'يمنع تشغيل المعدة وأنت تعمل عليها: يحمي حياتك.',
+EARTH:'يصرّف تيار العطل ليعمل القاطع ويمنع الصعق.',
+WARN:'ينبهك إلى خطر محتمل قبل الاقتراب.',
+PROH:'يمنعك من فعل خطر في المكان.',
+MAND:'يلزمك بمعدات الوقاية المطلوبة.',
+SAFE:'يدلك على مخارج الطوارئ والإسعافات.',
+PUMP:'تنقل السوائل في المصانع والمباني؛ صيانتها عمل يومي.',
+VALVE:'يتحكم في مرور السوائل ويعزل الأجزاء للصيانة.',
+TANK:'يخزن السوائل، ومستواه أحد أهم القياسات.',
+TT:'ينقل قراءة الحرارة إلى غرفة التحكم.',
+PT:'ينقل قراءة الضغط إلى غرفة التحكم.',
+FT:'ينقل قراءة التدفق لحساب الإنتاج والاستهلاك.',
+LT:'ينقل قراءة المستوى لمنع الفيضان والجفاف.',
+PLCF:'تعرف منه أن الجهاز مركّب في الموقع.',
+PLCP:'تعرف منه أن الجهاز على لوحة غرفة التحكم.',
+HMI:'شاشة يراقب بها المشغّل الآلة ويتحكم فيها.',
+RTU:'يجمع إشارات المحطات البعيدة ويرسلها إلى غرفة التحكم.',
+RTD:'يقيس الحرارة بدقة عالية في العمليات الصناعية.',
+TC:'يقيس الحرارات العالية في الأفران والمحركات.',
+ORF:'وسيلة بسيطة شائعة لقياس التدفق.',
+CV:'ينفذ قرار المتحكم بضبط التدفق تلقائيًا.',
+XMTR:'ينقل القياس لمسافات طويلة بإشارة 4-20 mA مقاومة للتشويش.',
+BRGN:'يحمل العمود بأقل احتكاك؛ تلفه أشهر أعطال الآلات.',
+ACCEL:'يكشف أعطال الآلات مبكرًا من اهتزازها.',
+CPL:'ينقل الحركة بين المحرك والحمل ويتحمل خطأ محاذاة صغيرًا.',
+GBX:'يخفض السرعة ويزيد العزم لتناسب الحمل.',
+FAN:'يبرد المعدات ويهوّي الأماكن.',
+CMP:'يولّد الهواء المضغوط الذي يحرك آلات المصنع.',
+HPMP:'يولّد التدفق في الأنظمة الهيدروليكية القوية.',
+HMOT:'يعطي عزمًا كبيرًا بحجم صغير.',
+CYL1:'حركة خطية بسيطة يعود فيها المكبس بالنابض.',
+CYL2:'حركة خطية قوية في الاتجاهين.',
+V32:'يتحكم في أسطوانة فعل مفرد.',
+V52:'يتحكم في أسطوانة فعل مزدوج.',
+CHK:'يمنع رجوع المائع ويحمي المضخة.',
+RLF:'يحمي النظام من الضغط الزائد والانفجار.',
+FLT:'يحمي المكونات من الشوائب ويطيل عمرها.',
+FRL:'يجهّز الهواء النظيف المنضبط فتطول حياة الأدوات.',
+RSV:'يخزن الزيت ويبرده.',
+ACM:'يخزن الطاقة الهيدروليكية ويمتص الصدمات.',
+GAG:'يعرض الضغط بنظرة سريعة للتشخيص.',
+FCV:'يضبط سرعة الأسطوانات والمحركات.'
+};
 /* ===== v6 fun layer: XP, levels, badges, reactions, motivational lines ===== */
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const MOTTOS=['الفني الماهر لم يولد ماهرًا؛ صنعته المحاولات.','كل دائرة معقدة تتكون من عناصر بسيطة تفهمها واحدًا واحدًا.','القياس قبل الحكم، والسلامة قبل السرعة.','خمس دقائق مراجعة اليوم توفّر ساعة بحث غدًا.','اسأل «لماذا؟» مرة إضافية، فهناك يبدأ الفهم.','سوق العمل يحتاج فنيين يفهمون لا يحفظون فقط. كن منهم.','خطأ تفهمه اليوم لن تكرره في الموقع.','العطل لغز، وأنت المحقق.','لوحة واحدة كل يوم تعني مادة كاملة في أسبوعين.','دقتك في التفاصيل الصغيرة هي سمعتك الكبيرة.','من يتقن الأساسيات يتقن كل ما بعدها.','مصانع المملكة ومحطاتها الجديدة تنتظر يديك وعقلك.','لا تخجل من السؤال؛ اخجل من التخمين أمام لوحة حية.','الاستمرار يغلب الموهبة حين تتوقف الموهبة.','كل محترف تعرفه كان يومًا في مكانك الآن.'];
@@ -11401,6 +11592,147 @@ document.addEventListener('change',e=>{const t=e.target;if(!t)return;
   if(t.id=='spir'){SPIF.r=t.value;$('#spib').innerHTML=spiBody();return}
   if(t.dataset&&t.dataset.fxk){const k=fixKey(),o=store.get(k,{});if(t.checked){o[t.dataset.fxk]=1;addXP(5);toast('✅',pick(['خطوة رائعة! واصل','أحسنت، كل خطوة تقرّبك من هدفك','تقدّم جميل، استمر بالحماس نفسه']),'ok')}else delete o[t.dataset.fxk];store.set(k,o);const y=scrollY;$('#fxres').innerHTML=fixResult();scrollTo(0,y);return}});
 document.addEventListener('input',e=>{const t=e.target;if(t&&t.id=='spiq'){SPIF.q=t.value;$('#spib').innerHTML=spiBody()}});
+/* v8: dropdown pickers */
+document.addEventListener('change',e=>{const t=e.target;if(!t||!t.id)return;
+  if(t.id=='specsel'){store.set('spec',t.value);ST.lf=null;const y=scrollY;paint();scrollTo(0,y);const D=deptOf(t.value);toast(D.em,`تخصصك الآن: ${D.ar}`,'ok',2000);return}
+  if(t.id=='cfsel'){ST.f=t.value;$('#cgrid').innerHTML=courseGrid();return}
+  if(t.id=='libspec'){ST.lf=t.value;ST.cg='all';const y=scrollY;paint();scrollTo(0,y);return}
+  if(t.id=='cgsel'){ST.cg=t.value;$('#cbody').innerHTML=compBody();return}
+  if(t.id=='insjump'&&t.value){const el=document.getElementById(t.value);if(el){el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}return}
+});
+/* ===== v8: accounts (Firebase Auth + Firestore). Progress stays local for guests and syncs to the cloud after sign-in.
+   The web config below is public by design; access is enforced by the Firestore security rules (each user reads/writes only their own record). */
+const FB_CFG={apiKey:'AIzaSyCuFwaJR0KWX20XNwsL1iVUbPdkwlcHE-0',authDomain:'my-career-compass.firebaseapp.com',projectId:'my-career-compass',storageBucket:'my-career-compass.firebasestorage.app',messagingSenderId:'1046488108650',appId:'1:1046488108650:web:f7286a4a8219d38d49c413'};
+const FB_V='10.12.2',ADMIN_EMAIL='hatimalhwsawy@gmail.com';
+const ACC={ready:false,fb:null,user:null,prof:null,admin:false,saveT:null,busy:false};
+const CATS=['طالب في المرحلة الثانوية','متدرب في كلية تقنية أو معهد','طالب في كلية تطبيقية أو جامعة','خريج يبحث عن عمل','موظف','معلم أو مدرب'];
+const CITIES=['الرياض','جدة','مكة المكرمة','المدينة المنورة','الدمام','الخبر','الظهران','الأحساء','الجبيل','القطيف','حفر الباطن','الطائف','تبوك','بريدة','عنيزة','حائل','الجوف','عرعر','جازان','نجران','أبها','خميس مشيط','الباحة','ينبع','رابغ','القنفذة','الخرج'];
+const PROG_RE=/^(done\.|exam\.|fix\.)|^(xp|stat|miss|specres|spec|last)$/;
+const enc=k=>k.replace(/\./g,'__'),dec=k=>k.replace(/__/g,'.');
+const AERR={'auth/invalid-email':'البريد الإلكتروني غير صحيح.','auth/missing-password':'اكتب كلمة المرور.','auth/weak-password':'كلمة المرور ضعيفة: 8 أحرف على الأقل.','auth/email-already-in-use':'هذا البريد مسجّل من قبل. سجّل الدخول، أو استخدم «نسيت كلمة المرور».','auth/invalid-credential':'البريد أو كلمة المرور غير صحيحة.','auth/wrong-password':'كلمة المرور غير صحيحة.','auth/user-not-found':'لا يوجد حساب بهذا البريد.','auth/too-many-requests':'محاولات كثيرة. انتظر قليلًا ثم حاول مرة أخرى.','auth/network-request-failed':'تعذّر الاتصال بالإنترنت. تحقق من اتصالك.','auth/requires-recent-login':'لأمان حسابك، اكتب كلمة المرور مرة أخرى.','permission-denied':'لا تملك صلاحية لهذا الإجراء.'};
+const aerr=e=>AERR[e&&e.code]||('حدث خطأ غير متوقع. حاول مرة أخرى. ('+((e&&e.code)||'')+')');
+
+async function accInit(){try{
+  const B=`https://www.gstatic.com/firebasejs/${FB_V}/`;
+  const [A,U,F]=await Promise.all([import(B+'firebase-app.js'),import(B+'firebase-auth.js'),import(B+'firebase-firestore.js')]);
+  const app=A.initializeApp(FB_CFG),auth=U.getAuth(app),db=F.getFirestore(app);auth.languageCode='ar';
+  ACC.fb={A,U,F,app,auth,db};ACC.ready=true;
+  U.onAuthStateChanged(auth,async u=>{ACC.user=u;ACC.admin=!!(u&&u.email==ADMIN_EMAIL);
+    if(u){try{await pullAndMerge()}catch(e){console.warn(e)}}else{ACC.prof=null}
+    if(ACC.admin&&!NAV.some(n=>n[0]=='admin'))NAV.push(['admin','لوحة المستخدمين']);
+    if(!ACC.admin){const i=NAV.findIndex(n=>n[0]=='admin');if(i>=0)NAV.splice(i,1);if(ST.v=='admin')ST.v='home'}
+    const y=scrollY;if(ST.v=='course'&&curC())paintTop();else paint();scrollTo(0,y)});
+  }catch(e){ACC.ready=false;console.warn('accounts unavailable',e);paintTop()}}
+
+/* ---------- progress sync ---------- */
+function localProg(){const o={};try{Object.keys(localStorage).forEach(k=>{if(!k.startsWith('bp.'))return;const s=k.slice(3);if(PROG_RE.test(s)){try{o[enc(s)]=JSON.parse(localStorage.getItem(k))}catch(e){}}})}catch(e){}return o}
+function mergeProg(cloud){const loc=localProg(),out=Object.assign({},cloud);
+  Object.keys(loc).forEach(k=>{const a=cloud[k],b=loc[k],s=dec(k);
+    if(a==null){out[k]=b;return}
+    if(/^done\.|^fix\./.test(s))out[k]=Object.assign({},a,b);
+    else if(/^exam\./.test(s)||s=='xp')out[k]=Math.max(+a||0,+b||0);
+    else if(s=='stat')out[k]={ok:Math.max(a.ok||0,b.ok||0),st:Math.max(a.st||0,b.st||0),best:Math.max(a.best||0,b.best||0),qz:(a.qz||b.qz)?1:0};
+    else if(s=='miss'){const seen=new Set(),m=[];(b||[]).concat(a||[]).forEach(x=>{const id=x.c+'|'+x.q;if(!seen.has(id)){seen.add(id);m.push(x)}});out[k]=m.slice(0,80)}
+    else if(s=='specres')out[k]=((b&&b.t)||0)>=((a&&a.t)||0)?b:a;
+    else out[k]=b});
+  return out}
+function applyProg(p){Object.keys(p).forEach(k=>{try{localStorage.setItem('bp.'+dec(k),JSON.stringify(p[k]))}catch(e){}})}
+async function pullAndMerge(){const {F,db}=ACC.fb,u=ACC.user,ref=F.doc(db,'users',u.uid),snap=await F.getDoc(ref);
+  if(snap.exists()){const d=snap.data();ACC.prof=d;const m=mergeProg(d.progress||{});applyProg(m);await F.setDoc(ref,{progress:m,seen:F.serverTimestamp()},{merge:true})}
+  else if(ACC.pendingProfile){await writeProfile(ACC.pendingProfile);ACC.pendingProfile=null}}
+async function writeProfile(p){const {F,db}=ACC.fb,u=ACC.user;const d={name:p.name,cat:p.cat,org:p.org,city:p.city,spec:p.spec,created:F.serverTimestamp(),seen:F.serverTimestamp(),progress:localProg(),v:8};await F.setDoc(F.doc(db,'users',u.uid),d);ACC.prof=d}
+function scheduleSave(){if(!ACC.user)return;clearTimeout(ACC.saveT);ACC.saveT=setTimeout(saveNow,4000)}
+async function saveNow(){clearTimeout(ACC.saveT);ACC.saveT=null;if(!ACC.user||!ACC.prof)return;const {F,db}=ACC.fb;
+  try{await F.setDoc(F.doc(db,'users',ACC.user.uid),{progress:localProg(),spec:specOf(),seen:F.serverTimestamp()},{merge:true});setSync('✓ محفوظ في حسابك')}catch(e){setSync('⚠️ لم يُحفظ، سنحاول لاحقًا')}}
+const setSync=t=>{const s=$('#syncst');if(s)s.textContent=t};
+{const _set=store.set.bind(store);store.set=(k,v)=>{_set(k,v);if(PROG_RE.test(k))scheduleSave()}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='hidden'&&ACC.saveT)saveNow()});
+{const _rd=resetDo;resetDo=function(){_rd();if(ACC.user){ACC.prof&&saveNow()}}}
+
+/* ---------- top-bar account button ---------- */
+{const _pt=paintTop;paintTop=function(){_pt();const tb=$('.tb-in');if(!tb||!ACC.ready)return;const b=document.createElement('button');b.type='button';b.className='accbtn';b.dataset.acc='1';
+  b.innerHTML=ACC.user?`👤 <span>${esc((ACC.prof&&ACC.prof.name)||'حسابي')}</span>`:'👤 <span>دخول / تسجيل</span>';b.setAttribute('aria-label',ACC.user?'حسابي':'تسجيل الدخول أو إنشاء حساب');tb.appendChild(b)}}
+
+/* ---------- dialogs ---------- */
+function accDlg(html){accClose();const w=document.createElement('div');w.className='dlg';w.id='accd';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.innerHTML=`<div class="dlg-in acc">${html}</div>`;document.body.appendChild(w);w.addEventListener('click',e=>{if(e.target===w)accClose()});setTimeout(()=>{const f=w.querySelector('input,select,button');if(f)f.focus()},50)}
+function accClose(){const w=$('#accd');if(w)w.remove()}
+const fld=(id,l,t='text',extra='')=>`<label for="${id}">${l}</label><input id="${id}" type="${t}" ${extra}>`;
+const accMsg=(t,k='no')=>{const m=$('#accmsg');if(m){m.className='accmsg '+k;m.textContent=t;m.hidden=false}};
+function accOpen(mode){if(!ACC.ready){toast('⚠️','الحسابات غير متاحة في هذه النسخة. استخدم رابط المنصة العام.','no',3500);return}
+  if(ACC.user&&mode!='reauth'){accPanel();return}
+  const tabs=`<div class="subt acct" role="tablist"><button type="button" role="tab" class="${mode=='in'?'on':''}" data-acctab="in">تسجيل الدخول</button><button type="button" role="tab" class="${mode=='up'?'on':''}" data-acctab="up">حساب جديد</button></div>`;
+  if(mode=='forgot')return accDlg(`<h2>🔑 استعادة كلمة المرور</h2><p class="lead">اكتب بريدك، وسنرسل لك رابطًا لتعيين كلمة مرور جديدة.</p>${fld('aem','البريد الإلكتروني','email','autocomplete="email" dir="ltr"')}<p id="accmsg" class="accmsg" hidden></p><div class="dlg-b"><button type="button" class="btn" data-acctab="in">رجوع</button><button type="button" class="btn pri" data-accdo="forgot">أرسل الرابط</button></div>`);
+  if(mode=='up')return accDlg(`<h2>👤 أنشئ حسابك</h2>${tabs}<p class="lead">احفظ تقدمك وانتقل به بين أجهزتك. ما أنجزته على هذا الجهاز سيُنقل إلى حسابك.</p>
+  ${fld('anm','الاسم','text','maxlength="60" autocomplete="name"')}${fld('aem','البريد الإلكتروني','email','autocomplete="email" dir="ltr"')}${fld('apw','كلمة المرور (8 أحرف على الأقل)','password','autocomplete="new-password" dir="ltr" minlength="8"')}${fld('apw2','أعد كتابة كلمة المرور','password','autocomplete="new-password" dir="ltr"')}
+  <label for="acat">الفئة</label><select id="acat"><option value="">اختر…</option>${CATS.map(c=>`<option>${c}</option>`).join('')}</select>
+  ${fld('aorg','الجهة التدريبية أو جهة العمل','text','maxlength="100" placeholder="مثال: الكلية التقنية بالدمام"')}
+  <label for="acity">المدينة</label><input id="acity" list="acities" maxlength="40" placeholder="اكتب أو اختر"><datalist id="acities">${CITIES.map(c=>`<option value="${c}">`).join('')}</datalist>
+  <label for="aspec">التخصص</label><select id="aspec">${specOpts(specOf())}</select>
+  <label class="fx-ck"><input type="checkbox" id="aok"><span>أوافق على حفظ بياناتي (الاسم والفئة والجهة والمدينة والتخصص وتقدمي) لمتابعة تقدمي، ولاستخدامها في إحصاءات عامة عن المنصة دون نشر أي بيانات شخصية.</span></label>
+  <p class="priv"><span>🔒</span><span>كلمة المرور محمية لدى Google ولا يراها أحد، حتى معدّ المنصة. ولا يرى أي مستخدم بيانات غيره. تستطيع حذف حسابك وبياناتك في أي وقت.</span></p>
+  <p id="accmsg" class="accmsg" hidden></p><div class="dlg-b"><button type="button" class="btn" data-accx="1">إلغاء</button><button type="button" class="btn pri" data-accdo="up">إنشاء الحساب</button></div>`);
+  if(mode=='reauth')return accDlg(`<h2>🔐 تأكيد الهوية</h2><p class="lead">لحذف حسابك، اكتب كلمة المرور مرة أخرى.</p>${fld('apw','كلمة المرور','password','autocomplete="current-password" dir="ltr"')}<p id="accmsg" class="accmsg" hidden></p><div class="dlg-b"><button type="button" class="btn" data-accx="1">إلغاء</button><button type="button" class="btn rs-go" data-accdo="reauthdel" style="background:var(--bad);color:#fff">احذف حسابي نهائيًا</button></div>`);
+  accDlg(`<h2>👤 تسجيل الدخول</h2>${tabs}<p class="lead">ادخل لتحفظ تقدمك وتتابعه من أي جهاز.</p>${fld('aem','البريد الإلكتروني','email','autocomplete="email" dir="ltr"')}${fld('apw','كلمة المرور','password','autocomplete="current-password" dir="ltr"')}
+  <p id="accmsg" class="accmsg" hidden></p><div class="dlg-b"><button type="button" class="btn" data-acctab="forgot">نسيت كلمة المرور؟</button><button type="button" class="btn pri" data-accdo="in">دخول</button></div>`)}
+function accPanel(){const p=ACC.prof||{},u=ACC.user,{td}=totals(),x=xpOf(),L=lvlOf(x),D=deptOf(p.spec||specOf());
+  accDlg(`<h2>👤 ${esc(p.name||'حسابي')}</h2><p class="lead mono" dir="ltr" style="text-align:right">${esc(u.email)}</p>
+  <div class="acc-g"><div><b>${L.em} ${L.t}</b><small>${x} XP</small></div><div><b>${td}</b><small>لوحة معتمدة</small></div><div><b>${D?D.em+' '+D.s:'—'}</b><small>التخصص</small></div></div>
+  <p class="nolab">${esc(p.cat||'')}${p.org?' · '+esc(p.org):''}${p.city?' · '+esc(p.city):''}</p>
+  <p class="priv"><span>☁️</span><span id="syncst">تقدمك يُحفظ تلقائيًا في حسابك.</span></p>
+  ${u.emailVerified?'':`<p class="disc">بريدك غير مؤكد بعد. <button type="button" class="ref" data-accdo="verify">أرسل رابط التأكيد</button></p>`}
+  <div class="dlg-b" style="justify-content:space-between"><button type="button" class="btn" style="border-color:var(--bad);color:var(--bad)" data-accdo="delask">حذف الحساب</button><span><button type="button" class="btn" data-accdo="out">تسجيل الخروج</button> <button type="button" class="btn pri" data-accx="1">إغلاق</button></span></div>`)}
+
+async function accDo(a){if(ACC.busy)return;const {U,F,auth,db}=ACC.fb,v=id=>(($('#'+id)||{}).value||'').trim();ACC.busy=true;
+  try{
+    if(a=='in'){const em=v('aem'),pw=($('#apw')||{}).value||'';if(!em||!pw){accMsg('اكتب البريد وكلمة المرور.');return}accMsg('جارٍ الدخول…','info');await U.signInWithEmailAndPassword(auth,em,pw);accClose();toast('👋','أهلًا بعودتك! تقدمك محفوظ في حسابك','ok',2600)}
+    else if(a=='up'){const nm=v('anm'),em=v('aem'),pw=($('#apw')||{}).value||'',pw2=($('#apw2')||{}).value||'',cat=v('acat'),org=v('aorg'),city=v('acity'),sp=v('aspec');
+      if(nm.length<2){accMsg('اكتب اسمك.');return}if(!em){accMsg('اكتب بريدك الإلكتروني.');return}if(pw.length<8){accMsg('كلمة المرور 8 أحرف على الأقل.');return}if(pw!==pw2){accMsg('كلمتا المرور غير متطابقتين.');return}
+      if(!cat){accMsg('اختر الفئة.');return}if(!org){accMsg('اكتب الجهة التدريبية أو جهة العمل.');return}if(!city){accMsg('اكتب المدينة.');return}if(!$('#aok').checked){accMsg('يلزم الموافقة على حفظ البيانات لإنشاء الحساب.');return}
+      accMsg('جارٍ إنشاء الحساب…','info');ACC.pendingProfile={name:nm.slice(0,60),cat,org:org.slice(0,100),city:city.slice(0,40),spec:sp};store.set('spec',sp);
+      const c=await U.createUserWithEmailAndPassword(auth,em,pw);ACC.user=c.user;if(ACC.pendingProfile){await writeProfile(ACC.pendingProfile);ACC.pendingProfile=null}
+      try{await U.sendEmailVerification(c.user)}catch(e){}
+      accClose();paintTop();confetti(120);toast('🎉',`مرحبًا ${nm}! أنشأنا حسابك، وأرسلنا رابط تأكيد إلى بريدك`,'ok',4500);addXP(20)}
+    else if(a=='forgot'){const em=v('aem');if(!em){accMsg('اكتب بريدك الإلكتروني.');return}await U.sendPasswordResetEmail(auth,em);accMsg('إذا كان البريد مسجّلًا فستصلك رسالة خلال دقائق. تفقد البريد غير الهام أيضًا.','ok')}
+    else if(a=='verify'){await U.sendEmailVerification(ACC.user);toast('📧','أرسلنا رابط التأكيد إلى بريدك','ok')}
+    else if(a=='out'){await saveNow();await U.signOut(auth);accClose();toast('👋','سجّلت الخروج. تقدمك محفوظ في حسابك','info',2600)}
+    else if(a=='delask'){accDlg(`<h2 style="color:var(--bad)">⚠️ حذف الحساب نهائيًا</h2><p>سيُحذف حسابك وكل بياناتك المحفوظة في السحابة، <b>ولا يمكن التراجع عن ذلك.</b> يبقى تقدمك على هذا الجهاز فقط.</p><label class="fx-ck"><input type="checkbox" id="delok"><span>فهمت، وأريد حذف حسابي نهائيًا.</span></label><p id="accmsg" class="accmsg" hidden></p><div class="dlg-b"><button type="button" class="btn pri" data-accx="1">تراجع</button><button type="button" class="btn" style="border-color:var(--bad);color:var(--bad)" data-accdo="del">احذف حسابي</button></div>`)}
+    else if(a=='del'||a=='reauthdel'){if(a=='del'&&!$('#delok').checked){accMsg('أشّر على المربع للتأكيد.');return}
+      if(a=='reauthdel'){const pw=($('#apw')||{}).value||'';await U.reauthenticateWithCredential(ACC.user,U.EmailAuthProvider.credential(ACC.user.email,pw))}
+      try{await F.deleteDoc(F.doc(db,'users',ACC.user.uid));await U.deleteUser(ACC.user)}catch(e){if(e.code=='auth/requires-recent-login'){ACC.busy=false;accOpen('reauth');return}throw e}
+      ACC.prof=null;accClose();toast('🗑️','حُذف حسابك وبياناتك من السحابة','info',3500)}
+  }catch(e){accMsg(aerr(e))}finally{ACC.busy=false}}
+
+/* ---------- owner dashboard (data protected by Firestore rules: only the verified owner can list users) ---------- */
+const ADM={rows:null,err:null};
+async function admLoad(){const {F,db}=ACC.fb;ADM.rows=null;ADM.err=null;try{const s=await F.getDocs(F.collection(db,'users'));ADM.rows=s.docs.map(d=>{const x=d.data(),p=x.progress||{};const lessons=Object.keys(p).filter(k=>/^done__/.test(k)).reduce((a,k)=>a+Object.keys(p[k]||{}).length,0);
+  return {name:x.name||'',cat:x.cat||'',org:x.org||'',city:x.city||'',spec:x.spec||'',created:x.created&&x.created.toDate?x.created.toDate():null,seen:x.seen&&x.seen.toDate?x.seen.toDate():null,lessons,xp:+p.xp||0}})}catch(e){ADM.err=e.code=='permission-denied'?(ACC.user&&!ACC.user.emailVerified?'أكّد بريدك أولًا من نافذة «حسابي»، ثم سجّل الخروج والدخول مرة أخرى.':'لا تملك صلاحية عرض المستخدمين.'):aerr(e)}
+  if(ST.v=='admin')$('#app').innerHTML=pgAdmin()}
+const cnt=(rows,f)=>{const m={};rows.forEach(r=>{const k=f(r)||'غير محدد';m[k]=(m[k]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1])};
+const barList=(t,arr,n)=>`<div class="panel adm-b"><h3>${t}</h3>${arr.slice(0,12).map(([k,v])=>`<div class="prow" style="grid-template-columns:minmax(0,1.3fr) minmax(60px,2fr) 40px"><span>${esc(k)}</span><span class="bar"><i style="width:${v/n*100}%"></i></span><span class="pc">${v}</span></div>`).join('')||'<p class="nolab">لا توجد بيانات بعد.</p>'}</div>`;
+const fmtD=d=>d?d.toLocaleDateString('ar-SA-u-ca-gregory',{year:'numeric',month:'2-digit',day:'2-digit'}):'—';
+function pgAdmin(){if(!ACC.admin)return '<div class="empty">هذه الصفحة لمالك المنصة فقط.</div>';
+  if(!ADM.rows&&!ADM.err){admLoad();return '<header class="pghead"><h1>لوحة المستخدمين</h1></header><div class="empty">جارٍ تحميل البيانات…</div>'}
+  if(ADM.err)return `<header class="pghead"><h1>لوحة المستخدمين</h1></header><div class="empty">${ADM.err}</div><div class="chipr" style="justify-content:center;margin-top:10px"><button type="button" class="btn" data-adm="reload">إعادة المحاولة</button></div>`;
+  const R=ADM.rows,n=R.length||1,now=Date.now(),wk=R.filter(r=>r.seen&&now-r.seen<7*864e5).length,mo=R.filter(r=>r.created&&now-r.created<30*864e5).length,avg=R.length?Math.round(R.reduce((a,r)=>a+r.lessons,0)/R.length):0;
+  const sorted=R.slice().sort((a,b)=>(b.created||0)-(a.created||0));
+  return `<header class="pghead"><span class="eyebrow">خاص بك فقط</span><h1>لوحة المستخدمين</h1><p>إحصاءات المسجلين في «بوصلتي المهنية». البريد الإلكتروني لا يُخزن هنا؛ تجده عند الحاجة في قسم Authentication في Firebase.</p></header>
+  <div class="tblk" style="max-width:none;margin-top:14px;grid-template-columns:repeat(4,minmax(0,1fr))"><div><b>إجمالي المستخدمين</b>${R.length}</div><div><b>نشطون آخر 7 أيام</b>${wk}</div><div><b>جدد آخر 30 يومًا</b>${mo}</div><div><b>متوسط اللوحات</b>${avg}</div></div>
+  <div class="chipr" style="margin-top:12px"><button type="button" class="btn" data-adm="reload">🔄 تحديث</button><button type="button" class="btn pri" data-adm="csv">⬇️ تنزيل CSV</button></div>
+  <div class="adm-g">${barList('حسب الفئة',cnt(R,r=>r.cat),n)}${barList('حسب المدينة',cnt(R,r=>r.city),n)}${barList('حسب التخصص',cnt(R,r=>{const D=deptOf(r.spec);return D?D.ar:r.spec}),n)}${barList('حسب الجهة التدريبية',cnt(R,r=>r.org),n)}</div>
+  <section class="sec"><h2>أحدث المسجلين</h2><div class="tw"><table class="kv kvx"><tr><th>الاسم</th><th>الفئة</th><th>الجهة</th><th>المدينة</th><th>التخصص</th><th>اللوحات</th><th>التسجيل</th><th>آخر نشاط</th></tr>${sorted.slice(0,100).map(r=>{const D=deptOf(r.spec);return `<tr><td>${esc(r.name)}</td><td>${esc(r.cat)}</td><td>${esc(r.org)}</td><td>${esc(r.city)}</td><td>${D?D.s:esc(r.spec)}</td><td class="mono">${r.lessons}</td><td class="mono">${fmtD(r.created)}</td><td class="mono">${fmtD(r.seen)}</td></tr>`}).join('')}</table></div></section>`}
+function admCsv(){const R=ADM.rows||[],q=s=>'"'+String(s==null?'':s).replace(/"/g,'""')+'"';const rows=[['الاسم','الفئة','الجهة','المدينة','التخصص','اللوحات المعتمدة','XP','تاريخ التسجيل','آخر نشاط']].concat(R.map(r=>[r.name,r.cat,r.org,r.city,(deptOf(r.spec)||{}).ar||r.spec,r.lessons,r.xp,r.created?r.created.toISOString().slice(0,10):'',r.seen?r.seen.toISOString().slice(0,10):'']));
+  const blob=new Blob(['﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='career-compass-users-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+PAGES.admin=()=>pgAdmin();
+
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.acc){accOpen('in');return}
+  if(d.acctab){accOpen(d.acctab);return}
+  if(d.accx){accClose();return}
+  if(d.accdo){accDo(d.accdo);return}
+  if(d.adm=='reload'){ADM.rows=null;ADM.err=null;$('#app').innerHTML=pgAdmin();return}
+  if(d.adm=='csv'){admCsv();return}});
+document.addEventListener('keydown',e=>{if(e.key=='Escape'&&$('#accd'))accClose();if(e.key=='Enter'&&$('#accd')&&e.target.tagName=='INPUT'&&e.target.type!='checkbox'){const p=$('#accd .btn.pri[data-accdo]');if(p)p.click()}});
+accInit();
 boot();
 </script>
 </body></html>
