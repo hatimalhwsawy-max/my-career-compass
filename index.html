@@ -792,6 +792,22 @@ body{font-size:16px;line-height:1.85}
 .wspin{fill:var(--ok)!important;font-size:16px;font-weight:800;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:wsp 1s linear infinite}
 @keyframes wsp{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.wspin{animation:none}}
+
+/* v14: public landing, wiring lab extras */
+.pubg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.pubc{border:1.5px solid var(--line);border-radius:16px;padding:14px;background:var(--paper)}.pubc .em{font-size:1.6rem}.pubc h3{margin:.3em 0}.pubc p{margin:0;color:var(--mute);font-size:.92rem}
+.lockn{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:18px 0;padding:14px 16px;border-radius:16px;border:1.5px solid color-mix(in srgb,var(--acc) 45%,var(--line));background:color-mix(in srgb,var(--acc) 8%,var(--paper))}
+.lockn>span{font-size:1.8rem}.lockn>div{flex:1 1 240px}.lockn p{margin:.2em 0 0;color:var(--mute)}
+.wmodes{display:flex;gap:6px;margin:0 0 12px;padding:4px;border-radius:14px;background:color-mix(in srgb,var(--line) 40%,var(--paper));width:fit-content;max-width:100%}
+.wmodes button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:8px 14px;background:transparent;color:var(--ink);cursor:pointer}.wmodes button.on{background:var(--paper);box-shadow:0 1px 4px rgba(0,0,0,.12);color:var(--acc)}
+.wpan .wph{display:flex;gap:8px;align-items:center;flex-basis:100%}.wpan .wpf{display:flex;flex-wrap:wrap;gap:8px;flex-basis:100%}.wpan .wpb{display:flex;flex-wrap:wrap;gap:6px;flex-basis:100%}
+.wpan .wtip{flex-basis:100%;margin:0}.wvl input.err{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--paper))}
+.wvl input{width:110px}
+.wjn{fill:var(--ink);stroke:none;pointer-events:none}
+.wwr .ln,.wwr .fl,.wwr .hit{fill:none}
+.wst{font-size:10.5px;font-weight:700;pointer-events:none}
+.wlbl .wid{font-weight:800;fill:var(--ink)}
+.wread summary{cursor:pointer;font-weight:800}
 </style>
 <header id="topbar" class="topbar"></header>
 <main class="wrap"><div id="app"></div></main>
@@ -11688,59 +11704,79 @@ QX('wlq',3,[tQ('اختبار PT يحتاج قبل وضع الصبغة:',['تنظ
  tQ('اختبار الشد الإتلافي يقيس:',['مقاومة الوصلة حتى الكسر','لون اللحام','سطحه فقط','الوزن'],'Tensile test.'),
  tQ('لماذا يُؤهل اللحام باختبار وفق كود؟',['لإثبات قدرته على لحام سليم بالإجراء المعتمد','للزينة','لتوفير الوقت فقط','لا داعي'],'تأهيل اللحامين.'),
  tQ('RT يكشف بشكل جيد:',['المسامية واحتباس الخبث داخل اللحام','اللون فقط','الشقوق السطحية فقط','الحرارة'],'صورة إشعاعية للداخل.')]);
-/* ===== v13: free wiring lab (tab 5) for every course.
-   Library dropdown + free numeric values; complex nodal solver (DC and AC phasors) with diodes, fuses, relays (coil + linked NO/NC contacts),
-   push buttons, PV panels and 4–20 mA transmitters. Exercises are declarative goal lists built from templates. Terminal "a" is the + side. */
+/* ===== v14 wiring lab — engine. Components reuse the symbols of the main library (SYMS); behaviour class "b" drives the solver.
+   Terminal "a" (x=0 of the glyph) is the + / anode side. Complex nodal analysis (DC = 0 Hz, AC phasors), companion models for
+   diodes/Zener, a realistic PV I–V curve, relays with pick-up/drop-out hysteresis, fuses/MCB/overload trips, 4–20 mA transmitters. */
 const WT={
- DC:{n:'بطارية / مصدر مستمر',p:'B',grp:0,pol:1,g:'<path d="M0 0H24M24-12V12M32-6V6M32 0H60"/>',pr:[['v','الجهد','V',12,.1,1000]]},
- AC:{n:'مصدر متردد',p:'G',grp:0,g:'<path d="M0 0H16M44 0H60"/>',u:['c','~'],pr:[['v','الجهد الفعّال','V',220,1,1000],['f','التردد','Hz',60,1,1e5]]},
- PV:{n:'لوح شمسي',p:'PV',grp:0,pol:1,g:'<path d="M0 0H18M42 0H60"/><rect x="18" y="-12" width="24" height="24"/><path d="M18 12L42-12M25-24l5 5M33-26l5 5"/>',pr:[['voc','جهد الدائرة المفتوحة Voc','V',21,1,1000],['isc','تيار القصر Isc','A',5.5,.01,100]]},
- TX:{n:'مرسل 4–20 mA',p:'TX',grp:0,pol:1,g:'<path d="M0 0H15M45 0H60"/>',u:['r','mA'],pr:[['ma','تيار الإشارة','mA',12,4,20]]},
- R:{n:'مقاومة',p:'R',grp:1,s:'R',pr:[['v','المقاومة','Ω',100,.001,1e8]]},
- RV:{n:'مقاومة متغيرة / حساس',p:'RV',grp:1,g:'<path d="M0 0H10l4-8 8 16 8-16 8 16 4-8H60"/><path d="M16 14L44-14M44-14h-7M44-14v7"/>',pr:[['v','المقاومة','Ω',1000,.001,1e8]]},
- LAMP:{n:'مصباح',p:'L',grp:1,s:'LAMP',pr:[['rv','الجهد المقنن','V',12,.5,1000],['w','القدرة','W',6,.01,1e5]]},
- LED:{n:'ثنائي مضيء LED',p:'LED',grp:1,s:'LED',pol:1},
- MOT:{n:'محرك',p:'M',grp:1,g:'<path d="M0 0H16M44 0H60"/>',u:['c','M'],pr:[['rv','الجهد المقنن','V',24,.5,1000],['w','القدرة','W',100,.01,1e6]]},
- HT:{n:'سخان',p:'H',grp:1,g:'<path d="M0 0H10l4-8 8 16 8-16 8 16 4-8H60"/><path d="M22-15q3-4 0-8M30-15q3-4 0-8M38-15q3-4 0-8" stroke-width="1.6"/>',pr:[['rv','الجهد المقنن','V',12,.5,1000],['w','القدرة','W',12,.01,1e6]]},
- BZ:{n:'جرس / بوق',p:'BZ',grp:1,g:'<path d="M0 0H20M40 0H60"/><path d="M20 0A10 10 0 0 1 40 0Z"/>',pr:[['rv','الجهد المقنن','V',12,.5,1000],['w','القدرة','W',3,.01,1e4]]},
- SOL:{n:'ملف صمام (سولينويد)',p:'Y',grp:1,g:'<path d="M0 0H18M42 0H60"/><rect x="18" y="-10" width="24" height="20"/><path d="M18 10L42-10"/>',pr:[['rv','الجهد المقنن','V',24,.5,1000],['w','القدرة','W',10,.01,1e4]]},
- DEV:{n:'جهاز (حمل عام)',p:'X',grp:1,g:'<path d="M0 0H16M44 0H60"/><rect x="16" y="-12" width="28" height="24" rx="4"/><path d="M22-4H38M22 4H38"/>',pr:[['rv','الجهد المقنن','V',12,.5,1000],['w','القدرة','W',12,.01,1e6]]},
- C:{n:'مكثف',p:'C',grp:2,s:'C',pr:[['v','السعة','µF',10,1e-6,1e6]]},
- LI:{n:'ملف حثّي L',p:'LI',grp:2,g:'<path d="M0 0H12a4.5 4.5 0 0 1 9 0a4.5 4.5 0 0 1 9 0a4.5 4.5 0 0 1 9 0a4.5 4.5 0 0 1 9 0H60"/>',pr:[['v','المحاثة','mH',100,1e-3,1e6]]},
- SW:{n:'مفتاح',p:'S',grp:3},
- PB:{n:'زر تشغيل NO',p:'PB',grp:3},
- PBC:{n:'زر إيقاف / طوارئ NC',p:'PS',grp:3},
- K:{n:'ملف مرحّل / كونتاكتور',p:'K',grp:3,g:'<path d="M0 0H18M42 0H60"/>',u:['r','K'],pr:[['rv','جهد الملف','V',24,1,1000]]},
- KNO:{n:'تلامس مرحّل NO',p:'NO',grp:3},
- KNC:{n:'تلامس مرحّل NC',p:'NC',grp:3},
- IN:{n:'مدخل PLC / متحكم',p:'I',grp:3,g:'<path d="M0 0H15M45 0H60"/>',u:['r','IN'],pr:[['rv','جهد المدخل','V',24,1,250]]},
- FUSE:{n:'فيوز',p:'F',grp:4,s:'FUSE',pr:[['v','قيمة الفيوز','A',2,.01,5000]]},
- DIODE:{n:'ثنائي (دايود)',p:'D',grp:4,s:'DIODE',pol:1},
- AM:{n:'أميتر',p:'A',grp:5,pol:1,g:'<path d="M0 0H16M44 0H60"/>',u:['c','A']},
- VM:{n:'فولتميتر',p:'V',grp:5,pol:1,g:'<path d="M0 0H16M44 0H60"/>',u:['c','V']},
- DMM:{n:'أفوميتر',p:'DM',grp:5,pol:1,g:'<path d="M0 0H13M47 0H60"/>',u:['r','']}};
-const WGRP=['المصادر','الأحمال','عناصر التيار المتردد والمرشحات','التحكم والمرحّلات','الحماية','أجهزة القياس'];
-const WDI={LED:2,DIODE:.7},WPOL=Object.keys(WT).filter(t=>WT[t].pol),WSWT=['SW','PB','PBC','KNO','KNC'],WSRC=['DC','AC','PV'],WRATED=['LAMP','MOT','HT','BZ','SOL','DEV'],WMAX=8;
+ DC:{n:'مصدر مستمر / بطارية',p:'B',grp:0,b:'src',sy:'DC',pol:1,pr:[['v','الجهد','V',12,.1,1000]]},
+ AC:{n:'مصدر متردد',p:'G',grp:0,b:'src',sy:'AC',pr:[['v','الجهد الفعّال','V',220,1,1000],['f','التردد','Hz',60,1,1e5]]},
+ PV:{n:'لوح شمسي',p:'PV',grp:0,b:'pv',pol:1,g:'<path d="M0 0H14M46 0H60"/><rect x="14" y="-14" width="32" height="28"/><path d="M14 14L46-14M24-32l6 8M24-24h5M30-24v-5M34-34l6 8M34-26h5M40-26v-5"/>',pr:[['voc','جهد الدائرة المفتوحة Voc','V',21,1,1000],['isc','تيار القصر Isc','A',5.5,.01,100]]},
+ TX:{n:'مرسل 4–20 mA',p:'TX',grp:0,b:'tx',pol:1,sy:'XMTR',pr:[['ma','تيار الإشارة','mA',12,4,20]]},
+ R:{n:'مقاومة',p:'R',grp:1,b:'res',sy:'R',pr:[['v','المقاومة','Ω',100,.001,1e8]]},
+ RV:{n:'مقاومة متغيرة',p:'RV',grp:1,b:'res',sy:'POT',pr:[['v','المقاومة','Ω',1000,.001,1e8]]},
+ NTC:{n:'ثيرمستور NTC (حساس حرارة)',p:'NT',grp:1,b:'res',sy:'NTC',pr:[['v','المقاومة عند الحرارة الحالية','Ω',10000,.1,1e8]]},
+ LDR:{n:'مقاومة ضوئية LDR',p:'LD',grp:1,b:'res',sy:'LDR',pr:[['v','المقاومة عند الإضاءة الحالية','Ω',1000,1,1e8]]},
+ RTD:{n:'حساس Pt100',p:'RT',grp:1,b:'res',sy:'RTD',pr:[['v','المقاومة','Ω',100,1,1e5]]},
+ LAMP:{n:'مصباح',p:'L',grp:1,b:'load',sy:'LAMP',fil:1,pr:[['rv','الجهد المقنن','V',12,.5,1000],['w','القدرة','W',6,.01,1e5]]},
+ PL:{n:'لمبة بيان',p:'PL',grp:1,b:'load',sy:'PL',fil:1,pr:[['rv','الجهد المقنن','V',24,.5,1000],['w','القدرة','W',2,.01,100]]},
+ LED:{n:'ثنائي مضيء LED',p:'LED',grp:1,b:'led',sy:'LED',pol:1},
+ MOT:{n:'محرك',p:'M',grp:1,b:'load',sy:'MOT',mot:1,pr:[['rv','الجهد المقنن','V',24,.5,1000],['w','القدرة','W',100,.01,1e6],['pf','معامل القدرة (في المتردد)','',.8,.1,1]]},
+ FAN:{n:'مروحة',p:'FN',grp:1,b:'load',mot:1,g:'<path d="M0 0H8M52 0H60"/>',gs:'FAN',pr:[['rv','الجهد المقنن','V',12,.5,1000],['w','القدرة','W',3,.01,1e5],['pf','معامل القدرة (في المتردد)','',.8,.1,1]]},
+ PUMP:{n:'مضخة',p:'P',grp:1,b:'load',mot:1,g:'<path d="M0 0H12M48 0H60"/><circle cx="30" cy="0" r="18"/><path d="M22-10L42 0L22 10Z"/>',pr:[['rv','الجهد المقنن','V',24,.5,1000],['w','القدرة','W',240,.01,1e6],['pf','معامل القدرة (في المتردد)','',.8,.1,1]]},
+ CMPH:{n:'ضاغط تبريد',p:'CP',grp:1,b:'load',mot:1,sy:'CMPH',pr:[['rv','الجهد المقنن','V',220,.5,1000],['w','القدرة','W',1200,1,1e6],['pf','معامل القدرة (في المتردد)','',.85,.1,1]]},
+ STRT:{n:'بادئ الحركة (سيارة)',p:'ST',grp:1,b:'load',mot:1,sy:'STRT',pr:[['rv','الجهد المقنن','V',12,.5,100],['w','القدرة','W',1200,1,1e5]]},
+ HT:{n:'سخان / حمل مقاوم',p:'H',grp:1,b:'load',g:'<path d="M0 0H10l4-8 8 16 8-16 8 16 4-8H60"/><path d="M22-15q3-4 0-8M30-15q3-4 0-8M38-15q3-4 0-8" stroke-width="1.6"/>',pr:[['rv','الجهد المقنن','V',12,.5,1000],['w','القدرة','W',12,.01,1e6]]},
+ BZ:{n:'جرس / بوق',p:'BZ',grp:1,b:'load',sy:'BUZ',pr:[['rv','الجهد المقنن','V',12,.5,1000],['w','القدرة','W',3,.01,1e4]]},
+ SOL:{n:'ملف صمام (سولينويد)',p:'Y',grp:1,b:'load',sy:'SOL',pr:[['rv','الجهد المقنن','V',24,.5,1000],['w','القدرة','W',10,.01,1e4]]},
+ DEV:{n:'جهاز (حمل عام)',p:'X',grp:1,b:'load',g:'<path d="M0 0H16M44 0H60"/><rect x="16" y="-12" width="28" height="24" rx="4"/><path d="M22-4H38M22 4H38"/>',pr:[['rv','الجهد المقنن','V',12,.5,1000],['w','القدرة','W',12,.01,1e6]]},
+ C:{n:'مكثف',p:'C',grp:2,b:'cap',sy:'C',pr:[['v','السعة','µF',10,1e-6,1e6]]},
+ CE:{n:'مكثف إلكتروليتي',p:'CE',grp:2,b:'cap',sy:'CE',pol:1,pr:[['v','السعة','µF',100,.1,1e6]]},
+ LI:{n:'ملف حثّي L',p:'LI',grp:2,b:'ind',sy:'L',pr:[['v','المحاثة','mH',100,1e-3,1e6]]},
+ SW:{n:'مفتاح',p:'S',grp:3,b:'sw',st:['مغلق','مفتوح',1],tg:['🔓 افتح المفتاح','🔒 أغلق المفتاح']},
+ LIM:{n:'مفتاح حدّي NO',p:'LS',grp:3,b:'sw',st:['مضغوط (موصل)','حر (مفصول)',0],tg:['↩ حرّر المفتاح','👆 اضغط المفتاح']},
+ THST:{n:'ترموستات',p:'TH',grp:3,b:'sw',sy:'THST',st:['يطلب التبريد (موصل)','وصل للحرارة المطلوبة (مفصول)',1],tg:['🌡 الغرفة بردت','🌡 الغرفة سخنت']},
+ PB:{n:'زر تشغيل NO',p:'PB',grp:3,b:'pb',st:['مضغوط','غير مضغوط',0],tg:['✋ أفلت الزر','👆 اضغط الزر']},
+ PBC:{n:'زر إيقاف NC',p:'PS',grp:3,b:'pbc',st:['غير مضغوط (موصل)','مضغوط (مفصول)',1],tg:['👆 اضغط زر الإيقاف','✋ أفلت زر الإيقاف']},
+ ESTOP:{n:'زر طوارئ NC',p:'ES',grp:3,b:'pbc',st:['غير مضغوط (موصل)','مضغوط (مفصول)',1],tg:['🛑 اضغط زر الطوارئ','↻ حرّر زر الطوارئ']},
+ K:{n:'ملف كونتاكتور / مرحّل',p:'KM',grp:3,b:'coil',sy:'KM',pr:[['rv','جهد الملف','V',24,1,1000]]},
+ KNO:{n:'تلامس NO',p:'NO',grp:3,b:'no',sy:'NO'},
+ KNC:{n:'تلامس NC',p:'NC',grp:3,b:'nc',sy:'NC'},
+ IN:{n:'مدخل PLC / متحكم',p:'I',grp:3,b:'in',g:'<path d="M0 0H15M45 0H60"/>',u:['r','IN'],pr:[['rv','جهد المدخل','V',24,1,250]]},
+ FUSE:{n:'فيوز',p:'F',grp:4,b:'fuse',sy:'FUSE',pr:[['v','قيمة الفيوز','A',2,.01,5000]]},
+ MCB:{n:'قاطع MCB',p:'Q',grp:4,b:'mcb',st:['مغلق','مفصول',1],tg:['⏏ افصل القاطع','⏻ أعد تشغيل القاطع'],pr:[['v','تيار القاطع','A',10,.5,5000]]},
+ OL:{n:'ريليه حراري OL',p:'OL',grp:4,b:'ol',sy:'OL',pr:[['v','تيار الضبط','A',5,.1,1000]]},
+ DIODE:{n:'ثنائي',p:'D',grp:4,b:'diode',sy:'DIODE',pol:1,vf:.7},
+ ZENER:{n:'ثنائي زينر',p:'Z',grp:4,b:'diode',sy:'ZENER',pol:1,vf:.7,pr:[['vz','جهد الزينر','V',5.1,1,200]]},
+ SCHOT:{n:'ثنائي شوتكي',p:'SD',grp:4,b:'diode',sy:'SCHOT',pol:1,vf:.3},
+ AM:{n:'أميتر',p:'A',grp:5,b:'am',pol:1,g:'<path d="M0 0H16M44 0H60"/>',u:['c','A']},
+ VM:{n:'فولتميتر',p:'V',grp:5,b:'vm',pol:1,g:'<path d="M0 0H16M44 0H60"/>',u:['c','V']},
+ DMM:{n:'أفوميتر',p:'DM',grp:5,b:'dmm',pol:1,g:'<path d="M0 0H13M47 0H60"/>',u:['r','']}};
+const WGRP=['المصادر','الأحمال والحساسات','عناصر التيار المتردد والمرشحات','التحكم والمرحّلات','الحماية وأشباه الموصلات','أجهزة القياس'];
+/* parts that may stand in for one another when an exercise asks for a type */
+const WALIAS={PBC:['PBC','ESTOP'],LAMP:['LAMP','PL'],SW:['SW','THST','LIM'],MOT:['MOT','FAN','PUMP','CMPH','STRT'],RV:['RV','NTC','LDR','RTD'],DIODE:['DIODE','SCHOT'],C:['C','CE']};
+const WLEDC={r:['أحمر',2,'#ff3b3b'],y:['أصفر',2.1,'#ffc400'],g:['أخضر',2.2,'#2bd46b'],b:['أزرق',3,'#4d8dff'],w:['أبيض',3.1,'#fafafa']};
 const WMODE={V:'وضع الجهد V',A:'وضع التيار A','Ω':'وضع المقاومة Ω'};
+const WPOL=Object.keys(WT).filter(t=>WT[t].pol),WMAX=8;
+const wB=p=>WT[p.t].b,wIsLoad=p=>wB(p)=='load',wIsSrc=p=>wB(p)=='src'||wB(p)=='pv';
+const wIsSw=p=>['sw','pb','pbc','no','nc','mcb'].includes(wB(p));
+const wIsV=p=>wB(p)=='vm'||(wB(p)=='dmm'&&p.v!='A');
+const wIsZ=p=>wIsSw(p)||['fuse','ol','am'].includes(wB(p))||(wB(p)=='dmm'&&p.v=='A');
+const wVf=p=>p.t=='LED'?WLEDC[p.col||'r'][1]:WT[p.t].vf;
+const wRi=p=>p.t=='DC'&&Math.abs(p.v)<=9.5?.3:.01;
 const wRp=(r,x,y)=>r==90?[-y,x]:r==180?[-x,-y]:r==270?[y,-x]:[x,y];
 const wSnap=v=>Math.round(v/10)*10;
 const wN=v=>{const a=Math.abs(v);return a>=1e6?+(v/1e6).toPrecision(3)+'M':a>=1e4?+(v/1e3).toPrecision(3)+'k':''+ +(+v).toPrecision(4)};
 const wfA=i=>{const a=Math.abs(i);return a<1?(i*1000).toFixed(a<.01?1:0)+' mA':i.toFixed(a<100?2:0)+' A'};
 const wfV=v=>v.toFixed(Math.abs(v)<10?2:1)+' V';
 const wfR=r=>!isFinite(r)||r>1e8?'∞ Ω':r>=1000?+(r/1000).toPrecision(3)+' kΩ':+r.toPrecision(3)+' Ω';
-function wVal(p){const T=WT[p.t];if(p.t=='DMM')return WMODE[p.v]||'';if(T.pr)return T.pr.map(q=>wN(p[q[0]])+' '+q[2]).join(' · ');
-  return {SW:p.on?'مغلق':'مفتوح',PB:p.on?'مضغوط':'غير مضغوط',PBC:p.on?'غير مضغوط':'مضغوط',KNO:'← '+(p.link||'؟'),KNC:'← '+(p.link||'؟'),LED:'أحمر'}[p.t]||''}
-const wIsV=p=>p.t=='VM'||(p.t=='DMM'&&p.v!='A');
-const wIsZ=p=>WSWT.includes(p.t)||p.t=='FUSE'||p.t=='AM'||(p.t=='DMM'&&p.v=='A');
-function wGlyph(p,cl){switch(p.t){
-  case 'SW':return p.on?'<path d="M0 0H14M46 0H60M14 0H46"/><circle cx="14" cy="0" r="2"/><circle cx="46" cy="0" r="2"/>':SYMS.SW.g;
-  case 'PB':return p.on?'<path d="M0 0H14M46 0H60M14 0H46M30 0V-12M24-12H36"/><circle cx="14" cy="0" r="2"/><circle cx="46" cy="0" r="2"/>':'<path d="M0 0H14M46 0H60M14-9H46M30-9V-21M24-21H36"/><circle cx="14" cy="0" r="2"/><circle cx="46" cy="0" r="2"/>';
-  case 'PBC':return p.on?'<path d="M0 0H14M46 0H60M14 3H46M30 3V-14M24-14H36"/><circle cx="14" cy="0" r="2"/><circle cx="46" cy="0" r="2"/>':'<path d="M0 0H14M46 0H60M14 13H46M30 13V-6M24-6H36"/><circle cx="14" cy="0" r="2"/><circle cx="46" cy="0" r="2"/>';
-  case 'KNO':return '<path d="M0 0H24M36 0H60M24-12V12M36-12V12"/>'+(cl?'<path class="wcl" d="M24 0H36"/>':'');
-  case 'KNC':return '<path d="M0 0H24M36 0H60M24-12V12M36-12V12M20 12L40-12"/>'+(cl?'<path class="wcl" d="M24 0H36"/>':'')}
-  const T=WT[p.t];return T.g||(SYMS[T.s]||{g:''}).g}
-function wOver(p,cx,cy,on){const u=WT[p.t].u;if(!u)return '';const t=p.t=='DMM'?({V:'V',A:'A','Ω':'Ω'}[p.v]||'V/A/Ω'):u[1],c=on?' on':'';
-  return u[0]=='c'?`<circle cx="${cx}" cy="${cy}" r="14" class="wbody${c}"/><text class="wmt" x="${cx}" y="${cy+5}" text-anchor="middle">${t}</text>`:`<rect x="${cx-16}" y="${cy-13}" width="32" height="26" rx="4" class="wbody${c}"/><text class="wmt${t.length>2?' sm':''}" x="${cx}" y="${cy+5}" text-anchor="middle">${t}</text>`}
+function wVal(p){const T=WT[p.t];if(p.t=='DMM')return WMODE[p.v]||'';if(p.t=='LED')return WLEDC[p.col||'r'][0];
+  let s=(T.pr||[]).filter(q=>q[0]!='pf').map(q=>wN(p[q[0]])+' '+q[2]).join(' · ');
+  if(T.st)s=(s?s+' · ':'')+(p.on?T.st[0]:T.st[1]);if(wB(p)=='no'||wB(p)=='nc')s='← '+(p.link||'؟');return s}
+
+/* ---------- PV panel: single-diode style curve I = Isc − I0(e^(V/a) − 1) ---------- */
+const wPVa=p=>.055*p.voc,wPVi0=p=>p.isc/(Math.exp(p.voc/wPVa(p))-1);
+const wPVI=(p,V,night)=>(night?0:p.isc)-wPVi0(p)*(Math.exp(Math.min(V,1.5*p.voc)/wPVa(p))-1);
+function wPVmax(p){let b=0,vb=0;for(let v=0;v<=p.voc;v+=p.voc/500){const P=v*wPVI(p,v);if(P>b){b=P;vb=v}}return {P:b,V:vb,I:wPVI(p,vb)}}
 
 /* ---------- complex nodal solver ---------- */
 const cA=(a,b)=>[a[0]+b[0],a[1]+b[1]],cS=(a,b)=>[a[0]-b[0],a[1]-b[1]],cM=(a,b)=>[a[0]*b[0]-a[1]*b[1],a[0]*b[1]+a[1]*b[0]],cAbs=a=>Math.hypot(a[0],a[1]);
@@ -11750,41 +11786,50 @@ function wSolveC(A,b){const n=b.length;for(let i=0;i<n;i++){let m=i;for(let k=i+
   const x=Array(n);for(let i=n-1;i>=0;i--){let s=b[i];for(let j=i+1;j<n;j++)s=cS(s,cM(A[i][j],x[j]));x[i]=cAbs(A[i][i])<1e-300?[0,0]:cD(s,A[i][i])}return x}
 function wNodes(C,merge){const P={};const f=k=>{if(P[k]==null)P[k]=k;while(P[k]!==k){P[k]=P[P[k]];k=P[k]}return k};const u=(a,b)=>{a=f(a);b=f(b);if(a!==b)P[a]=b};
   C.wires.forEach(w=>u(w[0],w[1]));if(merge)C.parts.forEach(p=>{if(merge(p))u(p.id+'.a',p.id+'.b')});return f}
-/* opt: init (coil states), rev (sources reversed), night (PV dark), noBlow (fuses never open) */
-function wSim(C,over={},opt={}){const srcs=C.parts.filter(p=>WSRC.includes(p.t)||(p.t=='DMM'&&p.v=='Ω'));if(!srcs.length)return null;
+/* opt: init (coil states), rev (DC/AC sources reversed), night (PV dark), noBlow (protection never trips) */
+function wSim(C,over={},opt={}){const srcs=C.parts.filter(p=>wIsSrc(p)||(p.t=='DMM'&&p.v=='Ω'));if(!srcs.length)return null;
   const R=wNodes(C),idx={};idx[R(srcs[0].id+'.b')]=0;let n=1;C.parts.forEach(p=>['a','b'].forEach(s=>{const r=R(p.id+'.'+s);if(idx[r]==null)idx[r]=n++}));
-  const nd=(p,s)=>idx[R(p.id+'.'+s)],acs=C.parts.find(p=>p.t=='AC'),w=acs?2*Math.PI*acs.f:0;
-  const D={},F={},K=Object.assign({},opt.init||{}),TG={},sg1=opt.rev?-1:1;
-  const cl=p=>p.t=='KNO'?!!K[p.link]:p.t=='KNC'?!K[p.link]:!!(over[p.id]!=null?over[p.id]:p.on);
-  const Y=p=>{switch(p.t){case 'DC':case 'AC':return [100,0];case 'PV':return [p.isc/p.voc,0];case 'R':case 'RV':return [1/p.v,0];
-    case 'K':return [1/(p.rv*p.rv),0];case 'IN':return [.005/p.rv,0];case 'C':return w?[0,w*p.v*1e-6]:[1e-9,0];case 'LI':return cD([1,0],[.05,w*p.v*1e-3]);
-    case 'FUSE':return [F[p.id]?1e-9:1e4,0];case 'AM':return [1e4,0];case 'VM':return [1e-7,0];case 'DMM':return [p.v=='A'&&!F[p.id]?1e4:1e-7,0];
-    case 'LED':return [D[p.id]?.1:1e-9,0];case 'DIODE':return [D[p.id]?20:1e-9,0];case 'TX':return [TG[p.id]||1e-3,0]}
-    if(WRATED.includes(p.t))return [p.w/(p.rv*p.rv),0];if(WSWT.includes(p.t))return [cl(p)?1e4:1e-9,0];return [1e-9,0]};
-  const J=p=>p.t=='DC'||p.t=='AC'?sg1*p.v*100:p.t=='PV'?(opt.night?0:sg1*p.isc):p.t=='DMM'&&p.v=='Ω'?.001:WDI[p.t]&&D[p.id]?WDI[p.t]*Y(p)[0]:0;
+  const nd=(p,s)=>idx[R(p.id+'.'+s)],acs=C.parts.find(p=>p.t=='AC'),w=acs?2*Math.PI*acs.f:0,dead=!C.parts.some(wIsSrc),sg1=opt.rev?-1:1;
+  const D={},F={},K=Object.assign({},opt.init||{}),TG={},PVV={};C.parts.forEach(p=>{if(p.t=='PV')PVV[p.id]=.8*p.voc});
+  const st=p=>over[p.id]!=null?over[p.id]:p.on;
+  const cl=p=>{const b=wB(p);return b=='no'?!!K[p.link]:b=='nc'?!K[p.link]:b=='mcb'?!!st(p)&&!F[p.id]:b=='fuse'||b=='ol'?!F[p.id]:!!st(p)};
+  const pvc=p=>{const a=wPVa(p),V0=PVV[p.id],e=Math.exp(Math.min(V0,1.5*p.voc)/a),i0=wPVi0(p),I0=(opt.night?0:p.isc)-i0*(e-1),g=i0*e/a;return {g,J:I0+g*V0}};
+  const Y=p=>{const b=wB(p);switch(b){case 'src':return [1/wRi(p),0];case 'pv':return [pvc(p).g,0];case 'res':return [1/p.v,0];
+    case 'load':{const k=dead&&(WT[p.t].fil||WT[p.t].mot)?10:1,G=k*p.w/(p.rv*p.rv);return [G,w&&p.pf&&p.pf<1?-G*Math.tan(Math.acos(p.pf)):0]}
+    case 'coil':return [1/(p.rv*p.rv),0];case 'in':return [.005/p.rv,0];case 'cap':return w?[0,w*p.v*1e-6]:[1e-9,0];case 'ind':return cD([1,0],[.05,w*p.v*1e-3]);
+    case 'am':return [1e4,0];case 'vm':return [1e-7,0];case 'dmm':return [p.v=='A'&&!F[p.id]?1e4:1e-7,0];case 'tx':return [TG[p.id]||1e-3,0];
+    case 'led':return [D[p.id]?.1:1e-9,0];case 'diode':return [D[p.id]?20:1e-9,0]}
+    return [cl(p)?1e4:1e-9,0]};
+  const J=p=>{const b=wB(p);if(b=='src')return sg1*p.v/wRi(p);if(b=='pv')return pvc(p).J;if(b=='dmm'&&p.v=='Ω')return .001;
+    if((b=='led'||b=='diode')&&D[p.id])return (D[p.id]>0?wVf(p):-p.vz)*Y(p)[0];return 0};
   let V=()=>[0,0];
-  for(let it=0;it<90;it++){const N=n-1,A=Array.from({length:N},()=>Array.from({length:N},()=>[0,0])),b=Array.from({length:N},()=>[0,0]);
+  for(let it=0;it<250;it++){const N=n-1,A=Array.from({length:N},()=>Array.from({length:N},()=>[0,0])),b=Array.from({length:N},()=>[0,0]);
     const sg=(i,j,y)=>{if(i)A[i-1][i-1]=cA(A[i-1][i-1],y);if(j)A[j-1][j-1]=cA(A[j-1][j-1],y);if(i&&j){A[i-1][j-1]=cS(A[i-1][j-1],y);A[j-1][i-1]=cS(A[j-1][i-1],y)}};
     for(let k=0;k<N;k++)A[k][k][0]+=1e-8;
     C.parts.forEach(p=>{const a=nd(p,'a'),c=nd(p,'b');sg(a,c,Y(p));const j=J(p);if(j){if(a)b[a-1][0]+=j;if(c)b[c-1][0]-=j}});
     const x=N?wSolveC(A,b):[];V=i=>i?x[i-1]:[0,0];let ch=false;
-    C.parts.forEach(p=>{const v=cS(V(nd(p,'a')),V(nd(p,'b'))),vr=v[0];
-      if(WDI[p.t]){const vf=WDI[p.t];if(!D[p.id]&&vr>vf+1e-6){D[p.id]=1;ch=true}else if(D[p.id]&&vr<vf-1e-6){D[p.id]=0;ch=true}}
-      if(!opt.noBlow&&!F[p.id]&&((p.t=='FUSE'&&cAbs(v)*1e4>p.v)||(p.t=='DMM'&&p.v=='A'&&cAbs(v)*1e4>10))){F[p.id]=1;ch=true}
-      if(p.t=='K'){const e=cAbs(v)>=.7*p.rv?1:0;if((K[p.id]?1:0)!==e){K[p.id]=e;ch=true}}
-      if(p.t=='TX'){const t=p.ma/1000,g0=TG[p.id]||1e-3,g1=vr>.05?Math.min(10,Math.max(1e-9,t/vr)):1e-9;if(Math.abs(g1-g0)>g0*.002+1e-12){TG[p.id]=g0+(g1-g0)*.7;ch=true}}});
+    C.parts.forEach(p=>{const v=cS(V(nd(p,'a')),V(nd(p,'b'))),vr=v[0],B=wB(p);
+      if(B=='led'||B=='diode'){const vf=wVf(p),vz=p.vz,s0=D[p.id]||0;let s1=s0;
+        if(s0==0){if(vr>vf+1e-6)s1=1;else if(vz&&vr<-vz-1e-6)s1=-1}else if(s0==1&&vr<vf-1e-6)s1=0;else if(s0==-1&&vr>-vz+1e-6)s1=0;
+        if(s1!==s0){D[p.id]=s1;ch=true}}
+      if(!opt.noBlow&&!F[p.id]){const I=cAbs(v)*1e4;if(((B=='fuse'||B=='ol'||(B=='mcb'&&st(p)))&&I>1.1*p.v)||(B=='dmm'&&p.v=='A'&&I>10)){F[p.id]=1;ch=true}}
+      if(B=='coil'){const e=cAbs(v)>=(K[p.id]?.35:.75)*p.rv?1:0;if((K[p.id]?1:0)!==e){K[p.id]=e;ch=true}}
+      if(B=='tx'){const t=p.ma/1000,g0=TG[p.id]||1e-3,g1=vr>.05?Math.min(10,Math.max(1e-9,t/vr)):1e-9;if(Math.abs(g1-g0)>g0*.002+1e-12){TG[p.id]=g0+(g1-g0)*.7;ch=true}}
+      if(B=='pv'){const dv=vr-PVV[p.id];if(Math.abs(dv)>1e-4){PVV[p.id]=Math.max(-2,Math.min(1.3*p.voc,PVV[p.id]+Math.max(-1,Math.min(1,dv))));ch=true}}});
     if(!ch)break}
-  const o={V:{},I:{},st:{},K,ac:!!acs,pf:{},P:{},ohm:{},cl:{},short:false,mblown:false};
-  C.parts.forEach(p=>{const a=nd(p,'a'),c=nd(p,'b'),v=cS(V(a),V(c)),y=Y(p);let i;
-    if(p.t=='DC'||p.t=='AC')i=[(sg1*p.v-v[0])*100,-v[1]*100];else if(p.t=='PV')i=[(opt.night?0:sg1*p.isc)-v[0]*y[0],-v[1]*y[0]];
-    else if(p.t=='DMM'&&p.v=='Ω'){i=[0,0];o.ohm[p.id]=cAbs(v)/.001}else if(WDI[p.t]&&D[p.id])i=[(v[0]-WDI[p.t])*y[0],0];else i=cM(v,y);
+  const o={V:{},I:{},st:{},K,ac:!!acs,dead,pf:{},P:{},ohm:{},cl:{},short:false,mblown:false,acDiode:false};
+  C.parts.forEach(p=>{const a=nd(p,'a'),c=nd(p,'b'),v=cS(V(a),V(c)),y=Y(p),B=wB(p);let i;
+    if(B=='src')i=[(sg1*p.v-v[0])/wRi(p),-v[1]/wRi(p)];else if(B=='pv')i=[pvc(p).J-v[0]*y[0],-v[1]*y[0]];
+    else if(B=='dmm'&&p.v=='Ω'){i=[0,0];o.ohm[p.id]=cAbs(v)/.001}else if((B=='led'||B=='diode')&&D[p.id])i=[(v[0]-(D[p.id]>0?wVf(p):-p.vz))*y[0],0];else i=cM(v,y);
     o.V[p.id]=acs?cAbs(v):v[0];o.I[p.id]=acs?cAbs(i):i[0];
     if(p.t=='AC'){const s=cM(v,[i[0],-i[1]]),S=cAbs(s);o.P[p.id]=s[0];o.pf[p.id]=S>1e-9?Math.abs(s[0])/S:1}
-    if(WSWT.includes(p.t))o.cl[p.id]=cl(p);
-    if(F[p.id]){o.st[p.id]='blown';if(p.t=='DMM')o.mblown=true}
-    if(p.t=='LED'&&o.I[p.id]>.03)o.st[p.id]='burn';
-    if((WRATED.includes(p.t)||p.t=='K'||p.t=='IN')&&Math.abs(o.V[p.id])>1.25*p.rv)o.st[p.id]='burn';
-    if((p.t=='DC'||p.t=='AC')&&Math.abs(o.V[p.id])<.3*Math.abs(p.v)&&Math.abs(o.I[p.id])>.5)o.short=true});
+    if(wIsSw(p)||B=='fuse'||B=='ol')o.cl[p.id]=cl(p);
+    if(F[p.id]){o.st[p.id]=B=='fuse'?'blown':B=='dmm'?'blown':'trip';if(B=='dmm')o.mblown=true}
+    if(B=='led'&&o.I[p.id]>.03)o.st[p.id]='burn';
+    if((B=='load'||B=='coil'||B=='in')&&Math.abs(o.V[p.id])>1.25*p.rv)o.st[p.id]='burn';
+    if(p.t=='CE'&&(acs||v[0]<-1))o.st[p.id]='burn';
+    if(acs&&(B=='led'||B=='diode'))o.acDiode=true;
+    if(B=='src'&&Math.abs(o.V[p.id])<.3*Math.abs(p.v)&&Math.abs(o.I[p.id])>.5)o.short=true});
   return o}
 /* series = joined only through nodes that the two parts share alone (voltmeters ignored); parallel = same node pair once switches/fuses/ammeters count as wire */
 function wTopo(C){const R=wNodes(C),nd=id=>[R(id+'.a'),R(id+'.b')],P=C.parts.reduce((m,p)=>(m[p.id]=p,m),{});
@@ -11794,52 +11839,54 @@ function wTopo(C){const R=wNodes(C),nd=id=>[R(id+'.a'),R(id+'.b')],P=C.parts.red
   const par=(x,y)=>{const M=wNodes(C,p=>p.id!==x&&p.id!==y&&wIsZ(p)),a=[M(x+'.a'),M(x+'.b')],b=[M(y+'.a'),M(y+'.b')];return a[0]!==a[1]&&((a[0]==b[0]&&a[1]==b[1])||(a[0]==b[1]&&a[1]==b[0]))};
   const ser=(x,y)=>{if(!P[x]||!P[y]||par(x,y))return false;const f=grp([x,y]);return f(x)==f(y)};
   return {ser,par}}
-const wWork=(p,s)=>{const V=Math.abs(s.V[p.id]),I=s.I[p.id];if(p.t=='LED')return I>=.005&&I<=.025;if(WRATED.includes(p.t))return V>=.85*p.rv&&V<=1.15*p.rv;
-  if(p.t=='K')return !!s.K[p.id]&&V<=1.25*p.rv;if(p.t=='IN')return V>=.6*p.rv&&V<=1.25*p.rv;return Math.abs(I)>1e-3};
-const wOn=(p,s)=>{const V=Math.abs(s.V[p.id]),I=s.I[p.id];if(p.t=='LED')return I>5e-4;if(WRATED.includes(p.t))return V>=.5*p.rv;if(p.t=='K')return !!s.K[p.id];if(p.t=='IN')return V>=.6*p.rv;return Math.abs(I)>1e-3};
+const wWork=(p,s)=>{const V=Math.abs(s.V[p.id]),I=s.I[p.id],b=wB(p);if(b=='led')return I>=.005&&I<=.025;if(b=='load')return V>=.85*p.rv&&V<=1.15*p.rv;
+  if(b=='coil')return !!s.K[p.id]&&V<=1.25*p.rv;if(b=='in')return V>=.6*p.rv&&V<=1.25*p.rv;return Math.abs(I)>1e-3};
+const wOn=(p,s)=>{const V=Math.abs(s.V[p.id]),I=s.I[p.id],b=wB(p);if(s.st[p.id]=='burn')return false;if(b=='led')return I>5e-4;if(b=='load')return V>=.5*p.rv;if(b=='coil')return !!s.K[p.id];if(b=='in')return V>=.6*p.rv;return Math.abs(I)>1e-3};
 const wRd=(p,s)=>p.t=='AM'||(p.t=='DMM'&&p.v=='A')?s.I[p.id]:p.t=='DMM'&&p.v=='Ω'?s.ohm[p.id]:s.V[p.id];
-const wRes=p=>p.t=='R'||p.t=='RV'?p.v:WRATED.includes(p.t)?p.rv*p.rv/p.w:p.t=='K'?p.rv*p.rv:p.t=='IN'?p.rv/.005:p.t=='LI'?.05:WSWT.includes(p.t)||p.t=='FUSE'||p.t=='AM'?0:NaN;
+/* resistance an ohmmeter sees with the circuit dead: filaments and motor windings are ~10× lower than when running */
+const wRes=p=>{const b=wB(p);return b=='res'?p.v:b=='load'?(WT[p.t].fil||WT[p.t].mot?.1:1)*p.rv*p.rv/p.w:b=='coil'?p.rv*p.rv:b=='in'?p.rv/.005:b=='ind'?.05:b=='fuse'||b=='ol'||b=='am'?0:wIsSw(p)?(p.on?0:Infinity):NaN};
 
 /* ---------- goals ---------- */
 const WFN={and:['AND',(a,b)=>a&&b,2],or:['OR',(a,b)=>a||b,2],not:['NOT',a=>!a,1],buf:['التشغيل المباشر',a=>a,1],nand:['NAND',(a,b)=>!(a&&b),2],nor:['NOR',(a,b)=>!(a||b),2]};
 const wn=t=>Array.isArray(t)?'الأحمال':WT[t].n;
-function wCtx(C){const tp=wTopo(C),op={};C.parts.forEach(p=>{if(p.t=='SW'||p.t=='PB'||p.t=='PBC')op[p.id]=1});
-  const X={C,op,ser:tp.ser,par:tp.par,of:t=>C.parts.filter(p=>Array.isArray(t)?t.includes(p.t):p.t==t),sim:(o,opt)=>wSim(C,Object.assign({},op,o||{}),opt||{})};X.on=X.sim();
+const wAl=t=>Array.isArray(t)?t.flatMap(x=>WALIAS[x]||[x]):WALIAS[t]||[t];
+function wCtx(C){const tp=wTopo(C),op={};C.parts.forEach(p=>{const b=wB(p);if(b=='sw'||b=='pb'||b=='pbc'||b=='mcb')op[p.id]=1});
+  const X={C,op,ser:tp.ser,par:tp.par,of:t=>{const L=wAl(t);return C.parts.filter(p=>L.includes(p.t))},sim:(o,opt)=>wSim(C,Object.assign({},op,o||{}),opt||{})};X.on=X.sim();
   X.shortMsg=()=>{const m=C.parts.find(p=>(p.t=='AM'||(p.t=='DMM'&&p.v=='A'))&&C.parts.some(q=>q!==p&&!wIsV(q)&&tp.par(p.id,q.id)));
     return m?`${m.id} يقيس التيار ومقاومته شبه صفر؛ توصيله على التوازي يصنع قصرًا يسحب تيارًا ضخمًا.`:'يوجد قصر: طرفا المصدر متصلان بمسار مقاومته شبه صفر (سلك مباشر، أو مفتاح أو أميتر وحده).'};
   return X}
 function wTitle(G){if(G.t)return G.t;const n=wn;switch(G.k){
-  case 'on':return G.p=='LED'?'الـLED يضيء بتيار آمن بين 5 و25 mA':G.p=='K'?'ملف المرحّل يعمل بجهده المقنن':`${n(G.p)} يعمل بجهده المقنن`;
+  case 'on':return G.p=='LED'?'الـLED يضيء بتيار آمن بين 5 و25 mA':G.p=='K'?'ملف الكونتاكتور يعمل بجهده المقنن':`${n(G.p)} يعمل بجهده المقنن`;
   case 'iR':return `تيار ${n(G.p)} بين ${wfA(G.min)} و${wfA(G.max)}`;case 'vR':return `جهد ${n(G.p)} ضمن المدى المطلوب`;
   case 'ctrl':return G.own?`كل ${n(G.sw)} يتحكم في حمل واحد فقط`:`${n(G.sw)} يشغّل ${n(G.p)} ويوقفه`;
   case 'mI':return `${n(G.m)} يقيس تيار ${n(G.p)}`;case 'mV':return `${n(G.m)} يقيس جهد ${n(G.p)}`;case 'pos':return `قراءة ${n(G.m)} موجبة (الطرف + نحو + المصدر)`;
   case 'mode':return `الأفوميتر على ${WMODE[G.v]}`;
-  case 'fuse':return G.main?'الفيوز في الخط الرئيسي وقيمته مناسبة للتيار الكلي':G.lo?`قيمة الفيوز بين ${G.lo} و${G.hi} ضعف تيار الحمل`:'كل فيوز سليم وقيمته مناسبة لتيار فرعه';
+  case 'fuse':{const nm=n(G.p||'FUSE');return G.main?`${nm} في الخط الرئيسي وقيمته مناسبة للتيار الكلي`:G.lo?`قيمة ${nm} بين ${G.lo} و${G.hi} ضعف تيار الحمل`:`${nm} سليم وقيمته مناسبة لتيار ما يحميه`}
   case 'polar':return `${n(G.p)} في الاتجاه الصحيح (الأنود نحو +)`;case 'ser':return `${n(G.a)} و${n(G.b)} على التوالي`;case 'par':return `${n(G.a)} و${n(G.b)} على التوازي`;
-  case 'iso':return `${n(G.sw)} لا يحمل تيار ${n(G.p)} (القدرة عبر تلامس المرحّل)`;
-  case 'latch':return 'دائرة تثبيت: تشغيل بالزر، واستمرار بعد تركه، وإيقاف بزر الإيقاف';case 'inter':return 'تعشيق: كل زر يشغّل مرحّله، ولا يعمل المرحّلان معًا أبدًا';
+  case 'iso':return `${n(G.sw)} لا يحمل تيار ${n(G.p)} (القدرة عبر تلامس الكونتاكتور)`;
+  case 'latch':return 'دائرة تثبيت: تشغيل بالزر، واستمرار بعد تركه، وإيقاف بزر الإيقاف';case 'inter':return 'تعشيق: كل زر يشغّل كونتاكتوره، ولا يعمل الاثنان معًا أبدًا';
   case 'logic':return `${n(G.out)} يعمل حسب منطق ${WFN[G.fn][0]}`;case 'pf':return `معامل القدرة لا يقل عن ${G.min}`;
   case 'tx':return 'حلقة 4–20 mA مغلقة وتيارها يساوي إشارة المرسل';case 'tx250':return 'الفولتميتر يقرأ 1–5 V متناسبة مع الإشارة (4 mA ← 1 V، 20 mA ← 5 V)';
   case 'ohm':return `الأفوميتر يقيس مقاومة ${n(G.p)} والعنصر مفصول عن المصدر`;case 'rev':return `${n(G.p)} محمي من عكس قطبية المصدر`;
-  case 'chg':return 'اللوح يشحن البطارية (تيار داخل إلى + البطارية)';case 'night':return 'لا تفريغ للبطارية عبر اللوح ليلًا';case 'rb':return `${n(G.p)} لا يمر فيه تيار أثناء التشغيل`}return ''}
+  case 'chg':return 'اللوح يشحن البطارية (تيار داخل إلى + البطارية)';case 'night':return 'لا تفريغ للبطارية عبر اللوح ليلًا';case 'rb':return `${n(G.p)} لا يمر فيه تيار أثناء التشغيل`;
+  case 'mpp':return 'الحمل يأخذ 85% على الأقل من أقصى قدرة للوح (نقطة MPP)';case 'cut':return `${n(G.sw)} يعزل ${n(G.p)} عن الدائرة`}return ''}
 function wTitles(W){return ['العناصر على اللوحة: '+W.need.map(([t,c])=>WT[t].n+(c>1?' ×'+c:'')).join('، ')].concat(W.ns===0?[]:['لا يوجد قصر في الدائرة'],W.g.map(wTitle))}
 function wG1(G,X){const s=X.on,n=wn,one=t=>X.of(t)[0],ids=t=>X.of(t).map(p=>p.id),fV=wfV,fA=wfA,F=(ok,m,h,h2,f,blk)=>({ok,m,h,h2,f,blk});
-  const miss=[G.p,G.m,G.sw,G.a,G.b,G.out].filter(t=>t&&WT[t]&&!X.of(t).length);if(miss.length)return F(false,'أضف إلى اللوحة: '+miss.map(n).join('، '),'افتح «مكتبة العناصر» وأضف العنصر الناقص.');
+  const miss=[G.p,G.m,G.sw,G.a,G.b,G.out].filter(t=>t&&WT[t]&&!X.of(t).length);if(miss.length)return F(false,'أضف إلى اللوحة: '+miss.map(n).join('، '),'افتح «مكتبة المادة» وأضف العنصر الناقص.');
   if(!s)return F(false,G.k=='ohm'?'اختر الأفوميتر واجعله على وضع المقاومة Ω.':'أضف مصدرًا للدائرة.','كل دائرة تحتاج مصدرًا.');
   switch(G.k){
   case 'on':{const L=X.of(G.p),p=L.find(x=>!wWork(x,s));if(!p)return F(true);const V=Math.abs(s.V[p.id]),I=s.I[p.id];
-    if(p.t=='LED'){const src=one('DC');return F(false,I>.025?`تيار ${p.id} = ${fA(I)} أكبر من الحد الآمن، فسيحترق. زد قيمة المقاومة.`:I>5e-4?`تيار ${p.id} = ${fA(I)} صغير والضوء خافت. قلّل المقاومة.`:s.V[p.id]<-1?`${p.id} مقلوب فلا يمر فيه تيار.`:`لا يمر تيار في ${p.id}: الدائرة ليست حلقة مغلقة من + المصدر إلى −.`,
-      'احسب: I = (V − 2) ÷ R، والمطلوب بين 5 و25 mA.',src?`مع مصدر ${wN(src.v)} V اختر مقاومة قريبة من ${Math.max(10,Math.round((Math.abs(src.v)-2)/.015))} Ω.`:'',[p.id])}
-    const m=V>1.15*p.rv&&p.t!='K'||V>1.25*p.rv?`${p.id} يأخذ ${fV(V)} أكبر من جهده المقنن ${wN(p.rv)} V فسيحترق.`:V>.03*p.rv?`${p.id} يأخذ ${fV(V)} فقط من ${wN(p.rv)} V فلا يعمل بكامل قدرته${L.length>1&&!X.par(L[0].id,L[1].id)?' (هل الأحمال على التوالي؟ في التوالي تتقاسم الجهد)':''}.`:`لا يصل جهد إلى ${p.id}: لا توجد حلقة مغلقة من + المصدر عبره إلى −${X.of('K').length&&p.t!='K'?'، أو المرحّل لا يغلق تلامسه':''}.`;
+    if(p.t=='LED'){const src=one('DC'),vf=wVf(p);return F(false,I>.025?`تيار ${p.id} = ${fA(I)} أكبر من الحد الآمن، فسيحترق. زد قيمة المقاومة.`:I>5e-4?`تيار ${p.id} = ${fA(I)} صغير والضوء خافت. قلّل المقاومة.`:s.V[p.id]<-1?`${p.id} مقلوب فلا يمر فيه تيار.`:`لا يمر تيار في ${p.id}: الدائرة ليست حلقة مغلقة من + المصدر إلى −.`,
+      `احسب: I = (V − ${vf}) ÷ R (جهد الـLED ${WLEDC[p.col||'r'][0]} ≈ ${vf} V)، والمطلوب بين 5 و25 mA.`,src?`مع مصدر ${wN(src.v)} V اختر مقاومة قريبة من ${Math.max(10,Math.round((Math.abs(src.v)-vf)/.015))} Ω.`:'',[p.id])}
+    const m=s.st[p.id]=='burn'||V>1.15*p.rv&&wB(p)=='load'?`${p.id} يأخذ ${fV(V)} أكبر من جهده المقنن ${wN(p.rv)} V فسيحترق.`:V>.03*p.rv?`${p.id} يأخذ ${fV(V)} فقط من ${wN(p.rv)} V فلا يعمل بكامل قدرته${L.length>1&&!X.par(L[0].id,L[1].id)?' (هل الأحمال على التوالي؟ في التوالي تتقاسم الجهد)':''}.`:`لا يصل جهد إلى ${p.id}: لا توجد حلقة مغلقة من + المصدر عبره إلى −${X.of('K').length&&p.t!='K'?'، أو الكونتاكتور لا يغلق تلامسه':''}.`;
     return F(false,m,'كل حمل يحتاج حلقة مغلقة وجهدًا يساوي جهده المقنن.',`اجعل جهد المصدر مساويًا لجهد ${n(p.t)} المقنن، وإن كان أكثر من حمل فصِلها على التوازي.`,[p.id])}
-  case 'iR':case 'vR':{const p=one(G.p),isI=G.k=='iR',meter=WT[p.t].u&&['AM','VM','DMM'].includes(p.t),val=Math.abs(meter?wRd(p,s):isI?s.I[p.id]:s.V[p.id]),base=G.rel?(G.relp?one(G.relp):p)[G.rel]:1,lo=G.min*base,hi=G.max*base,fm=isI?fA:fV;
+  case 'iR':case 'vR':{const p=one(G.p),isI=G.k=='iR',meter=['am','vm','dmm'].includes(wB(p)),val=Math.abs(meter?wRd(p,s):isI?s.I[p.id]:s.V[p.id]),base=G.rel?(G.relp?one(G.relp):p)[G.rel]:1,lo=G.min*base,hi=G.max*base,fm=isI?fA:fV;
     return F(val>=lo&&val<=hi,`${isI?'تيار':meter?'قراءة':'جهد'} ${p.id} = ${fm(val)}، والمطلوب بين ${fm(lo)} و${fm(hi)}.`,'غيّر قيم العناصر وراقب القراءة حتى تدخل المدى المطلوب.','',[p.id])}
   case 'ctrl':{const SWs=X.of(G.sw),L=X.of(G.p),lit=L.filter(p=>wOn(p,s));if(!lit.length)return F(false,`${n(G.p)} لا يعمل أصلًا؛ أكمل الدائرة أولًا.`,'أكمل الحلقة من + المصدر عبر الحمل إلى −.','',ids(G.p));
     let msg='';const ctl=[];for(const S of SWs){const r=X.sim({[S.id]:0}),off=lit.filter(p=>!wOn(p,r));ctl.push(off.map(p=>p.id).join());
       if(!msg&&!off.length)msg=`تشغيل ${S.id} لا يوقف أي حمل: ${S.id} خارج مسار التيار.`;if(!msg&&G.own&&off.length>1)msg=`${S.id} يوقف أكثر من حمل معًا: هذا المفتاح في الخط الرئيسي وليس داخل فرع.`;
       if(!msg&&!G.own&&off.length<lit.length)msg=`${S.id} لا يوقف كل الأحمال.`}
-    if(!msg&&G.own&&new Set(ctl).size<ctl.length)msg='مفتاحان يتحكمان في الحمل نفسه.';
-    if(!msg&&G.own&&lit.length<L.length)msg='بعض الأحمال لا تعمل أصلًا.';
+    if(!msg&&G.own&&new Set(ctl).size<ctl.length)msg='مفتاحان يتحكمان في الحمل نفسه.';if(!msg&&G.own&&lit.length<L.length)msg='بعض الأحمال لا تعمل أصلًا.';
     return F(!msg,msg,`${n(G.sw)} يقطع التيار فقط عن العناصر الموصولة معه على التوالي.`,G.own?`ضع كل ${n(G.sw)} على التوالي مع حمله داخل فرعه.`:`ضع ${n(G.sw)} على التوالي في المسار الذي يغذي ${n(G.p)}.`,SWs.map(x=>x.id))}
   case 'mI':{const M=one(G.m);if(M.t=='DMM'&&M.v!='A')return F(false,'الأفوميتر ليس على وضع التيار A.','اختر الأفوميتر وغيّر الوضع من لوحة خصائصه.','',[M.id]);
     const Im=Math.abs(s.I[M.id]),Ps=X.of(G.p),P=Ps.find(p=>{const Ip=Math.abs(s.I[p.id]);return Ip>1e-4&&Math.abs(Im-Ip)<=.02*Ip})||Ps[0],Ip=Math.abs(s.I[P.id]),ok=Ip>1e-4&&Math.abs(Im-Ip)<=.02*Ip;
@@ -11851,27 +11898,27 @@ function wG1(G,X){const s=X.on,n=wn,one=t=>X.of(t)[0],ids=t=>X.of(t).map(p=>p.id
       'جهاز قياس الجهد يوضع على التوازي: طرفاه على طرفي العنصر.',`صِل طرفي ${n(G.m)} بطرفي ${n(G.p)} مباشرة.`,[M.id])}
   case 'pos':{if(s.ac)return F(true);const M=one(G.m);return F(wRd(M,s)>1e-6,`قراءة ${M.id} سالبة أو صفر: الجهاز مقلوب أو لا يقيس شيئًا.`,'الطرف (+) لجهاز القياس يتجه نحو + المصدر.','اختر الجهاز واضغط «⇄ اعكس الاتجاه».',[M.id])}
   case 'mode':{const M=one('DMM');return F(M.v==G.v,`الأفوميتر الآن على ${WMODE[M.v]}، والمطلوب ${WMODE[G.v]}.`,'اختر الأفوميتر وغيّر الوضع من لوحة خصائصه.','في الجهاز الحقيقي: أدِر القرص إلى الوضع المطلوب، وضع السلك الأحمر في المنفذ المناسب.',[M.id])}
-  case 'fuse':{const Fs=X.of('FUSE'),nb=X.sim({},{noBlow:1});for(const f of Fs){const I=Math.abs(nb.I[f.id]);
-      if(s.st[f.id]=='blown')return F(false,`احترق ${f.id}: التيار المار فيه ≈ ${fA(I)} أكبر من قيمته ${wN(f.v)} A${s.short||nb.short?' (يوجد قصر)':''}.`,'الفيوز يُختار أكبر قليلًا من التيار الذي يحميه: I = P ÷ V.',`اجعل قيمة ${f.id} أكبر من ${fA(I)}.`,[f.id],1);
-      if(I<1e-3)return F(false,`لا يمر تيار في ${f.id}: ليس في مسار الحمل.`,'الفيوز يوضع على التوالي في المسار الذي يحميه.','',[f.id]);
-      const lo=(G.lo||1)*I,hi=(G.hi||3)*I;if(f.v<lo||f.v>hi)return F(false,`${f.id} = ${wN(f.v)} A وتيار ما يحميه ≈ ${fA(I)}؛ المناسب بين ${wN(+lo.toPrecision(2))} و${wN(+hi.toPrecision(2))} A.`,'الفيوز الصغير يحترق عند التشغيل، والكبير جدًا لا يحمي.',`اختر قيمة بين ${wN(+lo.toPrecision(2))} و${wN(+hi.toPrecision(2))} A.`,[f.id]);
-      if(G.main){const tot=Math.max(...X.C.parts.filter(p=>WSRC.includes(p.t)).map(p=>Math.abs(s.I[p.id])));if(Math.abs(Math.abs(s.I[f.id])-tot)>.03*tot)return F(false,`${f.id} لا يمر فيه التيار الكلي (${fA(tot)})، فلن يحمي كل الدائرة.`,'الخط الرئيسي هو الجزء الذي يمر فيه تيار كل الأحمال قبل أن يتفرع.','ضع الفيوز مباشرة بعد + المصدر وقبل أي تفرع.',[f.id])}}
+  case 'fuse':{const Fs=X.of(G.p||'FUSE'),nb=X.sim({},{noBlow:1});for(const f of Fs){const I=Math.abs(nb.I[f.id]);
+      if(s.st[f.id]=='blown'||s.st[f.id]=='trip')return F(false,`${s.st[f.id]=='blown'?'احترق':'فصل'} ${f.id}: التيار المار فيه ≈ ${fA(I)} أكبر من قيمته ${wN(f.v)} A${s.short||nb.short?' (يوجد قصر)':''}.`,'عنصر الحماية يُختار أكبر قليلًا من التيار الذي يحميه.',`اجعل قيمة ${f.id} أكبر من ${fA(I)}.`,[f.id],1);
+      if(I<1e-3)return F(false,`لا يمر تيار في ${f.id}: ليس في مسار الحمل.`,'عنصر الحماية يوضع على التوالي في المسار الذي يحميه.','',[f.id]);
+      const lo=(G.lo||1)*I,hi=(G.hi||3)*I,r2=v=>wN(+v.toPrecision(2));if(f.v<lo||f.v>hi)return F(false,`${f.id} = ${wN(f.v)} A وتيار ما يحميه ≈ ${fA(I)}؛ المناسب بين ${r2(lo)} و${r2(hi)} A.`,'الحماية الصغيرة تفصل عند التشغيل، والكبيرة جدًا لا تحمي.',`اختر قيمة بين ${r2(lo)} و${r2(hi)} A.`,[f.id]);
+      if(G.main){const tot=Math.max(...X.C.parts.filter(wIsSrc).map(p=>Math.abs(s.I[p.id])));if(Math.abs(Math.abs(s.I[f.id])-tot)>.03*tot)return F(false,`${f.id} لا يمر فيه التيار الكلي (${fA(tot)})، فلن يحمي كل الدائرة.`,'الخط الرئيسي هو الجزء الذي يمر فيه تيار كل الأحمال قبل أن يتفرع.','ضع الفيوز مباشرة بعد + المصدر وقبل أي تفرع.',[f.id])}}
     return F(true)}
   case 'polar':{const P=one(G.p);return F(!(Math.abs(s.I[P.id])<5e-4&&s.V[P.id]<-.5),`${P.id} مقلوب: الجهد عليه عكسي فلا يمر فيه تيار.`,'الأنود (جهة المثلث) يتجه نحو +، والكاثود (الخط) نحو −.','اختر العنصر واضغط «⇄ اعكس الاتجاه».',[P.id])}
   case 'ser':case 'par':{const a=one(G.a),b=G.a==G.b?X.of(G.a)[1]:one(G.b);if(!b)return F(false,`أضف ${n(G.b)} آخر.`);const ok=G.k=='ser'?X.ser(a.id,b.id):X.par(a.id,b.id);
     return F(ok,`${a.id} و${b.id} ليسا على ${G.k=='ser'?'التوالي':'التوازي'}.`,G.k=='ser'?'التوالي: مسار واحد لا يتفرع، يمر فيه التيار نفسه.':'التوازي: العنصران بين النقطتين نفسيهما فيأخذان الجهد نفسه.',G.k=='ser'?`صِل طرفًا من ${a.id} بطرف ${b.id} مباشرة، ولا تصل بهذه النقطة شيئًا آخر.`:`صِل طرفي ${a.id} بطرفي ${b.id}: الأول بالأول والثاني بالثاني.`,[a.id,b.id])}
   case 'iso':{const S=one(G.sw),P=one(G.p),Is=Math.abs(s.I[S.id]),Ip=Math.abs(s.I[P.id]),on=wOn(P,s);
-    return F(on&&!X.ser(S.id,P.id)&&Math.abs(Is-Ip)>.05*Ip,!on?`${P.id} لا يعمل؛ أكمل الدائرة.`:`${S.id} يمر فيه ${fA(Is)}، أي تيار ${P.id} نفسه تقريبًا؛ اجعل تلامس المرحّل يحمل تيار الحمل.`,
-      'دائرة التحكم (المفتاح + ملف المرحّل) منفصلة عن دائرة القدرة (تلامس المرحّل + الحمل).',`صِل ${n(G.sw)} مع ملف K، وصِل تلامس NO المرتبط بـK مع ${n(G.p)}.`,[S.id])}
-  case 'latch':{const B=one('PB'),Q=one('PBC'),Kc=one('K');if(!B||!Q||!Kc)return F(false,'تحتاج زر تشغيل وزر إيقاف وملف مرحّل.');
+    return F(on&&!X.ser(S.id,P.id)&&Math.abs(Is-Ip)>.05*Ip,!on?`${P.id} لا يعمل؛ أكمل الدائرة.`:`${S.id} يمر فيه ${fA(Is)}، أي تيار ${P.id} نفسه تقريبًا؛ اجعل تلامس الكونتاكتور يحمل تيار الحمل.`,
+      'دائرة التحكم (المفتاح + ملف الكونتاكتور) منفصلة عن دائرة القدرة (التلامس + الحمل).',`صِل ${n(G.sw)} مع ملف KM، وصِل تلامس NO التابع لـKM مع ${n(G.p)}.`,[S.id])}
+  case 'latch':{const B=one('PB'),Q=one('PBC'),Kc=one('K');if(!B||!Q||!Kc)return F(false,'تحتاج زر تشغيل وزر إيقاف وملف كونتاكتور.');
     const s1=X.sim({[B.id]:1,[Q.id]:1}),s2=X.sim({[B.id]:0,[Q.id]:1},{init:s1.K}),s3=X.sim({[B.id]:0,[Q.id]:0},{init:s2.K}),s4=X.sim({[B.id]:0,[Q.id]:1},{init:s3.K});
     const m=!s1.K[Kc.id]?`الضغط على ${B.id} لا يشغّل ملف ${Kc.id}.`:!s2.K[Kc.id]?`عند ترك ${B.id} يتوقف ${Kc.id}: أضف تلامس NO من ${Kc.id} على التوازي مع زر التشغيل (تلامس التثبيت).`:s3.K[Kc.id]?`زر الإيقاف ${Q.id} لا يوقف ${Kc.id}: ضعه على التوالي في دائرة الملف.`:s4.K[Kc.id]?`بعد الإيقاف يعود ${Kc.id} للعمل وحده: تلامس التثبيت في مكان خاطئ.`:'';
-    return F(!m,m,'تلامس التثبيت: تلامس NO من المرحّل نفسه على التوازي مع زر التشغيل.','+ ← زر الإيقاف NC ← (زر التشغيل ∥ تلامس NO) ← ملف K ← −.',[Kc.id])}
-  case 'inter':{const B=X.of('PB'),Ks=X.of('K');if(B.length<2||Ks.length<2)return F(false,'تحتاج زرين ومرحّلين.');
+    return F(!m,m,'تلامس التثبيت: تلامس NO من الكونتاكتور نفسه على التوازي مع زر التشغيل.','+ ← زر الإيقاف NC ← (زر التشغيل ∥ تلامس NO) ← ملف KM ← −.',[Kc.id])}
+  case 'inter':{const B=X.of('PB'),Ks=X.of('K');if(B.length<2||Ks.length<2)return F(false,'تحتاج زرين وكونتاكتورين.');
     const rA=X.sim({[B[0].id]:1,[B[1].id]:0}),rB=X.sim({[B[0].id]:0,[B[1].id]:1}),onA=Ks.filter(k=>rA.K[k.id]),onB=Ks.filter(k=>rB.K[k.id]);
     const rC=X.sim({[B[0].id]:1,[B[1].id]:1},{init:rA.K}),rD=X.sim({[B[0].id]:1,[B[1].id]:1},{init:rB.K}),both=r=>Ks.every(k=>r.K[k.id]);
-    const m=onA.length!=1||onB.length!=1?'كل زر يجب أن يشغّل مرحّلًا واحدًا فقط.':onA[0]===onB[0]?'الزران يشغّلان المرحّل نفسه.':both(rC)||both(rD)?'عند ضغط الزر الثاني والمرحّل الأول يعمل، يعمل الاثنان معًا: ينقص التعشيق.':'';
-    return F(!m,m,'ضع تلامس NC من كل مرحّل في دائرة ملف المرحّل الآخر.','+ ← PB1 ← NC(K2) ← K1 ← −، و + ← PB2 ← NC(K1) ← K2 ← −. اربط كل تلامس بملفه من خصائصه.',Ks.map(k=>k.id))}
+    const m=onA.length!=1||onB.length!=1?'كل زر يجب أن يشغّل كونتاكتورًا واحدًا فقط.':onA[0]===onB[0]?'الزران يشغّلان الكونتاكتور نفسه.':both(rC)||both(rD)?'عند ضغط الزر الثاني والأول يعمل، يعمل الاثنان معًا: ينقص التعشيق.':'';
+    return F(!m,m,'ضع تلامس NC من كل كونتاكتور في دائرة ملف الآخر.','+ ← PB1 ← NC(KM2) ← KM1 ← −، و + ← PB2 ← NC(KM1) ← KM2 ← −. اربط كل تلامس بملفه من خصائصه.',Ks.map(k=>k.id))}
   case 'logic':{const fn=WFN[G.fn],SWs=X.of(G.sw).slice(0,fn[2]),out=one(G.out);if(SWs.length<fn[2])return F(false,`تحتاج ${fn[2]} من ${n(G.sw)}.`);
     const combos=fn[2]==1?[[0],[1]]:[[0,0],[0,1],[1,0],[1,1]];for(const c of combos){const o={};SWs.forEach((S,i)=>o[S.id]=c[i]);const r=X.sim(o),got=wOn(out,r),exp=!!fn[1](...c.map(Boolean));
       if(got!==exp)return F(false,`عندما ${SWs.map((S,i)=>`${S.id} ${c[i]?(S.t=='PB'?'مضغوط':'مغلق'):(S.t=='PB'?'غير مضغوط':'مفتوح')}`).join(' و')} يجب أن يكون ${out.id} ${exp?'يعمل':'مطفأ'}، لكنه ${got?'يعمل':'مطفأ'}.`,
@@ -11882,19 +11929,21 @@ function wG1(G,X){const s=X.on,n=wn,one=t=>X.of(t)[0],ids=t=>X.of(t).map(p=>p.id
     'المرسل والمصدر ومقاومة الحمل في حلقة واحدة على التوالي.','+24 V ← (+) المرسل (−) ← المقاومة ← 0 V.',[T.id])}
   case 'tx250':{const M=one('VM'),T=one('TX'),e=T.ma/1000*250,v=Math.abs(s.V[M.id]);return F(Math.abs(v-e)<=.03*e,`قراءة ${M.id} = ${fV(v)}، والمطلوب ${fV(e)} (= ${wN(T.ma)} mA × 250 Ω).`,'V = I × R: المقاومة التي تحوّل 4–20 mA إلى 1–5 V هي 250 Ω.','اجعل المقاومة 250 Ω وصِل الفولتميتر على طرفيها.',[M.id])}
   case 'ohm':{const M=one('DMM'),P=one(G.p);if(M.v!='Ω')return F(false,'الأفوميتر ليس على وضع المقاومة Ω.','اختر الأفوميتر وغيّر الوضع من لوحة خصائصه.','',[M.id]);
-    const r=s.ohm[M.id],R=wRes(P),ok=X.par(M.id,P.id)&&Math.abs(r-R)<=Math.max(.03*R,.5);
-    return F(ok,!X.par(M.id,P.id)?`${M.id} ليس على طرفي ${P.id}.`:X.C.parts.some(p=>WSRC.includes(p.t))?`القراءة ${wfR(r)} غير صحيحة لأن الدائرة ما زالت موصولة بمصدر؛ افصله قبل قياس المقاومة.`:`القراءة ${wfR(r)} لا تساوي مقاومة ${P.id}: هل توجد عناصر أخرى موصولة معه؟`,
-      'قياس المقاومة يكون والعنصر مفصول عن أي مصدر، والأفوميتر على طرفيه.','احذف المصدر أو أسلاكه، واترك الأفوميتر وحده على طرفي العنصر.',[M.id])}
+    const r=s.ohm[M.id],R=wRes(P),ok=X.par(M.id,P.id)&&(isFinite(R)?Math.abs(r-R)<=Math.max(.03*R,.5):r>1e7);const cold=WT[P.t].fil||WT[P.t].mot;
+    return F(ok,!X.par(M.id,P.id)?`${M.id} ليس على طرفي ${P.id}.`:!s.dead?`القراءة ${wfR(r)} غير صحيحة لأن الدائرة ما زالت موصولة بمصدر؛ افصله قبل قياس المقاومة.`:`القراءة ${wfR(r)} لا تساوي مقاومة ${P.id}: هل توجد عناصر أخرى موصولة معه؟`,
+      'قياس المقاومة يكون والعنصر مفصول عن أي مصدر، والأفوميتر على طرفيه.'+(cold?' لاحظ: مقاومة الفتيل أو ملف المحرك وهو بارد أقل بكثير منها أثناء التشغيل.':''),'احذف المصدر أو أسلاكه، واترك الأفوميتر وحده على طرفي العنصر.',[M.id])}
   case 'rev':{const P=one(G.p),r=X.sim({},{rev:1});return F(Math.abs(r.I[P.id])<1e-3,`عند عكس المصدر يمر ${fA(Math.abs(r.I[P.id]))} عكسيًا في ${P.id}.`,'الثنائي يمرر التيار في اتجاه واحد فقط.','ضع ثنائيًا على التوالي مع الحمل، أنوده نحو + المصدر.',[P.id])}
   case 'chg':{const B=one('DC'),I=s.I[B.id];return F(I<-.05,I>.05?'البطارية تُفرّغ بدل أن تُشحن: تأكد أن + اللوح يصل إلى + البطارية.':'لا يمر تيار شحن: اللوح والبطارية يجب أن يكونا في حلقة واحدة (+ مع +).','تيار الشحن يدخل البطارية من طرفها الموجب.','',[B.id])}
-  case 'night':{const B=one('DC'),r=X.sim({},{night:1}),I=Math.abs(r.I[B.id]);return F(I<.01,`ليلًا يعود ${fA(I)} من البطارية عبر اللوح: أضف ثنائيًا على التوالي يمنع التيار العكسي.`,'في الليل يصبح جهد البطارية أعلى من اللوح.','ضع ثنائيًا (ثنائي منع الارتجاع) بين + اللوح و+ البطارية، أنوده نحو اللوح.',[B.id])}
-  case 'rb':{const P=one(G.p),o=G.of?one(G.of):null;return F(Math.abs(s.I[P.id])<1e-3&&(!o||X.par(P.id,o.id)),o&&!X.par(P.id,o.id)?`${P.id} ليس على طرفي ${o.id}.`:`يمر ${fA(Math.abs(s.I[P.id]))} في ${P.id} أثناء التشغيل: اتجاهه خاطئ.`,'ثنائي الحماية يوضع على طرفي الملف عكسيًا: كاثوده نحو +.','اختر الثنائي واضغط «⇄ اعكس الاتجاه».',[P.id])}}
+  case 'night':{const B=one('DC'),r=X.sim({},{night:1}),I=Math.abs(r.I[B.id]);return F(I<1e-3,`ليلًا يعود ${fA(I)} من البطارية عبر اللوح: أضف ثنائيًا على التوالي يمنع التيار العكسي.`,'في الليل يصبح جهد البطارية أعلى من جهد اللوح.','ضع ثنائيًا (ثنائي منع الارتجاع) بين + اللوح و+ البطارية، أنوده نحو اللوح.',[B.id])}
+  case 'rb':{const P=one(G.p),o=G.of?one(G.of):null;return F(Math.abs(s.I[P.id])<1e-3&&(!o||X.par(P.id,o.id)),o&&!X.par(P.id,o.id)?`${P.id} ليس على طرفي ${o.id}.`:`يمر ${fA(Math.abs(s.I[P.id]))} في ${P.id} أثناء التشغيل: اتجاهه خاطئ.`,'ثنائي الحماية يوضع على طرفي الملف عكسيًا: كاثوده نحو +.','اختر الثنائي واضغط «⇄ اعكس الاتجاه».',[P.id])}
+  case 'mpp':{const PV=one('PV'),L=one(G.p),mx=wPVmax(PV),P=Math.abs(s.V[L.id]*s.I[L.id]),pc=Math.round(P/mx.P*100);
+    return F(P>=.85*mx.P,`قدرة ${L.id} = ${P.toFixed(1)} W، أي ${pc}% من أقصى قدرة للوح (${mx.P.toFixed(1)} W).`,'أقصى قدرة عند جهد ≈ 0.8 Voc تقريبًا (نقطة MPP)، وليس عند Voc ولا عند Isc.',`جرّب مقاومة قريبة من ${wN(+(mx.V/mx.I).toPrecision(2))} Ω.`,[L.id])}
+  case 'cut':{const S=one(G.sw),P=one(G.p),r=X.sim({[S.id]:0}),i1=Math.abs(s.I[P.id]),i0=Math.abs(r.I[P.id]);return F(i1>.05&&i0<1e-3,i1<=.05?`لا يمر تيار في ${P.id} والمفتاح مغلق؛ أكمل الدائرة أولًا.`:`فتح ${S.id} لا يوقف تيار ${P.id} (${fA(i0)}).`,`${n(G.sw)} يوضع على التوالي في الخط الخارج من ${n(G.p)}.`,'',[S.id])}}
   return F(true)}
 function wGoals(W,X){const s=X.on,out=[],miss=W.need.filter(([t,c])=>X.of(t).length<c).map(([t,c])=>WT[t].n+(c>1?' ×'+c:''));
-  out.push({ok:!miss.length,m:'ينقصك: '+miss.join('، '),h:'افتح «مكتبة العناصر» واختر كل عنصر تحتاجه الدائرة.',h2:'العناصر المطلوبة مكتوبة في هذا البند؛ أضفها ثم وصّلها.'});if(miss.length)return out;
-  if(W.ns!==0){const ok=!s||(!s.short&&!s.mblown);out.push({ok,m:s&&s.mblown?'احترق فيوز الأفوميتر: مر فيه تيار ضخم لأنه على وضع التيار وموصول على التوازي.':X.shortMsg(),h:'تتبّع الأسلاك من + المصدر: هل يوجد طريق يعود إلى − دون أن يمر بحمل؟',h2:'احذف أي سلك يصل طرفي المصدر مباشرة، ولا تضع جهاز قياس التيار على التوازي.',f:X.of(['DC','AC']).map(p=>p.id)});if(!ok)return out}
+  out.push({ok:!miss.length,m:'ينقصك: '+miss.join('، '),h:'افتح «مكتبة المادة» واختر كل عنصر تحتاجه الدائرة.',h2:'العناصر المطلوبة مكتوبة في هذا البند؛ أضفها ثم وصّلها.'});if(miss.length)return out;
+  if(W.ns!==0){const ok=!s||(!s.short&&!s.mblown);out.push({ok,m:s&&s.mblown?'احترق فيوز الأفوميتر: مر فيه تيار ضخم لأنه على وضع التيار وموصول على التوازي.':X.shortMsg(),h:'تتبّع الأسلاك من + المصدر: هل يوجد طريق يعود إلى − دون أن يمر بحمل؟',h2:'احذف أي سلك يصل طرفي المصدر مباشرة، ولا تضع جهاز قياس التيار على التوازي.',f:X.C.parts.filter(p=>wB(p)=='src').map(p=>p.id)});if(!ok)return out}
   for(const G of W.g){const r=wG1(G,X);if(G.msg&&!r.ok)r.m=G.msg;if(G.h)r.h=G.h;if(G.h2)r.h2=G.h2;out.push(r);if(!r.ok&&r.blk)break}return out}
-
 /* ---------- exercise templates ---------- */
 const wgl=(k,o)=>Object.assign({k},o||{});
 const WTP=(d,o)=>{['t','task','n','ok'].forEach(k=>{if(o[k])d[k]=o[k]});if(o.def)d.def=Object.assign({},d.def,o.def);if(o.need)d.need=d.need.concat(o.need);if(o.g)d.g=d.g.concat(o.g);return d};
@@ -11929,18 +11978,18 @@ const WTM={
   g:[wgl('mode',{v:'V'}),wgl('mV',{m:'DMM',p:Ld}),wgl('on',{p:Ld}),wgl('pos',{m:'DMM'})],ok:['قياس الجهد: الجهاز على التوازي ووضعه V.','أكثر أخطاء الورش: قياس الجهد والجهاز على وضع A؛ النتيجة قصر واحتراق فيوز الجهاز.']},o)},
  ohm:(o={})=>{const P=o.p||'R';return WTP({t:`قياس مقاومة ${WT[P].n}`,task:`استخدم الأفوميتر على وضع المقاومة Ω لقياس مقاومة ${WT[P].n}، والعنصر مفصول عن أي مصدر.`,
   n:['قياس المقاومة يكون والدائرة مفصولة عن المصدر تمامًا.','على وضع Ω يرسل الأفوميتر تيارًا صغيرًا من بطاريته ويحسب R = V ÷ I.'],need:[[P,1],['DMM',1]],def:{DMM:{v:'V'}},ns:0,
-  g:[wgl('mode',{v:'Ω'}),wgl('ohm',{p:P})],ok:['قيمة قريبة من الصفر = استمرارية سليمة، وقيمة لا نهائية (∞) = دائرة مفتوحة.','مقاومة الحمل تقريبًا R = V² ÷ P (وهي أقل وهو بارد).']},o)},
+  g:[wgl('mode',{v:'Ω'}),wgl('ohm',{p:P})],ok:['قيمة قريبة من الصفر = استمرارية سليمة، وقيمة لا نهائية (∞) = دائرة مفتوحة.','مقاومة الفتيل أو ملف المحرك وهو بارد أقل بنحو 10 مرات من قيمتها أثناء التشغيل (V² ÷ P)؛ لذلك يسحب تيار بدء كبيرًا.']},o)},
  latch:(o={})=>{const V=o.V||24,Ld=o.load||'MOT',need=[['DC',1],['PBC',1],['PB',1],['K',1],['KNO',2],[Ld,1]],gl=[wgl('latch'),wgl('on',{p:Ld}),wgl('iso',{sw:'PB',p:Ld})];if(o.lamp){need.push(['LAMP',1]);gl.push(wgl('on',{p:'LAMP',t:'مصباح البيان يضيء أثناء التشغيل'}))}
   return WTP({t:'تشغيل وإيقاف بمرحّل (دائرة تثبيت)',task:`صمّم دائرة تشغّل ${WT[Ld].n} بزر تشغيل، ويستمر بعد ترك الزر، ويتوقف بزر الإيقاف، باستخدام مرحّل/كونتاكتور${o.lamp?'، مع مصباح بيان يضيء أثناء التشغيل':''}.`,
-   n:['زر الإيقاف NC على التوالي في دائرة الملف.','تلامس NO من المرحّل نفسه على التوازي مع زر التشغيل يحفظ التشغيل.','تلامس NO آخر يوصل القدرة إلى الحمل. اربط كل تلامس بالملف K1 من خصائصه.','لتجربة الدائرة: اختر زر التشغيل واضغط «اضغط»، ثم «أفلت».'],
+   n:['زر الإيقاف NC على التوالي في دائرة الملف.','تلامس NO من المرحّل نفسه على التوازي مع زر التشغيل يحفظ التشغيل.','تلامس NO آخر يوصل القدرة إلى الحمل. اربط كل تلامس بالملف KM1 من خصائصه.','لتجربة الدائرة: اختر زر التشغيل واضغط «اضغط»، ثم «أفلت».'],
    need,def:{DC:{v:V},K:{rv:V}},g:gl,ok:['تلامس التثبيت يجعل الدائرة «تتذكر» أمر التشغيل بعد ترك الزر.','إذا انقطعت الكهرباء يسقط المرحّل ولا يعود الحمل للعمل وحده: ميزة أمان.']},o)},
  relay:(o={})=>{const V=o.V||24,S2=o.src2,Ld=o.load||'MOT',sw=o.sw||'SW',need=[['DC',1]].concat(S2?[[S2,1]]:[],[[sw,1],['K',1],['KNO',1],[Ld,1]]),gl=[wgl('on',{p:Ld}),wgl('ctrl',{sw,p:Ld}),wgl('iso',{sw,p:Ld})];
   if(o.fuse){need.push(['FUSE',1]);gl.unshift(wgl('fuse',{}))}
-  return WTP({t:'التحكم في حمل عبر مرحّل',task:`استخدم ${WT[sw].n} لتشغيل ${WT[Ld].n} عبر مرحّل (ملف K وتلامس NO)${S2?`، بمصدر تحكم ${V} V منفصل عن مصدر القدرة`:''}، بحيث لا يمر تيار الحمل في ${WT[sw].n}${o.fuse?'، مع فيوز يحمي الحمل':''}.`,
-   n:['دائرة التحكم: المفتاح + ملف المرحّل K.','دائرة القدرة: تلامس NO من المرحّل + الحمل.','اربط التلامس بالملف من لوحة خصائصه (← K1).'],need,def:{DC:{v:V},K:{rv:V}},g:gl,
+  return WTP({t:'التحكم في حمل عبر مرحّل',task:`استخدم ${WT[sw].n} لتشغيل ${WT[Ld].n} عبر مرحّل (ملف KM وتلامس NO)${S2?`، بمصدر تحكم ${V} V منفصل عن مصدر القدرة`:''}، بحيث لا يمر تيار الحمل في ${WT[sw].n}${o.fuse?'، مع فيوز يحمي الحمل':''}.`,
+   n:['دائرة التحكم: المفتاح + ملف الكونتاكتور KM.','دائرة القدرة: تلامس NO من المرحّل + الحمل.','اربط التلامس بالملف من لوحة خصائصه (← KM1).'],need,def:{DC:{v:V},K:{rv:V}},g:gl,
    ok:['تيار صغير في المفتاح يتحكم في تيار كبير في الحمل.','فصل دائرة التحكم عن القدرة يحمي المفتاح ويزيد الأمان.']},o)},
  fuseSz:(o={})=>{const S=o.src||'DC',V=o.V||wDv(o,S,'v',24),Ld=o.load||'MOT',lo=o.lo||1.25,hi=o.hi||2.5;return WTP({t:'اختيار الفيوز المناسب',task:`شغّل ${WT[Ld].n} من ${wSrcN(S)} ${V} V بمفتاح، واحمه بفيوز قيمته بين ${lo} و${hi} ضعف تياره.`,
-  n:['تيار الحمل I = P ÷ V (اقرأ القدرة والجهد من خصائصه).','الفيوز الصغير يحترق عند التشغيل، والكبير جدًا لا يحمي من الحمل الزائد.'],need:[[S,1],['FUSE',1],['SW',1],[Ld,1]],def:{[S]:{v:V},FUSE:{v:o.fz||1}},
+  n:['تيار الحمل في المستمر I = P ÷ V، وفي المتردد I = P ÷ (V × معامل القدرة).','الفيوز الصغير يحترق عند التشغيل، والكبير جدًا لا يحمي من الحمل الزائد.'],need:[[S,1],['FUSE',1],['SW',1],[Ld,1]],def:{[S]:{v:V},FUSE:{v:o.fz||1}},
   g:[wgl('fuse',{lo,hi}),wgl('on',{p:Ld}),wgl('ctrl',{sw:'SW',p:Ld})],ok:['الفيوز على التوالي مع الحمل ويحمل تياره نفسه.','قيمة الفيوز تُختار من تيار الحمل وتيار بدء تشغيله ومقطع الكابل.']},o)},
  estop:(o={})=>{const S=o.src||'DC',V=o.V||wDv(o,S,'v',24),Ld=o.load||'MOT',N=o.N||1,sw=o.sw!==false;return WTP({t:'إيقاف الطوارئ',task:`شغّل ${WT[Ld].n} من ${wSrcN(S)} ${V} V${sw?' بمفتاح':''}، وأضف ${N>1?N+' أزرار':'زر'} طوارئ NC ${N>1?'أيٌّ منها يوقفه':'يوقفه'} فورًا عند الضغط.`,
   n:['زر الطوارئ NC: مغلق في الوضع العادي ويفتح عند الضغط.','أزرار الإيقاف توصل على التوالي حتى يقطع أي منها الدائرة.'],need:[[S,1],['PBC',N]].concat(sw?[['SW',1]]:[],[[Ld,1]]),def:{[S]:{v:V}},
@@ -11958,7 +12007,7 @@ const WTM={
   n:['هبوط الجهد = I × R الكابل.','الكابل الأقصر أو الأسمك = مقاومة أقل = هبوط أقل.'],need:[['DC',1],['R',1],[Ld,1],['VM',1]],def:{DC:{v:V},R:{v:o.R||1}},
   g:[wgl('ser',{a:'R',b:Ld}),wgl('mV',{m:'VM',p:Ld}),wgl('vR',{p:Ld,min:.95,max:1.05,rel:'rv',t:'جهد الحمل لا يقل عن 95% من جهده المقنن (هبوط ≤ 5%)'})],ok:['كلما زاد تيار الحمل احتجت كابلًا بمقاومة أقل.','الخسارة في الكابل P = I² × R تتحول إلى حرارة.']},o)},
  dim:(o={})=>{const S=o.src||'DC',V=o.V||wDv(o,S,'v',12);return WTP({t:'التحكم في شدة الإضاءة',task:'باستخدام مقاومة متغيرة على التوالي مع مصباح، اجعل جهد المصباح بين 45% و75% من جهده المقنن.',
-  n:['المقاومة المتغيرة على التوالي تأخذ جزءًا من الجهد.','غيّر قيمتها وراقب شدة الإضاءة وجهد المصباح.'],need:[[S,1],['RV',1],['LAMP',1]],def:{[S]:{v:V},RV:{v:10}},
+  n:['المقاومة المتغيرة على التوالي تأخذ جزءًا من الجهد.','غيّر قيمتها وراقب شدة الإضاءة وجهد المصباح.'],need:[[S,1],['RV',1],['LAMP',1]],def:{[S]:{v:V},RV:{v:1}},
   g:[wgl('ser',{a:'RV',b:'LAMP'}),wgl('vR',{p:'LAMP',min:.45,max:.75,rel:'rv',t:'جهد المصباح بين 45% و75% من المقنن'})],ok:['هذه طريقة بسيطة لكنها تُضيع طاقة في المقاومة؛ لذلك تستخدم المعتّمات الحديثة الثايرستور أو PWM.']},o)},
  rev:(o={})=>{const V=o.V||12,Ld=o.load||'LAMP';return WTP({t:'الحماية من عكس القطبية',task:`شغّل ${WT[Ld].n} من مصدر ${V} V، وأضف ثنائيًا يمنع مرور التيار إذا عُكست البطارية.`,
   n:['الثنائي يمرر التيار من الأنود إلى الكاثود فقط.','هبوط الجهد على الثنائي نحو 0.7 V.'],need:[['DC',1],['DIODE',1],[Ld,1]],def:{DC:{v:V}},g:[wgl('polar',{p:'DIODE'}),wgl('on',{p:Ld}),wgl('rev',{p:Ld})],
@@ -11966,7 +12015,7 @@ const WTM={
  fly:(o={})=>{const V=o.V||12;return WTP({t:'ثنائي حماية ملف المرحّل',task:'شغّل ملف مرحّل بمفتاح، وأضف ثنائيًا على طرفي الملف يحمي المفتاح من الجهد العكسي عند الفصل، دون أن يمر فيه تيار أثناء التشغيل.',
   n:['الملف يخزن طاقة مغناطيسية، وعند الفصل يولد جهدًا عكسيًا عاليًا.','الثنائي على طرفي الملف عكسيًا يفرّغ هذه الطاقة بأمان.'],need:[['DC',1],['SW',1],['K',1],['DIODE',1]],def:{DC:{v:V},K:{rv:V}},
   g:[wgl('on',{p:'K'}),wgl('ctrl',{sw:'SW',p:'K'}),wgl('rb',{p:'DIODE',of:'K'})],ok:['أثناء التشغيل يكون الثنائي عكسيًا فلا يمر فيه تيار.','عند الفصل يمرر الثنائي تيار الملف فيمنع شرارة المفتاح وتلف الترانزستور.']},o)},
- inter:(o={})=>{const V=o.V||24;return WTP({t:'التعشيق بين مرحّلين',task:'صمّم دائرتين: زر يشغّل المرحّل K1 وزر يشغّل K2، بحيث لا يعمل المرحّلان معًا أبدًا (كما في عكس اتجاه دوران المحرك).',
+ inter:(o={})=>{const V=o.V||24;return WTP({t:'التعشيق بين مرحّلين',task:'صمّم دائرتين: زر يشغّل الكونتاكتور KM1 وزر يشغّل KM2، بحيث لا يعمل المرحّلان معًا أبدًا (كما في عكس اتجاه دوران المحرك).',
   n:['التعشيق الكهربائي: تلامس NC من كل مرحّل يمنع تشغيل الآخر.','اربط كل تلامس بملفه الصحيح من خصائصه.','جرّب: اضغط زرًا، ثم اضغط الآخر وهو مضغوط.'],need:[['DC',1],['PB',2],['K',2],['KNC',2]],def:{DC:{v:V},K:{rv:V}},g:[wgl('inter')],
   ok:['التعشيق يمنع قصرًا بين الأطوار عند عكس الدوران.','في اللوحات الحقيقية يُضاف تعشيق ميكانيكي مع الكهربائي.']},o)},
  weld:(o={})=>{const cab=!!o.cable;return WTP({t:cab?'طول الكابل وتيار اللحام':'ضبط تيار اللحام',task:cab?'مقاومة كابل اللحام الطويل تمثلها R. اختر مقاومة الكابل (طوله ومقطعه) بحيث يصل تيار اللحام إلى 100–140 A، وقِسه بالأميتر.':'القوس يمثله حمل اللحام. اضبط جهد الماكينة ليصبح تيار اللحام بين 100 و140 A، وقِسه بالأميتر.',
@@ -11974,12 +12023,22 @@ const WTM={
   g:[wgl('mI',{m:'AM',p:'HT'}),wgl('iR',{p:'HT',min:100,max:140,t:'تيار اللحام بين 100 و140 A'})].concat(cab?[wgl('ser',{a:'R',b:'HT'})]:[]),ok:['تيار اللحام يحدد عمق الاختراق: القليل يسبب عدم انصهار، والكثير يسبب ثقوبًا وتطايرًا.','افحص الكابلات والوصلات؛ الوصلة الرخوة مقاومة إضافية وحرارة.']},o)},
  cells:(o={})=>WTP({t:'توصيل الخلايا على التوالي',task:'كوّن حزمة بطاريات بجهد 14.8 V من خلايا 3.7 V لتشغيل حمل 14.8 V.',n:['في التوالي تُجمع الجهود ويبقى التيار.','الطرف + لخلية يتصل بالطرف − للتي بعدها.'],
   need:[['DC',4],['LAMP',1]],def:{DC:{v:3.7},LAMP:{rv:14.8,w:10}},g:[wgl('ser',{a:'DC',b:'DC',t:'الخلايا على التوالي'}),wgl('on',{p:'LAMP'})],ok:['بطاريات السيارات الكهربائية مئات الخلايا على التوالي والتوازي.','4 × 3.7 V = 14.8 V.']},o),
- pvser:(o={})=>WTP({t:'توصيل الألواح على التوالي',task:'حمل 24 V يحتاج جهدًا أعلى من لوح واحد (Voc = 21 V). وصّل لوحين بحيث يعمل الحمل بجهده المقنن.',n:['في التوالي تُجمع الجهود ويبقى التيار.','في التوازي تُجمع التيارات ويبقى الجهد.'],
-  need:[['PV',2],['DEV',1]],def:{DEV:{rv:24,w:48}},g:[wgl('ser',{a:'PV',b:'PV',t:'اللوحان على التوالي'}),wgl('on',{p:'DEV'})],ok:['السلسلة (String) ترفع الجهد لتناسب العاكس.','جرّب توصيلهما على التوازي ولاحظ أن الجهد لا يكفي.']},o),
+ pvser:(o={})=>WTP({t:'توصيل الألواح على التوالي (سلسلة)',task:'العاكس يحتاج جهد سلسلة نحو 42 V. وصّل لوحين (Voc = 21 V لكل منهما) وقِس جهد السلسلة المفتوحة بالفولتميتر.',n:['في التوالي تُجمع الجهود ويبقى التيار.','في التوازي تُجمع التيارات ويبقى الجهد.','يُقاس Voc للسلسلة قبل توصيلها بالعاكس.'],
+  need:[['PV',2],['VM',1]],g:[wgl('ser',{a:'PV',b:'PV',t:'اللوحان على التوالي'}),wgl('vR',{p:'VM',min:1.96,max:2.04,rel:'voc',relp:'PV',t:'الفولتميتر يقرأ جهد السلسلة ≈ 2 × Voc'})],ok:['السلسلة (String) ترفع الجهد لتناسب مدخل العاكس.','جرّب توصيلهما على التوازي ولاحظ أن الجهد يبقى 21 V.']},o),
+ mpp:(o={})=>WTP({t:'نقطة القدرة القصوى للوح (MPP)',task:'حمّل اللوح الشمسي بمقاومة، وقِس تياره وجهده، واختر المقاومة التي تجعل اللوح يعطي 85% على الأقل من أقصى قدرته.',
+  n:['منحنى اللوح: عند Voc التيار صفر، وعند Isc الجهد صفر؛ وفي الحالتين القدرة صفر.','أقصى قدرة عند جهد ≈ 0.8 Voc، وهذا ما يبحث عنه منظم MPPT.','القدرة P = V × I.'],need:[['PV',1],['R',1],['AM',1],['VM',1]],def:{R:{v:20}},
+  g:[wgl('mI',{m:'AM',p:'R'}),wgl('mV',{m:'VM',p:'R'}),wgl('mpp',{p:'R'})],ok:['منظم MPPT يغيّر «المقاومة التي يراها اللوح» تلقائيًا ليبقى عند أقصى قدرة.','غيّر المقاومة وراقب كيف ترتفع القدرة ثم تنخفض.']},o),
+ pviso:(o={})=>WTP({t:'عازل التيار المستمر (DC Isolator)',task:'اشحن بطارية 12 V من لوح شمسي عبر ثنائي منع الارتجاع، وأضف مفتاح عزل يفصل اللوح عن الدائرة للصيانة.',n:['العازل يوضع على التوالي في الخط الخارج من اللوح.','افصل العازل قبل أي عمل على الدائرة.'],
+  need:[['PV',1],['SW',1],['DIODE',1],['DC',1]],def:{DC:{v:12}},g:[wgl('chg'),wgl('cut',{sw:'SW',p:'PV'})],ok:['التيار المستمر لا يمر بصفر كالمتردد، فقوسه أصعب في الإطفاء؛ لذلك يُستخدم عازل مخصص للتيار المستمر.']},o),
+ pvmon:(o={})=>WTP({t:'مراقبة تيار الشحن',task:'اشحن بطارية 12 V من لوح شمسي عبر ثنائي، وقِس تيار الشحن بالأميتر.',n:['الأميتر على التوالي بين اللوح والبطارية.','الطرف + للأميتر نحو اللوح.'],
+  need:[['PV',1],['DIODE',1],['AM',1],['DC',1]],def:{DC:{v:12}},g:[wgl('chg'),wgl('mI',{m:'AM',p:'DC'}),wgl('pos',{m:'AM'})],ok:['انخفاض تيار الشحن في يوم مشمس قد يعني اتساخ الألواح أو تظليلها.']},o),
  pvchg:(o={})=>WTP({t:'شحن البطارية من اللوح',task:'اشحن بطارية 12 V من لوح شمسي، وقِس تيار الشحن، وامنع تفريغ البطارية عبر اللوح ليلًا.',n:['تيار الشحن يدخل البطارية من طرفها الموجب.','ثنائي منع الارتجاع يمنع التيار العكسي ليلًا.'],
   need:[['PV',1],['DC',1],['DIODE',1],['AM',1]],def:{DC:{v:12}},g:[wgl('chg'),wgl('night'),wgl('mI',{m:'AM',p:'DC'})],ok:['منظم الشحن الحقيقي يؤدي هذه الوظيفة ويضبط الجهد حتى لا تُشحن البطارية زيادة.']},o),
- pvfuse:(o={})=>WTP({t:'فيوزات السلاسل الشمسية',task:'وصّل لوحين على التوازي لتغذية حمل 12 V، وضع فيوزًا مناسبًا لكل لوح.',n:['كل لوح (سلسلة) له فيوز خاص على التوالي معه.','الفيوز أكبر قليلًا من تيار اللوح، وأقل من تحمّل الكابل.'],
-  need:[['PV',2],['FUSE',2],['DEV',1]],def:{FUSE:{v:2},DEV:{rv:12,w:60}},g:[wgl('par',{a:'PV',b:'PV',t:'اللوحان على التوازي'}),wgl('fuse',{}),wgl('on',{p:'DEV'})],ok:['فيوز السلسلة يحمي من التيار العكسي إذا تعطل لوح وتغذى من الألواح الأخرى.']},o),
+ pvfuse:(o={})=>WTP({t:'فيوزات السلاسل الشمسية',task:'اشحن بطارية 12 V من لوحين على التوازي، وضع لكل لوح فيوزًا قيمته بين 1.25 و2.5 ضعف تياره.',n:['كل لوح (سلسلة) له فيوز خاص على التوالي معه.','تيار اللوح عند الشحن قريب من Isc.'],
+  need:[['PV',2],['FUSE',2],['DC',1]],def:{FUSE:{v:2},DC:{v:12}},g:[wgl('par',{a:'PV',b:'PV',t:'اللوحان على التوازي'}),wgl('fuse',{lo:1.25,hi:2.5}),wgl('chg')],ok:['فيوز السلسلة يحمي من التيار العكسي إذا تعطل لوح وتغذى من الألواح الأخرى.','يُختار عمليًا بنحو 1.56 × Isc.']},o),
+ prot:(o={})=>WTP({t:'حماية المحرك: فيوز وريليه حراري',task:'شغّل محركًا 220 V / 1100 W (cos φ = 0.8) بمفتاح، واحمه بفيوز (1.5–2.5 ضعف تياره) وريليه حراري مضبوط بين 1 و1.15 ضعف تياره.',
+  n:['تيار المحرك I = P ÷ (V × cos φ).','الفيوز يحمي من القصر، والريليه الحراري يحمي من الحمل الزائد.','الريليه الحراري يُضبط على تيار لوحة المحرك تقريبًا.'],need:[['AC',1],['FUSE',1],['OL',1],['SW',1],['MOT',1]],def:{AC:{v:220,f:60},MOT:{rv:220,w:1100,pf:.8},FUSE:{v:2},OL:{v:10}},
+  g:[wgl('fuse',{p:'FUSE',lo:1.5,hi:2.5}),wgl('fuse',{p:'OL',lo:1,hi:1.15}),wgl('on',{p:'MOT'}),wgl('ctrl',{sw:'SW',p:'MOT'})],ok:['لو ضُبط الريليه الحراري أعلى بكثير لن يفصل عند الحمل الزائد فيحترق الملف.']},o),
  pvvoc:(o={})=>WTP({t:'قياس Voc للوح',task:'قِس جهد الدائرة المفتوحة للوح الشمسي بالفولتميتر قبل التشغيل الأول.',n:['Voc: جهد اللوح بلا حمل.','الفولتميتر على طرفي اللوح مباشرة.'],need:[['PV',1],['VM',1]],
   g:[wgl('mV',{m:'VM',p:'PV'}),wgl('vR',{p:'VM',min:.98,max:1.02,rel:'voc',relp:'PV',t:'القراءة تساوي Voc المكتوبة على اللوح'})],ok:['مقارنة Voc المقاس بالمكتوب تكشف لوحًا تالفًا أو توصيلًا خاطئًا قبل التشغيل.']},o)};
 
@@ -11991,8 +12050,8 @@ const WAC=[
   need:[['AC',1],['R',1],['C',1],['AM',1]],def:{AC:{v:220,f:60},R:{v:100},C:{v:10}},g:[wgl('ser',{a:'R',b:'C'}),wgl('mI',{m:'AM',p:'R'}),wgl('iR',{p:'AM',min:1,max:1.5,t:'تيار الدائرة بين 1 و1.5 A'})],ok:['في RC يتقدم التيار على الجهد.','زيادة السعة تقلل XC فيزيد التيار.']},
  {t:'الرنين في RLC',task:'وصّل R و L و C على التوالي بمصدر 12 V / 60 Hz، واختر السعة التي تجعل الدائرة في حالة رنين.',n:['عند الرنين XL = XC فتصبح الممانعة = R فقط.','XL = 2π f L و XC = 1 ÷ (2π f C).'],
   need:[['AC',1],['R',1],['LI',1],['C',1],['AM',1]],def:{AC:{v:12,f:60},R:{v:10},LI:{v:100},C:{v:10}},g:[wgl('ser',{a:'R',b:'LI'}),wgl('ser',{a:'LI',b:'C'}),wgl('mI',{m:'AM',p:'R'}),wgl('pf',{min:.98,t:'الدائرة في حالة رنين (معامل القدرة ≈ 1)',h:'عند الرنين يكون التيار أكبر ما يمكن ومعامل القدرة = 1.',h2:'C = 1 ÷ (4π² f² L) ≈ 70 µF مع L = 100 mH و f = 60 Hz.'})],ok:['عند الرنين: I = V ÷ R أكبر تيار ممكن.','دوائر الضبط في الراديو والمرشحات تعتمد على الرنين.']},
- {t:'تحسين معامل القدرة',task:'المحرك يمثله R و L على التوالي (220 V / 60 Hz). أضف مكثفًا على التوازي معه ليصبح معامل القدرة 0.95 على الأقل، وقِس تيار الخط.',n:['الحمل الحثي يسحب تيارًا متأخرًا عن الجهد.','المكثف على التوازي يعوّض التيار المتأخر فيقل تيار الخط.'],
-  need:[['AC',1],['R',1],['LI',1],['C',1],['AM',1]],def:{AC:{v:220,f:60},R:{v:20},LI:{v:50},C:{v:10}},g:[wgl('ser',{a:'R',b:'LI',t:'R و L على التوالي (المحرك)'}),wgl('mI',{m:'AM',p:'AC',t:'الأميتر يقيس تيار الخط'}),wgl('pf',{min:.95,h:'المكثف يوضع على التوازي مع المحرك (على طرفي R و L معًا).',h2:'جرّب سعة بين 40 و90 µF.'})],ok:['تحسين معامل القدرة يقلل تيار الخط والخسائر وغرامات شركة الكهرباء.','لاحظ تيار الخط قبل إضافة المكثف وبعدها.']}];
+ {t:'تحسين معامل القدرة',task:'محرك 220 V / 60 Hz قدرته 1500 W ومعامل قدرته 0.75. أضف مكثفًا على التوازي معه ليصبح معامل القدرة 0.95 على الأقل، وقِس تيار الخط.',n:['الحمل الحثي يسحب تيارًا متأخرًا عن الجهد.','المكثف على التوازي يعوّض التيار المتأخر فيقل تيار الخط.','Qc = P × (tan φ1 − tan φ2) و C = Qc ÷ (2π f V²).'],
+  need:[['AC',1],['MOT',1],['C',1],['AM',1]],def:{AC:{v:220,f:60},MOT:{rv:220,w:1500,pf:.75},C:{v:10}},g:[wgl('on',{p:'MOT'}),wgl('mI',{m:'AM',p:'AC',t:'الأميتر يقيس تيار الخط'}),wgl('pf',{min:.95,h:'المكثف يوضع على التوازي مع المحرك، والأميتر في الخط الرئيسي قبل التفرع.',h2:'Qc = 1500 × (0.882 − 0.329) ≈ 830 var، فالسعة C = Qc ÷ (2π × 60 × 220²) ≈ 46 µF أو أكثر قليلًا (جرّب 50 µF).'})],ok:['تحسين معامل القدرة يقلل تيار الخط والخسائر وغرامات شركة الكهرباء.','لاحظ تيار الخط قبل إضافة المكثف وبعدها: القدرة الفعلية لم تتغير لكن التيار انخفض.']}];
 
 /* ---------- course exercises (lesson i uses exercise floor(i·n/len)) ---------- */
 const WEX={
@@ -12012,14 +12071,14 @@ const WEX={
  ind:[WTM.rev({def:{LAMP:{rv:12,w:6}}}),WTM.dim({src:'AC',V:220,def:{LAMP:{rv:220,w:100},RV:{v:10}},t:'معتّم الإضاءة'}),
   {t:'تخفيض الجهد بمقاومة',task:'شغّل حملًا 5 V / 1 W من مصدر 24 V بمقاومة على التوالي، ولاحظ الطاقة الضائعة فيها.',n:['المقاومة تأخذ فرق الجهد: 24 − 5 = 19 V.','R = (Vin − Vout) ÷ I.'],need:[['DC',1],['R',1],['LAMP',1]],def:{DC:{v:24},R:{v:10},LAMP:{rv:5,w:1}},
    g:[wgl('ser',{a:'R',b:'LAMP'}),wgl('on',{p:'LAMP',t:'الحمل يعمل على 5 V تقريبًا'})],ok:['الخسارة في المقاومة ≈ 19 V × 0.2 A ≈ 3.8 W مقابل 1 W مفيدة!','لذلك نستخدم محوّل Buck بكفاءة تتجاوز 90%.']},WTM.fly()],
- ins:[WTM.par({V:24,loads:['MOT'],own:false,def:{MOT:{rv:24,w:120}},fz:8,t:'العزل والقفل LOTO: مفتاح عزل وفيوز'}),WTM.ohm({p:'MOT',def:{MOT:{rv:24,w:120}},t:'قياس مقاومة ملف المحرك'}),
+ ins:[WTM.par({V:24,loads:['MOT'],own:false,def:{MOT:{rv:24,w:120}},fz:2,t:'العزل والقفل LOTO: مفتاح عزل وفيوز'}),WTM.ohm({p:'MOT',def:{MOT:{rv:24,w:120}},t:'قياس مقاومة ملف المحرك'}),
   WTM.ohm({p:'FUSE',t:'فحص استمرارية الفيوز'}),{t:'نصف التقسيم: قياس الجهد عند الحمل',task:'شغّل مصباحًا عبر فيوز ومفتاح، وقِس الجهد على طرفي المصباح لتحديد مكان العطل.',n:['ابدأ القياس من منتصف الدائرة: هل يصل الجهد إلى هنا؟','الفولتميتر على التوازي.'],
    need:[['DC',1],['FUSE',1],['SW',1],['LAMP',1],['VM',1]],def:{DC:{v:24},FUSE:{v:2},LAMP:{rv:24,w:12}},g:[wgl('on',{p:'LAMP'}),wgl('mV',{m:'VM',p:'LAMP'}),wgl('ctrl',{sw:'SW',p:'LAMP'})],ok:['إذا وصل الجهد للحمل ولم يعمل، فالعطل في الحمل نفسه.']}],
  ins2:[WTM.dmmV({V:24,def:{LAMP:{rv:24,w:12}}}),WTM.loop(),WTM.div({V:5,sensor:1,lo:2,hi:3,rv:100,t:'قياس حساس RTD بمقسم جهد',task:'حساس Pt100 (100 Ω) على التوالي مع مقاومة مرجعية من مصدر 5 V. اختر المقاومة المرجعية ليقرأ الفولتميتر على الحساس بين 2 و3 V.'}),WTM.loop({am:1,t:'صمام التحكم: قياس تيار الإشارة'})],
  lab:[WTM.dmmV({V:12,def:{LAMP:{rv:12,w:6}}}),WTM.meas({src:'AC',load:'LAMP',vm:false,def:{AC:{v:220,f:60},LAMP:{rv:220,w:100}},t:'قياس تيار متردد (True-RMS)'}),WTM.ohm({p:'R',def:{R:{v:470}}}),
   {t:'مرشح RC عند تردد القطع',task:'صمّم مرشح RC (R ثم C على التوالي) من مصدر 10 V / 60 Hz، بحيث يكون جهد المكثف نحو 70% من جهد المصدر.',n:['عند تردد القطع: R = XC = 1 ÷ (2π f C).','عندها جهد المكثف ≈ 0.707 من جهد الدخل.'],need:[['AC',1],['R',1],['C',1],['VM',1]],def:{AC:{v:10,f:60},R:{v:100},C:{v:1}},
    g:[wgl('ser',{a:'R',b:'C'}),wgl('mV',{m:'VM',p:'C'}),wgl('vR',{p:'VM',min:.65,max:.76,rel:'v',relp:'AC',t:'جهد المكثف 65–76% من جهد المصدر',h2:'مع C = 1 µF و f = 60 Hz تكون R ≈ 2.65 kΩ.'})],ok:['تحت تردد القطع يمر الجهد إلى المكثف، وفوقه يُخمد: مرشح تمرير منخفض.']}],
- mot:[WTM.latch({def:{MOT:{rv:24,w:240}},t:'بادئ التشغيل المباشر DOL'}),WTM.inter(),WTM.fuseSz({src:'AC',V:220,def:{MOT:{rv:220,w:1100}},fz:2,t:'أحجام الحماية: فيوز المحرك'}),
+ mot:[WTM.latch({def:{MOT:{rv:24,w:240}},t:'بادئ التشغيل المباشر DOL'}),WTM.inter(),WTM.prot(),
   WTM.relay({V:24,src2:'AC',def:{AC:{v:220,f:60},MOT:{rv:220,w:1500}},t:'لوحة المحرك: تحكم 24 V وقدرة 220 V'})],
  plc:[WTM.logic({fn:'buf',V:24,sw:'PB',out:'IN',t:'زر تشغيل إلى مدخل PLC',task:'وصّل زر تشغيل NO بمدخل PLC 24 V بحيث يكون المدخل ON عند الضغط فقط.'}),WTM.latch({load:'LAMP',def:{LAMP:{rv:24,w:5}},t:'دارة التشغيل والإيقاف'}),
   WTM.relay({t:'مخرج PLC يشغّل محركًا عبر مرحّل',n:['المفتاح يمثّل مخرج PLC (Q0.0).','مخرج PLC لا يتحمل تيار المحرك؛ لذلك نستخدم مرحّلًا.'],def:{MOT:{rv:24,w:240}}}),WTM.loop({t:'المداخل التناظرية 4–20 mA'})],
@@ -12047,10 +12106,10 @@ const WEX={
   WTM.par({V:12,loads:['DEV','LAMP'],own:false,fuse:false,def:{DEV:{rv:12,w:24},LAMP:{rv:12,w:2}},t:'مصباح بيان لتشغيل الخادم'}),WTM.fuseSz({V:12,load:'DEV',def:{DEV:{rv:12,w:60}},fz:2,t:'حماية الخادم بالفيوز'})],
  dat:[WTM.div({V:5,sensor:1,lo:2,hi:3,t:'قراءة حساس بمقسم جهد'}),WTM.meas({load:'HT',def:{HT:{rv:12,w:12}},t:'جمع بيانات: تيار وجهد سخان'}),WTM.dim({def:{LAMP:{rv:12,w:6}},t:'العلاقة بين المقاومة وشدة الإضاءة'}),WTM.loop({t:'بيانات حساس 4–20 mA'})],
  aim:[WTM.div({V:5,sensor:1,lo:2,hi:3,t:'حساس ضوء لنظام ذكي'}),WTM.led({V:5,t:'مؤشر LED لنظام ذكي'}),
-  {t:'لوح شمسي يغذي جهازًا ذكيًا',task:'شغّل جهازًا 12 V / 24 W مباشرة من لوح شمسي، وقِس جهده.',n:['اللوح مصدر محدود التيار: جهده يهبط كلما زاد الحمل.','الفولتميتر على طرفي الجهاز.'],need:[['PV',1],['DEV',1],['VM',1]],def:{DEV:{rv:12,w:24}},g:[wgl('on',{p:'DEV'}),wgl('mV',{m:'VM',p:'DEV'})],ok:['الأنظمة الذكية تتنبأ بإنتاج الألواح من بيانات الطقس.']},
+  {t:'لوح شمسي وبطارية يغذيان جهازًا ذكيًا',task:'جهاز ذكي 12 V / 24 W يعمل من بطارية 12 V يشحنها لوح شمسي عبر ثنائي منع الارتجاع. صمّم الدائرة.',n:['الجهاز يوصل على التوازي مع البطارية فيأخذ جهدها الثابت.','اللوح يشحن البطارية عبر ثنائي؛ لا يوصل الجهاز على اللوح مباشرة لأن جهد اللوح يتغير مع الإشعاع.'],need:[['PV',1],['DIODE',1],['DC',1],['DEV',1]],def:{DC:{v:12},DEV:{rv:12,w:24}},g:[wgl('on',{p:'DEV'}),wgl('chg')],ok:['البطارية تخزن الفائض نهارًا وتغذي الجهاز ليلًا.','الأنظمة الذكية تتنبأ بإنتاج الألواح من بيانات الطقس.']},
   WTM.estop({sw:true,def:{MOT:{rv:24,w:120}},t:'زر طوارئ لروبوت صناعي'})],
- pv:[WTM.meas({src:'PV',load:'LAMP',def:{LAMP:{rv:12,w:36}},t:'قدرة اللوح الشمسي'}),WTM.pvser(),WTM.pvchg(),WTM.par({V:12,loads:['LAMP','DEV'],def:{LAMP:{rv:12,w:10},DEV:{rv:12,w:24}},fz:2,t:'نظام منزلي صغير'})],
- pvi:[WTM.pvfuse(),WTM.par({src:'PV',loads:['DEV'],own:false,fuse:false,def:{DEV:{rv:12,w:24}},t:'مفتاح عزل التيار المستمر'}),WTM.pvvoc(),WTM.meas({src:'PV',load:'DEV',vm:false,def:{DEV:{rv:12,w:24}},t:'مراقبة تيار اللوح'})],
+ pv:[WTM.mpp(),WTM.pvser(),WTM.pvchg(),WTM.par({V:12,loads:['LAMP','DEV'],def:{LAMP:{rv:12,w:10},DEV:{rv:12,w:24}},fz:2,t:'نظام منزلي صغير'})],
+ pvi:[WTM.pvfuse(),WTM.pviso(),WTM.pvvoc(),WTM.pvmon()],
  mtr:[WTM.ohm({p:'R',def:{R:{v:220}}}),WTM.dmmV({V:9,def:{LAMP:{rv:9,w:4.5}}}),WTM.dmmI({def:{LAMP:{rv:9,w:4.5}}}),WTM.div({V:10,lo:4.9,hi:5.1,t:'التفاوت: مقاومتان متساويتان',task:'وصّل مقاومتين على التوالي من 10 V، بحيث يقرأ الفولتميتر على إحداهما بين 4.9 و5.1 V.'})],
  mch:[WTM.fuseSz({src:'AC',V:220,def:{MOT:{rv:220,w:1500}},fz:2,t:'محرك عمود المخرطة'}),WTM.par({src:'AC',V:220,loads:['MOT','MOT'],fuse:false,def:{MOT:{rv:220,w:750}},t:'محرك الفريزة ومضخة سائل التبريد'}),
   WTM.estop({src:'AC',V:220,N:2,def:{MOT:{rv:220,w:1500}},t:'زرّا طوارئ لآلة CNC'}),WTM.par({src:'AC',V:220,loads:['MOT','LAMP'],own:false,fuse:false,def:{MOT:{rv:220,w:1500},LAMP:{rv:220,w:10}},t:'مفتاح باب الأمان ومصباح البيان'})],
@@ -12059,79 +12118,127 @@ const WEX={
   WTM.meas({V:12,load:'SOL',vm:false,def:{SOL:{rv:12,w:24}},t:'تيار ملف جهاز الفحص المغناطيسي'})]};
 Object.keys(WEX).forEach(id=>{const c=COURSES.find(k=>k.id==id);if(!c)return;const L=WEX[id];c.lessons.forEach((l,i)=>{l.wire=L[Math.floor(i*L.length/c.lessons.length)]})});
 
-/* ---------- state ---------- */
-const W5={};const wKey=()=>ST.c+'.'+ST.l;
-function wst(){const k=wKey();if(!W5[k])W5[k]={C:store.get('wc.'+k,null)||{parts:[],wires:[]},sel:null,pick:null,res:null,hint:null,hl:[],hn:0,hk:'',km:{}};return W5[k]}
+
+/* ---------- each course gets its own component library (same symbols as the main library page) ---------- */
+const WLB=['DC','R','RV','LAMP','LED','SW','PB','FUSE','DIODE','AM','VM','DMM'];
+const WLIB={ef:WLB.concat(['C','CE','HT','BZ','MOT']),ac:['AC','R','RV','LI','C','LAMP','MOT','HT','SW','FUSE','MCB','AM','VM','DMM'],
+ dig:['DC','R','LED','SW','PB','PBC','DIODE','BZ','LDR','AM','VM','DMM'],dwg:['AC','DC','LAMP','PL','MOT','SW','PB','PBC','ESTOP','K','KNO','KNC','OL','FUSE','MCB','R','AM','VM'],
+ efp:['AC','DC','LAMP','PL','MOT','SOL','BZ','SW','LIM','PB','PBC','ESTOP','K','KNO','KNC','OL','FUSE','MCB','AM','VM'],emb:['DC','R','RV','NTC','LDR','LED','SW','PB','DIODE','K','KNO','FAN','MOT','BZ','IN','AM','VM','DMM'],
+ hmi:['DC','TX','R','VM','AM','LAMP','PL','BZ','MOT','PUMP','PB','PBC','ESTOP','K','KNO','KNC','SW','FUSE','IN'],ind:['DC','AC','R','RV','LAMP','LED','DIODE','ZENER','SCHOT','K','SW','C','CE','LI','HT','FUSE','AM','VM','DMM'],
+ ins:['DC','AC','MOT','LAMP','R','FUSE','MCB','OL','SW','DMM','AM','VM'],ins2:['DC','TX','R','RTD','NTC','RV','VM','AM','DMM','LAMP','SW'],lab:['DC','AC','R','RV','C','LI','LAMP','LED','DIODE','SW','DMM','AM','VM'],
+ mot:['AC','DC','MOT','PB','PBC','ESTOP','K','KNO','KNC','OL','FUSE','MCB','PL','SW','C','AM','VM'],plc:['DC','PB','PBC','ESTOP','LIM','SW','IN','K','KNO','KNC','LAMP','PL','MOT','SOL','TX','R','AM','VM','FUSE'],
+ pnh:['DC','PB','PBC','ESTOP','LIM','SW','SOL','K','KNO','KNC','PUMP','MOT','PL','FUSE'],tpm:['DC','AC','MOT','PL','LAMP','SW','PBC','ESTOP','FUSE','OL','AM','VM','DMM'],
+ vib:['DC','TX','R','VM','AM','DMM','MOT','PUMP','SW','FUSE'],rac:['AC','CMPH','FAN','MOT','THST','SW','PBC','K','KNO','FUSE','MCB','C','AM','VM','DMM'],
+ rcc:['AC','DC','CMPH','FAN','MOT','THST','SW','PBC','K','KNO','KNC','FUSE','MCB','C','AM','VM','DMM'],aue:['DC','FUSE','SW','PB','K','KNO','KNC','LAMP','STRT','MOT','BZ','SOL','NTC','R','DIODE','AM','VM','DMM'],
+ aun:['DC','FUSE','SW','PB','K','KNO','LAMP','STRT','MOT','FAN','PUMP','SOL','NTC','R','DIODE','AM','VM','DMM'],cmp:['DC','FAN','DEV','LED','R','FUSE','SW','PB','DMM','AM','VM'],
+ nwk:['DC','DEV','R','FUSE','SW','LED','AM','VM','DMM'],prg:['DC','R','LED','SW','PB','BZ','LDR','RV','IN','AM','VM'],dbs:['DC','DEV','LAMP','PL','FUSE','SW','AM','VM','DMM'],
+ dat:['DC','R','RV','NTC','LDR','TX','LAMP','HT','SW','AM','VM','DMM'],aim:['DC','PV','R','LDR','RV','LED','DEV','DIODE','MOT','PBC','ESTOP','SW','AM','VM'],
+ pv:['PV','DC','R','LAMP','DEV','DIODE','SCHOT','FUSE','SW','AM','VM','DMM'],pvi:['PV','DC','R','DEV','DIODE','SCHOT','FUSE','MCB','SW','AM','VM','DMM'],mtr:['DC','R','RV','LAMP','SW','DMM','AM','VM'],
+ mch:['AC','MOT','PUMP','LAMP','PL','SW','LIM','PBC','ESTOP','FUSE','MCB','OL','K','KNO'],wld:['DC','AC','HT','R','AM','VM','DMM','FUSE','MCB','SW'],wlq:['AC','DC','LAMP','R','SOL','SW','DMM','AM','VM','FUSE']};
+/* ===== v14 wiring lab — state, drawing and interaction. Exercise mode (per lesson) and free simulation mode (per course). ===== */
+const W5={},W5M={};
+const wFree=()=>W5M[ST.c]=='free';
+const wKey=()=>wFree()?'F.'+ST.c:ST.c+'.'+ST.l;
+const wSKey=()=>wFree()?'wf.'+ST.c:'wc.'+ST.c+'.'+ST.l;
+function wst(){const k=wKey();if(!W5[k])W5[k]={C:store.get(wSKey(),null)||{parts:[],wires:[]},sel:null,pick:null,res:null,hint:null,hl:[],hn:0,hk:'',km:{}};return W5[k]}
 const wireDone=()=>!!(store.get('wire.'+ST.c,{})[ST.l]);
 const wPart0=(C,id)=>C.parts.find(p=>p.id==id);
 const wTerm=(C,t)=>{const [id,s]=t.split('.'),p=wPart0(C,id);if(!p)return null;if(s=='a')return [p.x,p.y];const d=wRp(p.r,60,0);return [p.x+d[0],p.y+d[1]]};
 const wCtr=p=>{const d=wRp(p.r,30,0);return [p.x+d[0],p.y+d[1]]};
-function wClamp(p){const d=wRp(p.r,60,0),xs=[p.x,p.x+d[0]],ys=[p.y,p.y+d[1]];p.x+=Math.max(0,20-Math.min(...xs))-Math.max(0,Math.max(...xs)-620);p.y+=Math.max(0,20-Math.min(...ys))-Math.max(0,Math.max(...ys)-380)}
-function wChanged(){const S=wst();S.res=null;S.hint=null;S.hl=[];store.set('wc.'+wKey(),S.C);wRefresh()}
-function wAdd(t){const W=lesson().wire,S=wst(),C=S.C,T0=WT[t];if(!T0)return;if(C.parts.filter(p=>p.t==t).length>=WMAX){toast('ℹ️',`الحد الأقصى ${WMAX} من «${T0.n}»`,'info',2000);return}
-  let k=1;while(C.parts.some(p=>p.id==T0.p+k))k++;const p={id:T0.p+k,t,r:t=='DC'||t=='PV'||t=='AC'?90:0,x:0,y:0},d0=(W.def||{})[t]||{};
-  (T0.pr||[]).forEach(q=>p[q[0]]=d0[q[0]]!=null?d0[q[0]]:q[3]);if(t=='DMM')p.v=d0.v||'V';if(t=='SW'||t=='PBC')p.on=1;if(t=='PB')p.on=0;if(t=='KNO'||t=='KNC'){const k0=C.parts.find(x=>x.t=='K');p.link=k0?k0.id:'K1'}
-  const cs=(p.r==90?[[40,140],[40,260],[160,200]]:[]).concat([60,160,260,340].flatMap(y=>[110,230,350,470,570].map(x=>[x,y]))),used=C.parts.map(wCtr),c=cs.find(q=>used.every(u=>Math.hypot(u[0]-q[0],u[1]-q[1])>62))||[320,200];
+function wClamp(p){const d=wRp(p.r,60,0),xs=[p.x,p.x+d[0]],ys=[p.y,p.y+d[1]];p.x+=Math.max(0,30-Math.min(...xs))-Math.max(0,Math.max(...xs)-610);p.y+=Math.max(0,40-Math.min(...ys))-Math.max(0,Math.max(...ys)-370)}
+function wChanged(){const S=wst();S.res=null;S.hint=null;S.hl=[];store.set(wSKey(),S.C);wRefresh()}
+const wLibTypes=()=>{const W=lesson().wire||{need:[]},base=WLIB[ST.c]||Object.keys(WT),s=new Set(base);if(!wFree())W.need.forEach(([t])=>s.add(t));return Object.keys(WT).filter(t=>s.has(t))};
+function wAdd(t){const W=wFree()?{}:lesson().wire||{},S=wst(),C=S.C,T0=WT[t];if(!T0)return;if(C.parts.filter(p=>p.t==t).length>=WMAX){toast('ℹ️',`الحد الأقصى ${WMAX} من «${T0.n}»`,'info',2000);return}
+  let k=1;while(C.parts.some(p=>p.id==T0.p+k))k++;const p={id:T0.p+k,t,r:wIsSrc({t})?90:0,x:0,y:0},d0=(W.def||{})[t]||{};
+  (T0.pr||[]).forEach(q=>p[q[0]]=d0[q[0]]!=null?d0[q[0]]:q[3]);if(t=='DMM')p.v=d0.v||'V';if(t=='LED')p.col=d0.col||'r';if(T0.st)p.on=T0.st[2];
+  if(T0.b=='no'||T0.b=='nc'){const k0=C.parts.find(x=>x.t=='K');p.link=k0?k0.id:'KM1'}
+  const cs=(p.r==90?[[50,150],[50,280]]:[]).concat([70,170,270,350].flatMap(y=>[130,250,370,490].map(x=>[x,y]))).concat([[560,170],[560,270]]),used=C.parts.map(wCtr),c=cs.find(q=>used.every(u=>Math.hypot(u[0]-q[0],u[1]-q[1])>85))||[320,200];
   const d=wRp(p.r,30,0);p.x=wSnap(c[0]-d[0]);p.y=wSnap(c[1]-d[1]);wClamp(p);C.parts.push(p);S.sel={k:'c',id:p.id};S.pick=null;wChanged();
-  const n=document.querySelector(`[data-wpart="${p.id}"]`);if(n&&n.scrollIntoView){const cv=$('.wcanvas');if(cv){const r=n.getBoundingClientRect(),cr=cv.getBoundingClientRect();if(r.left<cr.left||r.right>cr.right)cv.scrollLeft+=r.left-cr.left-40}}}
+  const cv=$('.wcanvas'),n=document.querySelector(`[data-wpart="${p.id}"]`);if(cv&&n){const r=n.getBoundingClientRect(),cr=cv.getBoundingClientRect();if(r.left<cr.left||r.right>cr.right)cv.scrollLeft+=r.left-cr.left-40}}
 function wWire(a,b){const S=wst(),C=S.C;S.pick=null;if(a==b){wRefresh();return}if(!C.wires.some(w=>(w[0]==a&&w[1]==b)||(w[0]==b&&w[1]==a)))C.wires.push([a,b]);S.sel=null;wChanged()}
+/* Arabic-Indic digits, Arabic decimal comma and engineering suffixes (k, M, m, µ) are accepted */
+function wNum(s){s=String(s).trim().replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٫,]/g,'.').replace(/\s+/g,'');
+  const m=s.match(/^([-+]?\d*\.?\d+(?:e[-+]?\d+)?)([kKمMmuµ]?)/);if(!m)return NaN;const k={k:1e3,K:1e3,M:1e6,m:1e-3,u:1e-6,'µ':1e-6}[m[2]]||1;return parseFloat(m[1])*k}
 
-/* ---------- rendering ---------- */
-function wPartSvg(p,live,S){const d=wRp(p.r,60,0),cx=p.x+d[0]/2,cy=p.y+d[1]/2,n=wRp(p.r,0,-1),I=live?Math.abs(live.I[p.id]):0,V=live?Math.abs(live.V[p.id]):0,st=live&&live.st[p.id];
+/* ---------- drawing ---------- */
+function wGlyphRaw(p,cl){const T=WT[p.t],S=n=>SYMS[n]?SYMS[n].g:'';switch(p.t){
+  case 'SW':return p.on?'<path d="M0 0H14M46 0H60M14 0H46"/><circle cx="14" cy="0" r="2"/><circle cx="46" cy="0" r="2"/>':S('SW');
+  case 'LIM':return p.on?'<path d="M0 0H14M46 0H60M14 0H46M44 0L48-14"/><circle cx="50" cy="-16" r="4"/><circle cx="14" cy="0" r="2"/><circle cx="46" cy="0" r="2"/>':S('LIM');
+  case 'PB':return p.on?'<path d="M0 0H14M46 0H60M14 0H46M30 0V-14M20-14H40"/><circle cx="14" cy="0" r="2"/><circle cx="46" cy="0" r="2"/>':S('PB_NO');
+  case 'PBC':return p.on?S('PB_NC'):'<path d="M0 0H14M46 0H60M14 16H46M30-10V16M20-10H40"/>';
+  case 'ESTOP':return p.on?S('ESTOP'):'<path d="M0 0H14M46 0H60M14 16H46M30 4V16"/><path d="M16 0Q30-18 44 0Z" fill="currentColor"/>';
+  case 'MCB':return cl?'<path d="M0 0H14M46 0H60M14 0H46M26-14l8 8M34-14l-8 8"/><circle cx="14" cy="0" r="2"/>':S('MCB');
+  case 'KNO':case 'KNC':return S(T.sy)+(cl?'<path class="wcl" d="M24 0H36"/>':'');
+  case 'FAN':return T.g+S('FAN')}
+  return T.g||S(T.sy)}
+function wGlyph(p,cl){const tx=[];const g=wGlyphRaw(p,cl).replace(/<text([^>]*)>([^<]*)<\/text>/g,(m,a,t)=>{const x=+((a.match(/\bx="([-\d.]+)"/)||[])[1]||0),y=+((a.match(/\by="([-\d.]+)"/)||[])[1]||0);tx.push({x,y,t});return ''});return {g,tx}}
+function wOver(p,cx,cy,on){const u=WT[p.t].u;if(!u)return '';const t=p.t=='DMM'?({V:'V',A:'A','Ω':'Ω'}[p.v]||'V/A/Ω'):u[1],c=on?' on':'';
+  return u[0]=='c'?`<circle cx="${cx}" cy="${cy}" r="14" class="wbody${c}"/><text class="wmt" x="${cx}" y="${cy+5}" text-anchor="middle">${t}</text>`:`<rect x="${cx-16}" y="${cy-13}" width="32" height="26" rx="4" class="wbody${c}"/><text class="wmt${t.length>2?' sm':''}" x="${cx}" y="${cy+5}" text-anchor="middle">${t}</text>`}
+function wPartSvg(p,live,S){const d=wRp(p.r,60,0),cx=p.x+d[0]/2,cy=p.y+d[1]/2,n=wRp(p.r,0,-1),I=live?Math.abs(live.I[p.id]):0,V=live?Math.abs(live.V[p.id]):0,st=live&&live.st[p.id],B=wB(p);
   const cls='wpart'+(S.sel&&S.sel.k=='c'&&S.sel.id==p.id?' sel':'')+(S.hl.includes(p.id)?' hl':'');let fx='',bd='',on=false;
-  if(live&&st!='burn'){if(p.t=='LED'&&live.I[p.id]>5e-4)fx=`<circle cx="${cx}" cy="${cy}" r="21" class="wglow red" style="opacity:${(.2+.8*Math.min(1,I/.02)).toFixed(2)}"/>`;
-    if(WRATED.includes(p.t)){const a=Math.min(1,(V*V*p.w/(p.rv*p.rv))/p.w);on=V>=.5*p.rv;if(a>.02&&p.t!='MOT'&&p.t!='SOL')fx=`<circle cx="${cx}" cy="${cy}" r="25" class="wglow ${p.t=='HT'?'hot':p.t=='LAMP'?'yel':'grn'}" style="opacity:${(.15+.85*a).toFixed(2)}"/>`}
-    if(p.t=='K')on=!!live.K[p.id];if(p.t=='IN')on=V>=.6*p.rv;if(p.t=='MOT'&&on)bd=`<text class="wspin" x="${cx}" y="${cy-20}" text-anchor="middle">⟳</text>`;if(p.t=='BZ'&&on)bd=`<text class="wbad" x="${cx+20}" y="${cy-14}">♪</text>`}
+  if(live&&st!='burn'){if(B=='led'&&live.I[p.id]>5e-4)fx=`<circle cx="${cx}" cy="${cy}" r="21" class="wglow" style="fill:${WLEDC[p.col||'r'][2]};opacity:${(.2+.8*Math.min(1,I/.02)).toFixed(2)}"/>`;
+    if(B=='load'){const a=Math.min(1,(V/p.rv)**2);on=V>=.5*p.rv;if(a>.02&&!WT[p.t].mot&&p.t!='SOL')fx=`<circle cx="${cx}" cy="${cy}" r="25" class="wglow ${p.t=='HT'?'hot':p.t=='DEV'||p.t=='BZ'?'grn':'yel'}" style="opacity:${(.15+.85*a).toFixed(2)}"/>`}
+    if(B=='coil')on=!!live.K[p.id];if(B=='in')on=V>=.6*p.rv;if(WT[p.t].mot&&V>=.5*p.rv)bd=`<text class="wspin" x="${cx-n[0]*30}" y="${cy-n[1]*30+5}" text-anchor="middle">⟳</text>`;if(p.t=='BZ'&&on)bd=`<text class="wbad" x="${cx+22}" y="${cy-14}">♪</text>`}
   if(st=='burn')bd=`<text class="wbad" x="${cx-n[0]*30}" y="${cy-n[1]*30+6}" text-anchor="middle">💥</text>`;
-  if(st=='blown')bd=`<path class="wx" d="M${cx-9} ${cy-9}L${cx+9} ${cy+9}M${cx+9} ${cy-9}L${cx-9} ${cy+9}"/>`;
-  if((p.t=='DC'||p.t=='AC')&&live&&live.short)bd=`<text class="wbad" x="${cx+18}" y="${cy-30}">⚠️</text>`;
-  const clz=live?live.cl[p.id]:p.t=='KNC';let up=wOver(p,cx,cy,on);if(WT[p.t].u&&WT[p.t].pol){const q=wRp(p.r,4,-14);up+=`<text class="wplus" x="${p.x+q[0]}" y="${p.y+q[1]+4}" text-anchor="middle">+</text>`}
-  if(p.t=='DC'||p.t=='PV'){const q=wRp(p.r,6,-16);up+=`<text class="wplus" x="${p.x+q[0]}" y="${p.y+q[1]+4}" text-anchor="middle">+</text>`}
-  const an=n[0]>.5?'start':n[0]<-.5?'end':'middle',lx=cx+n[0]*26,ly=cy+n[1]*26+4;
-  let rd='';if(live&&['AM','VM','DMM'].includes(p.t)){const r=wRd(p,live),isA=p.t=='AM'||p.v=='A',t=p.t=='DMM'&&p.v=='Ω'?wfR(r):isA?wfA(r):wfV(r);rd=`<text class="wrdt" x="${cx-n[0]*34}" y="${cy-n[1]*34+4}" text-anchor="${n[0]>.5?'end':n[0]<-.5?'start':'middle'}">${t}${live.ac&&p.v!='Ω'?' ~':''}</text>`}
-  const tm=['a','b'].map(s=>{const [tx,ty]=s=='a'?[p.x,p.y]:[p.x+d[0],p.y+d[1]],id=p.id+'.'+s;return `<circle class="wterm${S.pick==id?' pk':''}" cx="${tx}" cy="${ty}" r="6"/><circle data-wt="${id}" class="wthit" cx="${tx}" cy="${ty}" r="14"/>`}).join('');
-  return `<g class="${cls}" data-wpart="${p.id}">${fx}<g transform="translate(${p.x},${p.y}) rotate(${p.r})">${wGlyph(p,clz)}<rect data-wc="${p.id}" class="whit" x="4" y="-18" width="52" height="36"/></g><g class="wup">${up}</g>${bd}<text class="wlbl" x="${lx}" y="${ly}" text-anchor="${an}">${p.id} · ${wVal(p)}</text>${rd}${tm}</g>`}
+  if(st=='blown'||st=='trip')bd=`<path class="wx" d="M${cx-9} ${cy-9}L${cx+9} ${cy+9}M${cx+9} ${cy-9}L${cx-9} ${cy+9}"/>`;
+  if(B=='src'&&live&&live.short)bd=`<text class="wbad" x="${cx+18}" y="${cy-30}">⚠️</text>`;
+  const clz=live?live.cl[p.id]:p.t=='KNC',G=wGlyph(p,clz);let up=wOver(p,cx,cy,on)+G.tx.map(t=>{const q=wRp(p.r,t.x,t.y);return `<text class="wst" x="${p.x+q[0]}" y="${p.y+q[1]}" text-anchor="middle">${t.t}</text>`}).join('');
+  if(WT[p.t].pol&&!G.tx.some(t=>t.t=='+')&&B!='led'&&B!='diode'){const q=wRp(p.r,5,-15);up+=`<text class="wplus" x="${p.x+q[0]}" y="${p.y+q[1]+4}" text-anchor="middle">+</text>`}
+  const an=n[0]>.5?'start':n[0]<-.5?'end':'middle',lx=cx+n[0]*30,ly=cy+n[1]*30+4;
+  let rd='';if(live&&['am','vm','dmm'].includes(B)){const r=wRd(p,live),isA=p.t=='AM'||p.v=='A',t=p.t=='DMM'&&p.v=='Ω'?wfR(r):isA?wfA(r):wfV(r);rd=`<text class="wrdt" x="${cx-n[0]*36}" y="${cy-n[1]*36+4}" text-anchor="${n[0]>.5?'end':n[0]<-.5?'start':'middle'}">${t}${live.ac&&p.v!='Ω'?' ~':''}</text>`}
+  const tm=['a','b'].map(s=>{const [tx,ty]=s=='a'?[p.x,p.y]:[p.x+d[0],p.y+d[1]],id=p.id+'.'+s;return `<circle class="wterm${S.pick==id?' pk':''}" cx="${tx}" cy="${ty}" r="5.5"/><circle data-wt="${id}" class="wthit" cx="${tx}" cy="${ty}" r="14"/>`}).join('');
+  return `<g class="${cls}" data-wpart="${p.id}">${fx}<g transform="translate(${p.x},${p.y}) rotate(${p.r})">${G.g}<rect data-wc="${p.id}" class="whit" x="5" y="-20" width="50" height="40"/></g><g class="wup">${up}</g>${bd}<text class="wlbl" x="${lx}" y="${ly}" text-anchor="${an}"><tspan class="wid">${p.id}</tspan> ${wVal(p)}</text>${rd}${tm}</g>`}
+/* right-angle wire: leave each terminal along its part's axis first */
+function wRoute(C,t1,t2){const a=wTerm(C,t1),b=wTerm(C,t2);if(!a||!b)return null;if(Math.abs(a[0]-b[0])<1||Math.abs(a[1]-b[1])<1)return `M${a[0]} ${a[1]}L${b[0]} ${b[1]}`;
+  const p=wPart0(C,t1.split('.')[0]),hz=p.r%180==0;return hz?`M${a[0]} ${a[1]}H${b[0]}V${b[1]}`:`M${a[0]} ${a[1]}V${b[1]}H${b[0]}`}
 function wBoard(S,live){const C=S.C,sel=S.sel||{},cur=id=>{const p=wPart0(C,id);return live&&p&&!wIsV(p)&&Math.abs(live.I[id])>1e-3};
-  let h=`<defs><pattern id="wgd" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="0" cy="0" r="1.5" class="wgdot"/><circle cx="20" cy="0" r="1.5" class="wgdot"/><circle cx="0" cy="20" r="1.5" class="wgdot"/><circle cx="20" cy="20" r="1.5" class="wgdot"/></pattern></defs><rect data-wbg="1" class="wbg" x="0" y="0" width="640" height="400" fill="url(#wgd)"/>`;
-  if(!C.parts.length)h+='<text class="wempty" x="320" y="200" text-anchor="middle">اختر العناصر من «مكتبة العناصر» أعلاه لتظهر هنا</text>';
-  C.wires.forEach((w,i)=>{const a=wTerm(C,w[0]),b=wTerm(C,w[1]);if(!a||!b)return;const lv=cur(w[0].split('.')[0])&&cur(w[1].split('.')[0]),L=`x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}"`;
-    h+=`<g class="wwr${sel.k=='w'&&sel.i==i?' sel':''}" data-ww="${i}"><line class="hit" ${L}/><line class="ln" ${L}/>${lv?`<line class="fl" ${L}/>`:''}</g>`});
-  C.parts.forEach(p=>h+=wPartSvg(p,live,S));return h+'<line id="wrub" class="wrub" x1="0" y1="0" x2="0" y2="0" style="display:none"/>'}
-function wLib(){return `<label class="wlib"><span>📚 مكتبة العناصر</span><select id="wlib" aria-label="مكتبة العناصر: اختر عنصرًا لإضافته إلى اللوحة"><option value="">اختر عنصرًا لإضافته إلى اللوحة…</option>${WGRP.map((gn,i)=>`<optgroup label="${gn}">${Object.keys(WT).filter(t=>WT[t].grp==i).map(t=>`<option value="${t}">${WT[t].n}</option>`).join('')}</optgroup>`).join('')}</select></label>`}
-function wPanel(W,S){const C=S.C;
+  let h=`<defs><pattern id="wgd" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="0" cy="0" r="1.4" class="wgdot"/><circle cx="20" cy="0" r="1.4" class="wgdot"/><circle cx="0" cy="20" r="1.4" class="wgdot"/><circle cx="20" cy="20" r="1.4" class="wgdot"/></pattern></defs><rect data-wbg="1" class="wbg" x="0" y="0" width="640" height="400" fill="url(#wgd)"/>`;
+  if(!C.parts.length)h+='<text class="wempty" x="320" y="200" text-anchor="middle">اختر العناصر من «مكتبة المادة» أعلاه لتظهر هنا</text>';
+  const deg={};C.wires.forEach(w=>w.forEach(t=>deg[t]=(deg[t]||0)+1));
+  C.wires.forEach((w,i)=>{const d=wRoute(C,w[0],w[1]);if(!d)return;const lv=cur(w[0].split('.')[0])&&cur(w[1].split('.')[0]);
+    h+=`<g class="wwr${sel.k=='w'&&sel.i==i?' sel':''}" data-ww="${i}"><path class="hit" d="${d}"/><path class="ln" d="${d}"/>${lv?`<path class="fl" d="${d}"/>`:''}</g>`});
+  C.parts.forEach(p=>h+=wPartSvg(p,live,S));
+  Object.keys(deg).forEach(t=>{if(deg[t]>1){const q=wTerm(C,t);if(q)h+=`<circle class="wjn" cx="${q[0]}" cy="${q[1]}" r="4.5"/>`}});
+  return h+'<line id="wrub" class="wrub" x1="0" y1="0" x2="0" y2="0" style="display:none"/>'}
+function wLib(){const T=wLibTypes();return `<label class="wlib"><span>📚 مكتبة المادة</span><select id="wlib" aria-label="مكتبة عناصر المادة: اختر عنصرًا لإضافته إلى اللوحة"><option value="">اختر عنصرًا لإضافته إلى اللوحة…</option>${WGRP.map((gn,i)=>{const L=T.filter(t=>WT[t].grp==i);return L.length?`<optgroup label="${gn}">${L.map(t=>`<option value="${t}">${WT[t].n}</option>`).join('')}</optgroup>`:''}).join('')}</select></label>`}
+function wPanel(S){const C=S.C;
   if(S.pick){const [id,s]=S.pick.split('.');return `<div class="wpan pick">🔗 اخترت ${s=='a'?'الطرف الأول (+)':'الطرف الثاني'} من <b>${id}</b>. اضغط الآن طرفًا آخر لتوصيل سلك بينهما، أو اضغط مساحة فارغة للإلغاء.</div>`}
   const sel=S.sel;if(sel&&sel.k=='w'&&C.wires[sel.i]){const w=C.wires[sel.i];return `<div class="wpan">سلك بين <b>${w[0].split('.')[0]}</b> و<b>${w[1].split('.')[0]}</b> <button type="button" class="btn" data-wp="delw">🗑 حذف السلك</button></div>`}
-  const p=sel&&sel.k=='c'&&wPart0(C,sel.id);if(!p)return '<div class="wpan muted">اضغط عنصرًا لتغيير قيمه أو تدويره، واسحبه لتحريكه. لتوصيل سلك: اضغط طرفًا (الدائرة الصغيرة) ثم طرفًا آخر، أو اسحب من طرف إلى طرف.</div>';
-  const T0=WT[p.t],prs=(T0.pr||[]).map(q=>`<label class="wvl">${q[1]} <input type="number" inputmode="decimal" step="any" min="${q[4]}" max="${q[5]}" value="${+p[q[0]]}" data-wpr="${q[0]}"> <span>${q[2]}</span></label>`).join('');
+  const p=sel&&sel.k=='c'&&wPart0(C,sel.id);if(!p)return '<div class="wpan muted">👆 اضغط أي عنصر على اللوحة لتظهر خصائصه هنا وتكتب قيمه بنفسك. لتوصيل سلك: اضغط طرفًا (الدائرة الصغيرة) ثم طرفًا آخر، أو اسحب من طرف إلى طرف.</div>';
+  const T0=WT[p.t],prs=(T0.pr||[]).map(q=>`<label class="wvl">${q[1]} <input type="text" inputmode="decimal" autocomplete="off" value="${+p[q[0]]}" data-wpr="${q[0]}" aria-label="${q[1]}"> <span>${q[2]}</span></label>`).join('');
   const mode=p.t=='DMM'?`<label class="wvl">الوضع <select id="wmode">${Object.keys(WMODE).map(m=>`<option value="${m}"${p.v==m?' selected':''}>${WMODE[m]}</option>`).join('')}</select></label>`:'';
-  const ks=C.parts.filter(x=>x.t=='K'),link=p.t=='KNO'||p.t=='KNC'?`<label class="wvl">تابع للملف <select id="wlink">${ks.length?ks.map(k=>`<option${p.link==k.id?' selected':''}>${k.id}</option>`).join(''):'<option value="">أضف ملف مرحّل أولًا</option>'}</select></label>`:'';
-  const tog={SW:p.on?'🔓 افتح المفتاح':'🔒 أغلق المفتاح',PB:p.on?'✋ أفلت الزر':'👆 اضغط الزر',PBC:p.on?'👆 اضغط زر الإيقاف':'✋ أفلت زر الإيقاف'}[p.t];
-  return `<div class="wpan"><b>${p.id}</b><span>${T0.n}</span>${prs}${mode}${link}${tog?`<button type="button" class="btn" data-wp="tog">${tog}</button>`:''}${WPOL.includes(p.t)?'<button type="button" class="btn" data-wp="flip">⇄ اعكس الاتجاه</button>':''}<button type="button" class="btn" data-wp="rot">↻ تدوير</button><button type="button" class="btn" data-wp="del">🗑 حذف</button></div>`}
-function wStx(p,s){const st=s.st[p.id],V=Math.abs(s.V[p.id]);if(st=='burn')return '<span class="bad">💥 احترق</span>';if(st=='blown')return '<span class="bad">احترق الفيوز</span>';
-  if(p.t=='LED'||p.t=='LAMP')return wOn(p,s)?'<span class="okc">يضيء</span>':'مطفأ';if(p.t=='MOT')return V>=.85*p.rv?'<span class="okc">يدور</span>':V>=.3*p.rv?'بطيء':'متوقف';
-  if(p.t=='HT')return wOn(p,s)?'يسخن':'بارد';if(p.t=='BZ')return wOn(p,s)?'يعمل':'صامت';if(p.t=='SOL')return wOn(p,s)?'مفتوح':'مغلق';if(p.t=='DEV')return wWork(p,s)?'<span class="okc">يعمل</span>':wOn(p,s)?'جهد غير كافٍ':'متوقف';
-  if(p.t=='K')return s.K[p.id]?'<span class="okc">منشّط</span>':'غير منشّط';if(WSWT.includes(p.t))return s.cl[p.id]?'موصل':'مفصول';if(p.t=='IN')return wOn(p,s)?'<span class="okc">ON</span>':'OFF';
-  if(p.t=='FUSE')return 'سليم';if((p.t=='DC'||p.t=='AC')&&s.short)return '<span class="bad">⚠️ قصر</span>';if(p.t=='AC')return `P = ${wN(+s.P[p.id].toFixed(1))} W · PF = ${s.pf[p.id].toFixed(2)}`;if(p.t=='DMM'&&p.v=='Ω')return wfR(s.ohm[p.id]);return ''}
+  const col=p.t=='LED'?`<label class="wvl">اللون <select id="wcol">${Object.keys(WLEDC).map(c=>`<option value="${c}"${(p.col||'r')==c?' selected':''}>${WLEDC[c][0]} (${WLEDC[c][1]} V)</option>`).join('')}</select></label>`:'';
+  const ks=C.parts.filter(x=>x.t=='K'),link=wB(p)=='no'||wB(p)=='nc'?`<label class="wvl">تابع للملف <select id="wlink">${ks.length?ks.map(k=>`<option${p.link==k.id?' selected':''}>${k.id}</option>`).join(''):'<option value="">أضف ملف كونتاكتور أولًا</option>'}</select></label>`:'';
+  const tog=T0.tg?(p.on?T0.tg[0]:T0.tg[1]):'';
+  return `<div class="wpan"><div class="wph"><b>${p.id}</b><span>${T0.n}</span></div><div class="wpf">${prs}${mode}${col}${link}</div>${prs?'<p class="nolab wtip">اكتب القيمة ثم اضغط Enter أو «تطبيق». يُقبل: 4.7k = 4700، 220m = 0.22، والأرقام العربية.</p>':''}<div class="wpb">${prs?'<button type="button" class="btn pri" data-wp="apply">✔ تطبيق القيم</button>':''}${tog?`<button type="button" class="btn" data-wp="tog">${tog}</button>`:''}${WPOL.includes(p.t)?'<button type="button" class="btn" data-wp="flip">⇄ اعكس الاتجاه</button>':''}<button type="button" class="btn" data-wp="rot">↻ تدوير</button><button type="button" class="btn" data-wp="del">🗑 حذف</button></div></div>`}
+function wStx(p,s){const st=s.st[p.id],V=Math.abs(s.V[p.id]),B=wB(p);if(st=='burn')return '<span class="bad">💥 احترق</span>';if(st=='blown')return '<span class="bad">احترق</span>';if(st=='trip')return '<span class="bad">فصل (حمل زائد)</span>';
+  if(s.ac&&(B=='led'||B=='diode'))return '<span class="bad">غير مدعوم في المتردد</span>';
+  if(B=='led'||p.t=='LAMP'||p.t=='PL')return wOn(p,s)?'<span class="okc">يضيء</span>':'مطفأ';if(WT[p.t].mot)return V>=.85*p.rv?'<span class="okc">يدور</span>':V>=.3*p.rv?'بطيء':'متوقف';
+  if(p.t=='HT')return wOn(p,s)?'يسخن':'بارد';if(p.t=='BZ')return wOn(p,s)?'يعمل':'صامت';if(p.t=='SOL')return wOn(p,s)?'منشّط':'غير منشّط';if(p.t=='DEV')return wWork(p,s)?'<span class="okc">يعمل</span>':wOn(p,s)?'جهد غير كافٍ':'متوقف';
+  if(B=='coil')return s.K[p.id]?'<span class="okc">منشّط</span>':'غير منشّط';if(wIsSw(p))return s.cl[p.id]?'موصل':'مفصول';if(B=='in')return wOn(p,s)?'<span class="okc">ON</span>':'OFF';
+  if(B=='fuse'||B=='ol')return 'سليم';if(B=='src'&&s.short)return '<span class="bad">⚠️ قصر</span>';if(p.t=='AC')return `P = ${wN(+s.P[p.id].toFixed(1))} W · PF = ${s.pf[p.id].toFixed(2)}`;if(p.t=='DMM'&&p.v=='Ω')return wfR(s.ohm[p.id]);
+  if(B=='pv')return `P = ${(Math.abs(s.V[p.id]*s.I[p.id])).toFixed(1)} W`;if(B=='src'&&p.t=='DC'&&s.I[p.id]<-.05)return 'تُشحن';return ''}
 function wRead(C,live){if(!C.parts.length)return '';if(!live)return '<p class="nolab">أضف مصدرًا (أو أفوميتر على وضع Ω) لترى قراءات دائرتك.</p>';
-  return `<div class="wread"><h4>📟 قراءات دائرتك الآن${live.ac?' (قيم فعّالة ~)':''}</h4><div class="tw"><table><thead><tr><th>العنصر</th><th>القيمة</th><th>الجهد</th><th>التيار</th><th>الحالة</th></tr></thead><tbody>${C.parts.map(p=>`<tr><td><b>${p.id}</b> ${WT[p.t].n}</td><td>${wVal(p)}</td><td class="mono">${wfV(Math.abs(live.V[p.id]))}</td><td class="mono">${wfA(Math.abs(live.I[p.id]))}</td><td>${wStx(p,live)}</td></tr>`).join('')}</tbody></table></div></div>`}
+  return `<details class="wread" open><summary>📟 قراءات دائرتك الآن${live.ac?' (قيم فعّالة ~)':''}</summary><div class="tw"><table><thead><tr><th>العنصر</th><th>القيمة</th><th>الجهد</th><th>التيار</th><th>الحالة</th></tr></thead><tbody>${C.parts.map(p=>`<tr><td><b>${p.id}</b> ${WT[p.t].n}</td><td>${wVal(p)}</td><td class="mono">${wfV(Math.abs(live.V[p.id]))}</td><td class="mono">${wfA(Math.abs(live.I[p.id]))}</td><td>${wStx(p,live)}</td></tr>`).join('')}</tbody></table></div></details>`}
 function wReq(W,S){const G=S.res?S.res.G:null;return `<div class="wreq"><h4>🎯 المطلوب من دائرتك</h4><ol>${wTitles(W).map((r,i)=>{const g0=G&&G[i],c=!G?'':g0?(g0.ok?'ok':'bad'):'pend';return `<li class="${c}">${r}${g0&&!g0.ok?`<div class="wwhy">${g0.m}</div>`:''}</li>`}).join('')}</ol></div>`}
 function wFb(W,S){const r=S.res;if(S.hint)return `<div class="wfb hintm">${S.hint}</div>`;if(!r)return '';
-  if(r.ok){const s=r.X.on,ms=r.X.C.parts.filter(p=>['AM','VM','DMM'].includes(p.t)).map(p=>{const v=wRd(p,s);return `${p.id} = ${p.t=='DMM'&&p.v=='Ω'?wfR(v):p.t=='AM'||p.v=='A'?wfA(v):wfV(v)}`});
-    return `<div class="wfb okm"><h4>🎉 دائرتك صحيحة، وصممتها بنفسك!</h4><ul>${(ms.length?['قراءاتك: '+ms.join('، ')]:[]).concat(W.ok||[]).map(t=>`<li>${t}</li>`).join('')}</ul><p class="nolab">جرّب تغيير القيم وراقب ما يحدث للقراءات؛ هكذا يترسخ الفهم.</p></div>`}
+  if(r.ok){const s=r.X.on,ms=r.X.C.parts.filter(p=>['am','vm','dmm'].includes(wB(p))).map(p=>{const v=wRd(p,s);return `${p.id} = ${p.t=='DMM'&&p.v=='Ω'?wfR(v):p.t=='AM'||p.v=='A'?wfA(v):wfV(v)}`});
+    return `<div class="wfb okm"><h4>🎉 دائرتك صحيحة، وصممتها بنفسك!</h4><ul>${(ms.length?['قراءاتك: '+ms.join('، ')]:[]).concat(W.ok||[]).map(t=>`<li>${t}</li>`).join('')}</ul><p class="nolab">جرّب تغيير القيم وراقب ما يحدث للقراءات، أو انتقل إلى «المحاكاة الحرة» لتجرّب دوائرك الخاصة.</p></div>`}
   const n=r.G.filter(x=>x.ok).length;return `<div class="wfb nom"><h4>🔍 حققت ${n} من ${wTitles(W).length}. راجع البنود المعلَّمة بالأحمر في «المطلوب».</h4><p class="nolab">كل خطأ هنا درس قبل الورشة الحقيقية. عدّل الدائرة ثم اضغط «تحقق» مرة أخرى، أو استعن بالتلميح.</p></div>`}
-function wBody(){const W=lesson().wire,S=wst(),C=S.C,live=wSim(C,{},{init:S.km});if(live)S.km=Object.assign({},live.K);
-  const src=live&&C.parts.find(p=>(p.t=='DC'||p.t=='AC')&&Math.abs(live.V[p.id])<.3*Math.abs(p.v));
-  const warn=live&&live.short?`<div class="wwarn">⚠️ قصر في الدائرة!${src?` تيار ${src.id} ${wfA(Math.abs(live.I[src.id]))}.`:''} في الواقع تسخن الأسلاك بسرعة وقد تحترق.</div>`:live&&Object.values(live.st).includes('burn')?'<div class="wwarn">💥 احترق عنصر! الجهد أو التيار أكبر من المسموح. غيّر القيم أو التوصيل.</div>':live&&live.mblown?'<div class="wwarn">💥 احترق فيوز الأفوميتر: مر فيه تيار كبير على وضع A.</div>':'';
-  return `${wReq(W,S)}${wLib()}${warn}<div class="wcanvas"><svg id="wbd" class="wsvg" viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="لوحة التوصيل">${wBoard(S,live)}</svg></div><p class="wswipe">↔ حرّك اللوحة يمينًا ويسارًا لرؤيتها كاملة</p>
-  <div id="wpan">${wPanel(W,S)}</div>${wRead(C,live)}
-  <div class="wbtns"><button type="button" class="btn pri" data-wdo="check">✔ تحقق من التوصيل</button><button type="button" class="btn" data-wdo="hint">💡 تلميح</button><button type="button" class="btn" data-wdo="reset">↺ ابدأ من جديد</button></div>
-  <div id="wfbx" aria-live="polite">${wFb(W,S)}</div>`}
-function wireHtml(){const W=lesson().wire;if(!W)return '<div class="empty">لا يوجد تمرين توصيل لهذه اللوحة بعد.</div>';
-  return `<div class="wire"><div class="whead"><span class="eyebrow">🔌 مختبر التوصيل${wireDone()?' · ✓ أنجزته سابقًا':''}</span><h3>${W.t}</h3><p class="wtask">${W.task}</p></div>
-  <div class="mk mk-field"><span class="mk-l">ملاحظة التوصيل</span><div><ul class="wnotes">${W.n.map(n=>`<li>${n}</li>`).join('')}</ul></div></div>
-  <details class="whow"><summary>كيف أستخدم المختبر؟</summary><ol><li>اختر العنصر من «مكتبة العناصر» فيظهر على اللوحة.</li><li>لتوصيل سلك: اضغط طرفًا (الدائرة الصغيرة) ثم طرفًا آخر، أو اسحب من طرف إلى طرف. يمكن أن يتصل بالطرف أكثر من سلك.</li><li>اضغط العنصر لتكتب قيمه بنفسك (الجهد، المقاومة، القدرة…)، أو لتدويره أو عكسه أو حذفه، واسحبه لتحريكه. اضغط السلك لحذفه.</li><li>جرّب الأزرار والمفاتيح من لوحة خصائصها، وراقب الإضاءة والقراءات مباشرة، ثم اضغط «تحقق».</li></ol></details>
+function wBody(){const free=wFree(),W=lesson().wire,S=wst(),C=S.C,live=wSim(C,{},{init:S.km});if(live)S.km=Object.assign({},live.K);
+  const src=live&&C.parts.find(p=>wB(p)=='src'&&Math.abs(live.V[p.id])<.3*Math.abs(p.v));
+  const warn=live&&live.short?`<div class="wwarn">⚠️ قصر في الدائرة!${src?` تيار ${src.id} ${wfA(Math.abs(live.I[src.id]))}.`:''} في الواقع تسخن الأسلاك بسرعة وقد تحترق.</div>`:live&&Object.values(live.st).includes('burn')?'<div class="wwarn">💥 احترق عنصر! الجهد أو التيار أكبر من المسموح. غيّر القيم أو التوصيل.</div>':live&&live.mblown?'<div class="wwarn">💥 احترق فيوز الأفوميتر: مر فيه تيار كبير على وضع A.</div>':live&&live.acDiode?'<div class="wwarn">ℹ️ الثنائيات والـLED لا تُحاكى بدقة مع المصدر المتردد في هذا المختبر؛ استخدمها مع المصدر المستمر.</div>':'';
+  return `${free?'':wReq(W,S)}${wLib()}<div id="wpan">${wPanel(S)}</div>${warn}<div class="wcanvas"><svg id="wbd" class="wsvg" viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="لوحة التوصيل">${wBoard(S,live)}</svg></div><p class="wswipe">↔ حرّك اللوحة يمينًا ويسارًا لرؤيتها كاملة</p>
+  ${wRead(C,live)}<div class="wbtns">${free?'':'<button type="button" class="btn pri" data-wdo="check">✔ تحقق من التوصيل</button><button type="button" class="btn" data-wdo="hint">💡 تلميح</button>'}<button type="button" class="btn" data-wdo="reset">↺ ابدأ من جديد</button></div>
+  <div id="wfbx" aria-live="polite">${free?'':wFb(W,S)}</div>`}
+function wireHtml(){const W=lesson().wire;if(!W)return '<div class="empty">لا يوجد تمرين توصيل لهذه اللوحة بعد.</div>';const free=wFree();
+  return `<div class="wire"><div class="wmodes" role="tablist"><button type="button" role="tab" aria-selected="${!free}" class="${free?'':'on'}" data-wmode="ex">🎯 تمرين اللوحة</button><button type="button" role="tab" aria-selected="${free}" class="${free?'on':''}" data-wmode="free">🧪 محاكاة حرة</button></div>
+  ${free?`<div class="whead"><span class="eyebrow">🧪 محاكاة حرة · ${curC().ar}</span><h3>مختبرك الخاص</h3><p class="wtask">ابنِ أي دائرة من مكتبة المادة، واكتب قيم العناصر بنفسك، وجرّب المفاتيح والأزرار، وراقب الجهد والتيار والإضاءة كما في الورشة. لا توجد متطلبات هنا؛ دائرتك تُحفظ لهذه المادة.</p></div>`:
+  `<div class="whead"><span class="eyebrow">🔌 مختبر التوصيل${wireDone()?' · ✓ أنجزته سابقًا':''}</span><h3>${W.t}</h3><p class="wtask">${W.task}</p></div>
+  <div class="mk mk-field"><span class="mk-l">ملاحظة التوصيل</span><div><ul class="wnotes">${W.n.map(n=>`<li>${n}</li>`).join('')}</ul></div></div>`}
+  <details class="whow"><summary>كيف أستخدم المختبر؟</summary><ol><li>اختر العنصر من «مكتبة المادة» فيظهر على اللوحة وتظهر خصائصه فوقها.</li><li>اكتب القيمة في خانتها ثم اضغط Enter أو «تطبيق القيم».</li><li>لتوصيل سلك: اضغط طرفًا (الدائرة الصغيرة) ثم طرفًا آخر، أو اسحب من طرف إلى طرف. النقطة السوداء تعني تفرعًا (أكثر من سلك على الطرف).</li><li>اضغط العنصر لتعديله أو تدويره أو عكسه أو حذفه، واسحبه لتحريكه. اضغط السلك لحذفه.</li><li>جرّب الأزرار والمفاتيح من خصائصها، وراقب القراءات مباشرة${free?'':'، ثم اضغط «تحقق»'}.</li></ol></details>
   <div id="wbox">${wBody()}</div></div>`}
-function wRefresh(){const b=$('#wbox');if(!b)return;const c=$('.wcanvas'),sl=c?c.scrollLeft:0,fo=document.activeElement&&document.activeElement.dataset&&document.activeElement.dataset.wpr;b.innerHTML=wBody();const n=$('.wcanvas');if(n)n.scrollLeft=sl;if(fo){const i=document.querySelector(`[data-wpr="${fo}"]`);if(i)i.focus()}}
+function wRefresh(){const b=$('#wbox');if(!b)return;const c=$('.wcanvas'),sl=c?c.scrollLeft:0,ae=document.activeElement,fo=ae&&ae.dataset&&ae.dataset.wpr;b.innerHTML=wBody();const n=$('.wcanvas');if(n)n.scrollLeft=sl;if(fo){const i=document.querySelector(`[data-wpr="${fo}"]`);if(i){i.focus();i.select&&i.select()}}}
 
 /* ---------- checking + hints ---------- */
 function wRun(){const W=lesson().wire,S=wst(),X=wCtx(S.C),G=wGoals(W,X);return {G,X,ok:G.length==wTitles(W).length&&G.every(x=>x.ok)}}
@@ -12139,13 +12246,18 @@ function wHint(){const S=wst(),W=lesson().wire,r=wRun(),i=r.G.findIndex(x=>!x.ok
   if(i>=0){const x=r.G[i],k='g'+i;S.hn=S.hk==k?S.hn+1:0;S.hk=k;const deep=S.hn>0&&x.h2;S.hl=x.f||[];S.hint=`💡 <b>تلميح ${deep?2:1}</b> · ${wTitles(W)[i]}<br>${deep?x.h2:(x.h||x.m)}${!deep&&x.h2?'<br><span class="nolab">اضغط «تلميح» مرة أخرى لتلميح أوضح.</span>':''}`}
   else{S.hl=[];S.hint='💡 كل شيء صحيح! اضغط «تحقق من التوصيل».'}
   wRefresh();const f=$('#wfbx');if(f)f.scrollIntoView({behavior:'smooth',block:'nearest'})}
-function wCheckDo(){const S=wst(),r=wRun();S.res=r;S.hint=null;S.hl=[];wRefresh();
+function wCheckDo(){wApply(true);const S=wst(),r=wRun();S.res=r;S.hint=null;S.hl=[];wRefresh();
   if(r.ok){const d=store.get('wire.'+ST.c,{}),first=!d[ST.l];d[ST.l]=1;store.set('wire.'+ST.c,d);confetti(110);toast('🔌',first?'دائرتك صحيحة! +20 XP':'دائرتك صحيحة، أحسنت!','ok',2600);if(first)addXP(20);
     const tb=document.querySelector('[data-go="t:wire"]');if(tb&&!/✓/.test(tb.textContent))tb.insertAdjacentText('beforeend',' ✓')}
   else toast('🔍',pick(['قريب! راجع البنود الحمراء','كل خطأ هنا درس قبل الورشة الحقيقية','عدّل دائرتك وحاول مرة أخرى']),'no',2200);
   const f=$('#wfbx');if(f)f.scrollIntoView({behavior:'smooth',block:'nearest'})}
+/* read every value box of the selected part; quiet=true skips refresh when nothing changed */
+function wApply(quiet){const S=wst(),p=S.sel&&S.sel.k=='c'&&wPart0(S.C,S.sel.id);if(!p)return true;let ch=false,bad='';
+  document.querySelectorAll('[data-wpr]').forEach(i=>{const q=(WT[p.t].pr||[]).find(x=>x[0]==i.dataset.wpr);if(!q)return;const v=wNum(i.value);
+    if(!(v>=q[4]&&v<=q[5])){bad=`أدخل ${q[1]} بين ${wN(q[4])} و${wN(q[5])} ${q[2]}`;i.classList.add('err');return}if(v!==p[q[0]]){p[q[0]]=v;ch=true}});
+  if(bad){toast('⚠️',bad,'no',2600);return false}if(ch){wChanged();if(!quiet)toast('✔','تم تطبيق القيم','ok',1200)}return true}
 
-/* ---------- interactions: drag to move, drag/tap terminal-to-terminal for wires ---------- */
+/* ---------- interactions ---------- */
 const wPt=e=>{const s=$('#wbd');if(!s)return null;const p=s.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const q=p.matrixTransform(s.getScreenCTM().inverse());return [q.x,q.y]};
 let WD=null;
 document.addEventListener('pointerdown',e=>{if(ST.v!='course'||ST.t!='wire'||e.button>0)return;const tm=e.target.closest('[data-wt]'),bd=e.target.closest('[data-wc]');
@@ -12158,12 +12270,16 @@ document.addEventListener('pointerup',e=>{if(!WD)return;const d=WD;WD=null;if(!d
   if(d.m=='wire'){const t=el&&el.closest&&el.closest('[data-wt]');if(t&&t.dataset.wt!==d.from)wWire(d.from,t.dataset.wt);else wRefresh();return}
   const q=wPt(e),p=wPart0(wst().C,d.id);if(q&&p&&d.p0){p.x+=wSnap(q[0]-d.p0[0]);p.y+=wSnap(q[1]-d.p0[1]);wClamp(p);wst().sel={k:'c',id:p.id}}wChanged()});
 document.addEventListener('pointercancel',()=>{WD=null});
-document.addEventListener('click',e=>{if(ST.v!='course'||ST.t!='wire'||!e.target.closest('.wire'))return;if(window.__wNoClick&&Date.now()-window.__wNoClick<350){window.__wNoClick=0;return}const S=wst(),C=S.C;
+document.addEventListener('click',e=>{if(ST.v!='course'||ST.t!='wire'||!e.target.closest('.wire'))return;if(window.__wNoClick&&Date.now()-window.__wNoClick<350){window.__wNoClick=0;return}
+  const md=e.target.closest('[data-wmode]');if(md){W5M[ST.c]=md.dataset.wmode;$('#app')&&paintSheet?paintSheet():paint();return}
+  const S=wst(),C=S.C;
   const tm=e.target.closest('[data-wt]');if(tm){const t=tm.dataset.wt;if(S.pick&&S.pick!==t)wWire(S.pick,t);else{S.pick=S.pick==t?null:t;S.sel=null;wRefresh()}return}
-  const bd=e.target.closest('[data-wc]');if(bd){S.pick=null;S.sel={k:'c',id:bd.dataset.wc};wRefresh();return}
+  const bd=e.target.closest('[data-wc]');if(bd){S.pick=null;S.sel={k:'c',id:bd.dataset.wc};wRefresh();const pn=$('#wpan');if(pn){const r=pn.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight)pn.scrollIntoView({behavior:'smooth',block:'center'})}return}
   const ww=e.target.closest('[data-ww]');if(ww){S.pick=null;S.sel={k:'w',i:+ww.dataset.ww};wRefresh();return}
   if(e.target.closest('[data-wbg]')){S.pick=null;S.sel=null;wRefresh();return}
   const bp=e.target.closest('[data-wp]');if(bp){const a=bp.dataset.wp,sel=S.sel||{},p=sel.k=='c'&&wPart0(C,sel.id);
+    if(a=='apply'){wApply(false);return}
+    if(p&&a!='del'&&!wApply(true))return;
     if(a=='delw'&&sel.k=='w'){C.wires.splice(sel.i,1);S.sel=null}
     if(p&&a=='del'){C.parts=C.parts.filter(x=>x!==p);C.wires=C.wires.filter(w=>w[0].split('.')[0]!==p.id&&w[1].split('.')[0]!==p.id);S.sel=null}
     if(p&&a=='rot'){const c=wCtr(p);p.r=(p.r+90)%360;const d=wRp(p.r,30,0);p.x=wSnap(c[0]-d[0]);p.y=wSnap(c[1]-d[1]);wClamp(p)}
@@ -12174,11 +12290,12 @@ document.addEventListener('click',e=>{if(ST.v!='course'||ST.t!='wire'||!e.target
 document.addEventListener('change',e=>{if(ST.v!='course'||ST.t!='wire')return;const S=wst(),t=e.target;
   if(t.id=='wlib'){const v=t.value;t.value='';if(v)wAdd(v);return}
   const p=S.sel&&S.sel.k=='c'&&wPart0(S.C,S.sel.id);if(!p)return;
-  if(t.dataset&&t.dataset.wpr){const q=(WT[p.t].pr||[]).find(x=>x[0]==t.dataset.wpr),v=parseFloat(String(t.value).replace(',','.'));
-    if(!q||!(v>=q[4]&&v<=q[5])){toast('⚠️',`أدخل ${q?q[1]:'قيمة'} بين ${q?wN(q[4]):''} و${q?wN(q[5]):''} ${q?q[2]:''}`,'no',2400);wRefresh();return}p[q[0]]=v;wChanged();return}
-  if(t.id=='wmode'){p.v=t.value;wChanged();return}
+  if(t.dataset&&t.dataset.wpr){wApply(true);return}
+  if(t.id=='wmode'){p.v=t.value;wChanged();return}if(t.id=='wcol'){p.col=t.value;wChanged();return}
   if(t.id=='wlink'&&t.value){p.link=t.value;wChanged()}});
+document.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.wpr)e.target.classList.remove('err')});
 document.addEventListener('keydown',e=>{if(ST.v!='course'||ST.t!='wire'||!$('#wbd'))return;const S=wst();
+  if(e.key=='Enter'&&e.target.dataset&&e.target.dataset.wpr){e.preventDefault();wApply(false);return}
   if(e.key=='Escape'&&(S.pick||S.sel)){S.pick=null;S.sel=null;wRefresh()}
   if((e.key=='Delete'||e.key=='Backspace')&&S.sel&&!/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)){e.preventDefault();const b=$(S.sel.k=='w'?'[data-wp="delw"]':'[data-wp="del"]');if(b)b.click()}});
 /* v8: practical benefit of each library element: why it matters to you as a technician */
@@ -12609,12 +12726,12 @@ async function accInit(){try{
   const [A,U,F]=await Promise.all([import(B+'firebase-app.js'),import(B+'firebase-auth.js'),import(B+'firebase-firestore.js')]);
   const app=A.initializeApp(FB_CFG),auth=U.getAuth(app),db=F.getFirestore(app);auth.languageCode='ar';
   ACC.fb={A,U,F,app,auth,db};ACC.ready=true;
-  U.onAuthStateChanged(auth,async u=>{ACC.user=u;ACC.admin=!!(u&&u.email==ADMIN_EMAIL);
+  U.onAuthStateChanged(auth,async u=>{ACC.user=u;ACC.known=true;ACC.admin=!!(u&&u.email==ADMIN_EMAIL);
     if(u){try{await pullAndMerge()}catch(e){console.warn(e)}}else{ACC.prof=null}
     if(ACC.admin&&!NAV.some(n=>n[0]=='admin'))NAV.push(['admin','لوحة المستخدمين']);
     if(!ACC.admin){const i=NAV.findIndex(n=>n[0]=='admin');if(i>=0)NAV.splice(i,1);if(ST.v=='admin')ST.v='home'}
-    const y=scrollY;if(ST.v=='course'&&curC())paintTop();else paint();scrollTo(0,y)});
-  }catch(e){ACC.ready=false;console.warn('accounts unavailable',e);paintTop()}}
+    const y=scrollY;if(u&&ST.v=='course'&&curC())paintTop();else paint();scrollTo(0,u?y:0)});
+  }catch(e){ACC.ready=false;ACC.known=true;console.warn('accounts unavailable',e);paint()}}
 
 /* ---------- progress sync ---------- */
 function localProg(){const o={};try{Object.keys(localStorage).forEach(k=>{if(!k.startsWith('bp.'))return;const s=k.slice(3);if(PROG_RE.test(s)){try{o[enc(s)]=JSON.parse(localStorage.getItem(k))}catch(e){}}})}catch(e){}return o}
@@ -12724,6 +12841,20 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
   if(d.adm=='reload'){ADM.rows=null;ADM.err=null;$('#app').innerHTML=pgAdmin();return}
   if(d.adm=='csv'){admCsv();return}});
 document.addEventListener('keydown',e=>{if(e.key=='Escape'&&$('#accd'))accClose();if(e.key=='Enter'&&$('#accd')&&e.target.tagName=='INPUT'&&e.target.type!='checkbox'){const p=$('#accd .btn.pri[data-accdo]');if(p)p.click()}});
+
+/* ---------- members only: guests see the public landing page; every other page needs a signed-in account ---------- */
+const accGuest=()=>!ACC.user;
+function pgPublic(){const wait=!ACC.known&&ACC.ready!==false;
+  const F=[['🧭','اختبار التوجه المهني','12 سؤالًا تقترح عليك المسار والتخصص المناسب لتوجهك.'],['📚',`${COURSES.length} مادة في ${DEPTS.length} تخصصًا`,'لوحات تفاعلية مبسطة: شرح، ومختبر، وتطبيق، واختبار لكل لوحة.'],
+   ['🔌','مختبر توصيل ومحاكاة','تبني الدائرة بنفسك من مكتبة عناصر المادة، وتكتب القيم، وترى الجهد والتيار كما في الورشة.'],['🏫','أين تتدرب في المملكة','دليل معاهد الشراكات الاستراتيجية الخمسين حسب المنطقة والقطاع.'],
+   ['🔄','تصحيح المسار','خطة عملية بخطوات واضحة إذا قررت تغيير تخصصك.'],['⭐','تقدّم محفوظ','نقاط ومستويات، ويُحفظ تقدمك في حسابك على أي جهاز.']];
+  return `<header class="hero hero2"><div><span class="eyebrow">دليلك من الثانوية إلى سوق العمل</span><h1>بوصلتي المهنية</h1><p>منصة تعليمية عربية مجانية للتخصصات التقنية في المملكة العربية السعودية: تساعدك على اكتشاف تخصصك، وتعلّم أساسياته في لوحات تفاعلية، وتجربة الدوائر في مختبر يحاكي الواقع، ومعرفة أين تتدرب.</p>
+  <div class="chipr" style="margin-top:14px">${wait?'<span class="nolab">⏳ جارٍ التحقق من حسابك…</span>':'<button type="button" class="btn pri" data-acctab="up">✨ أنشئ حسابًا مجانيًا</button><button type="button" class="btn" data-acctab="in">👤 تسجيل الدخول</button>'}</div></div>${heroArt}</header>
+  <section class="sec"><h2>ماذا تقدم المنصة؟</h2><div class="pubg">${F.map(f=>`<div class="pubc"><span class="em">${f[0]}</span><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join('')}</div></section>
+  <div class="lockn"><span>🔒</span><div><b>المحتوى التعليمي متاح للمسجلين فقط.</b><p>التسجيل مجاني ويستغرق دقيقة، ويحفظ تقدمك وينقله معك بين أجهزتك.</p></div>${wait?'':'<button type="button" class="btn pri" data-acctab="up">أنشئ حسابك ‹</button>'}</div>`}
+{const _p=paint;paint=function(){if(accGuest()){clearTimers();paintTop();ST.v='home';$('#app').innerHTML=pgPublic();return}_p()}}
+document.addEventListener('click',e=>{if(!accGuest())return;const b=e.target.closest('[data-go]');if(!b||b.dataset.go=='v:home')return;e.preventDefault();e.stopPropagation();
+  const m=$('#navmenu');if(m)m.hidden=true;toast('🔒','هذا المحتوى للمسجلين فقط. أنشئ حسابًا مجانيًا أو سجّل الدخول','info',2800);accOpen(ACC.known?'up':'in')},true);
 accInit();
 boot();
 </script>
