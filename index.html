@@ -868,6 +868,28 @@ body{font-size:16px;line-height:1.85}
 @media(max-width:600px){.wview label{margin-inline-start:0;flex-basis:100%}.wview select{flex:1}.wsvg{min-width:0}.wqc select{max-width:100%;flex:1}.wqc label{flex-basis:100%}.wbbc{margin-inline-start:0}}
 @media(pointer:coarse){.wthit{stroke-width:0}.wterm{r:7}}
 @media(prefers-reduced-motion:reduce){.wterm.tg{animation:none}}
+
+/* v18: unified toolbar + library search */
+.wbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0;padding:8px;border-radius:14px;border:1.5px solid var(--line);background:color-mix(in srgb,var(--line) 22%,var(--paper))}
+.wbar .wgrp{display:flex;align-items:center;gap:4px;padding:2px;border-radius:10px;background:var(--paper);border:1px solid var(--line)}
+.wbar button{font:inherit;font-size:.84rem;font-weight:700;border:0;border-radius:8px;padding:6px 10px;background:transparent;color:var(--ink);cursor:pointer;min-height:36px}
+.wbar button:disabled{opacity:.35;cursor:default}.wbar button:not(:disabled):hover{background:color-mix(in srgb,var(--acc) 10%,var(--paper))}
+.wbar .wseg button.on{background:var(--acc);color:#fff}
+.wbar .wz{font-family:ui-monospace,monospace;font-size:.8rem;color:var(--mute);min-width:38px;text-align:center}
+.wbar button.onp{color:var(--ok)}.wbar button.off{background:var(--bad);color:#fff}
+.wbar .wflow{display:flex;align-items:center;gap:4px;padding:0 6px;font-weight:700}.wbar .wflow select{font:inherit;font-size:.84rem;border:0;background:transparent;color:var(--ink);padding:6px 2px}
+.wbar .wbbc{padding:6px 10px;font-size:.84rem;font-weight:700;gap:6px}
+.wview,.wtools{display:none}
+.wlib{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.wsrch{flex:1 1 260px;position:relative;min-width:0}
+.wsrch input{width:100%;box-sizing:border-box;font:inherit;padding:9px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
+.wsrch input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 22%,transparent)}
+.wlibr{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.wlibr:empty{display:none}
+.wlibr button{font:inherit;display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:6px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;text-align:start}
+.wlibr button b{font-size:.86rem}.wlibr button small{font-size:.72rem;color:var(--mute)}
+.wlibr button.first,.wlibr button:hover{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 8%,var(--paper))}
+.wlib select{flex:1 1 220px}
+@media(max-width:600px){.wbar{gap:6px;padding:6px}.wbar .wseg{flex-basis:100%;justify-content:space-between}.wbar .wseg button{flex:1;padding:6px 4px}.wbar .wflow{flex:1}.wbar .wflow select{flex:1}}
 </style>
 <header id="topbar" class="topbar"></header>
 <main class="wrap"><div id="app"></div></main>
@@ -12615,7 +12637,14 @@ function wBoard(S,live){const C=S.C,sel=S.sel||{},real=WV!='sch',bb=WV=='bb';
   C.parts.forEach(p=>h+=wPartSvg(p,live,S));h+=el;
   Object.keys(deg).forEach(t=>{if(deg[t]>1){const q=wTerm(C,t);if(q)h+=`<circle class="wjn" cx="${q[0]}" cy="${q[1]}" r="${real?5.5:4.5}"/>`}});
   return h+'<line id="wrub" class="wrub" x1="0" y1="0" x2="0" y2="0" style="display:none"/>'}
-function wLib(){const G=wLibGroups(),n=new Set(G.flatMap(g=>g[1])).size;return `<label class="wlib"><span>📚 مكتبة المادة <small>(${n} عنصرًا)</small></span><select id="wlib" aria-label="مكتبة عناصر المادة: اختر عنصرًا لإضافته إلى اللوحة"><option value="">اختر عنصرًا لإضافته إلى اللوحة…</option>${G.map(g=>`<optgroup label="${g[0]}">${g[1].map(t=>`<option value="${t}">${WT[t].n}${WT[t].b=='sym'?' (رمز توضيحي)':''}</option>`).join('')}</optgroup>`).join('')}</select></label>`}
+function wLib(){const G=wLibGroups(),n=new Set(G.flatMap(g=>g[1])).size;return `<div class="wlib"><span>📚 مكتبة المادة <small>(${n} عنصرًا)</small></span><div class="wsrch"><input id="wlibq" type="search" inputmode="search" autocomplete="off" placeholder="🔍 ابحث عن عنصر: مقاومة، LED، ترانزستور، 7805، فيوز…" aria-label="ابحث في مكتبة المادة" aria-controls="wlibr"><div id="wlibr" class="wlibr" role="listbox" aria-label="نتائج البحث"></div></div><select id="wlib" aria-label="مكتبة عناصر المادة: اختر عنصرًا لإضافته إلى اللوحة"><option value="">اختر عنصرًا لإضافته إلى اللوحة…</option>${G.map(g=>`<optgroup label="${g[0]}">${g[1].map(t=>`<option value="${t}">${WT[t].n}${WT[t].b=='sym'?' (رمز توضيحي)':''}</option>`).join('')}</optgroup>`).join('')}</select></div>`}
+/* library search: Arabic-aware matching on the name, the type code and the library's unit/English hint */
+const wNorm=s=>String(s||'').toLowerCase().replace(/[\u064B-\u0652\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/\bال/g,'').replace(/(^|\s)ال/g,'$1');
+const WSYN={'موتور':'محرك','ماتور':'محرك','لمبه':'مصباح','لمبة':'مصباح','سويتش':'مفتاح','سويش':'مفتاح','ريلاي':'مرحل','ريلي':'مرحل','كنتاكتر':'كونتاكتور','بطاريه':'بطاريه','حساس':'حساس','ترانس':'محول','ترانسفورمر':'محول','دايود':'ثنائي','ديود':'ثنائي','كباستور':'مكثف','كاباسيتور':'مكثف','مقاومه':'مقاومه','ميتر':'ميتر','افوميتر':'افوميتر','ملتيميتر':'افوميتر','بريكر':'قاطع','سلك':'وصله','جرس':'جرس','بوق':'بوق','بوابه':'and or not','ic':'دوائر'};
+function wLibSearch(q){let n=wNorm(q).trim();if(!n)return [];n=n.split(/\s+/).map(w=>WSYN[w]?wNorm(WSYN[w]):w).join(' ');const G=wLibGroups(),seen=new Set(),out=[];
+  G.forEach(g=>g[1].forEach(tp=>{if(seen.has(tp))return;const T=WT[tp],hay=wNorm([T.n,tp,T.sy||'',(SYMS[T.sy||tp]||{}).u||''].join(' '));if(n.split(/\s+/).every(w=>hay.includes(w))){seen.add(tp);out.push([tp,g[0]])}}));
+  const sc=tp=>{const nm=wNorm(WT[tp].n);return nm.startsWith(n)?0:nm.includes(n)?1:2};return out.sort((a,b)=>sc(a[0])-sc(b[0])).slice(0,14)}
+function wLibShow(q){const r=$('#wlibr');if(!r)return;const L=wLibSearch(q);r.innerHTML=!q.trim()?'':L.length?L.map(([tp,g],i)=>`<button type="button" role="option" data-wadd="${tp}" class="${i?'':'first'}"><b>${WT[tp].n}</b><small>${g.replace('⭐ ','')}${WT[tp].b=='sym'?' · رمز توضيحي':''}</small></button>`).join(''):'<p class="nolab">لا توجد نتائج. جرّب اسمًا آخر أو اختر من القائمة.</p>'}
 function wPanel(S){const C=S.C;
   if(S.pick){const i=S.pick.indexOf('.'),id=S.pick.slice(0,i),s=S.pick.slice(i+1),pp=wPart0(C,id);return `<div class="wpan pick">🔗 اخترت ${pp&&W2L(pp)?(s=='a'?'الطرف الأول (+)':'الطرف الثاني'):'الطرف '+s} من <b>${id}</b>. اضغط الآن طرفًا آخر لتوصيل سلك بينهما، أو اضغط مساحة فارغة للإلغاء.</div>`}
   const sel=S.sel;if(sel&&sel.k=='w'&&C.wires[sel.i]){const w=C.wires[sel.i];return `<div class="wpan">سلك بين <b>${w[0]}</b> و<b>${w[1]}</b> <button type="button" class="btn" data-wp="delw">🗑 حذف السلك</button></div>`}
@@ -12662,8 +12691,13 @@ function wStat(C,live,S){if(!C.parts.length)return '';if(S.off)return '<div clas
 function wBody(){const free=wFree(),W=lesson().wire,S=wst(),C=S.C,live=wLiveSim(S);setTimeout(()=>wTickSet(S),0);
   const src=live&&C.parts.find(p=>wB(p)=='src'&&Math.abs(live.V[p.id])<.3*Math.abs(wSrcV(p)));
   const warn=live&&live.short?`<div class="wwarn">⚠️ قصر في الدائرة!${src?` تيار ${src.id} ${wfA(Math.abs(live.I[src.id]))}.`:''} في الواقع تسخن الأسلاك بسرعة وقد تحترق.</div>`:live&&Object.values(live.st).includes('burn')?'<div class="wwarn">💥 احترق عنصر! الجهد أو التيار أكبر من المسموح. غيّر القيم أو التوصيل.</div>':live&&live.mblown?'<div class="wwarn">💥 احترق فيوز الأفوميتر: مر فيه تيار كبير على وضع A.</div>':live&&live.acDiode?'<div class="wwarn">ℹ️ أشباه الموصلات والدوائر المنطقية تُحاكى مع المصدر المستمر. مع المتردد استخدم قنطرة التقويم لتحويله إلى مستمر أولًا.</div>':'';
-  return `${free?'':wReq(W,S)}${wLib()}<div id="wpan">${wPanel(S)}</div>${warn}<div class="wview"><span>العرض:</span><button type="button" class="${WV=='real'?'on':''}" data-wview="real">🖼 واقعي</button><button type="button" class="${WV=='bb'?'on':''}" data-wview="bb">🧱 لوحة تجارب</button><button type="button" class="${WV=='sch'?'on':''}" data-wview="sch">📐 مخطط</button><label>⚡ <select id="wel" aria-label="عرض حركة التيار"><option value="c"${WEL=='c'?' selected':''}>اتجاه التيار (من + إلى −)</option><option value="e"${WEL=='e'?' selected':''}>حركة الإلكترونات (من − إلى +)</option><option value="n"${WEL=='n'?' selected':''}>بلا حركة</option></select></label></div>
-  <div class="wtools"><button type="button" data-wtool="undo"${S.hist.length?'':' disabled'} title="تراجع">↶ تراجع</button><button type="button" data-wtool="redo"${S.fut.length?'':' disabled'} title="إعادة">↷ إعادة</button><button type="button" data-wtool="zout" title="تصغير"${S.zoom<=1?' disabled':''}>➖</button><span class="wz">${Math.round(S.zoom*100)}%</span><button type="button" data-wtool="zin" title="تكبير"${S.zoom>=2.5?' disabled':''}>➕</button><button type="button" data-wtool="power" class="${S.off?'off':'onp'}">${S.off?'⏻ التغذية مفصولة':'⏻ التغذية تعمل'}</button>${WV=='bb'?`<label class="wbbc"><input type="checkbox" id="wbbc"${C.bb?' checked':''}> توصيل تلقائي عبر شرائح اللوحة</label>`:''}</div>
+  return `${free?'':wReq(W,S)}${wLib()}<div id="wpan">${wPanel(S)}</div>${warn}<div class="wbar" role="toolbar" aria-label="أدوات مختبر التوصيل">
+  <div class="wgrp wseg" role="group" aria-label="طريقة العرض"><button type="button" class="${WV=='real'?'on':''}" data-wview="real" aria-pressed="${WV=='real'}">🖼 واقعي</button><button type="button" class="${WV=='bb'?'on':''}" data-wview="bb" aria-pressed="${WV=='bb'}">🧱 لوحة تجارب</button><button type="button" class="${WV=='sch'?'on':''}" data-wview="sch" aria-pressed="${WV=='sch'}">📐 مخطط</button></div>
+  <div class="wgrp"><label class="wflow">⚡<select id="wel" aria-label="عرض حركة التيار"><option value="c"${WEL=='c'?' selected':''}>التيار من + إلى −</option><option value="e"${WEL=='e'?' selected':''}>الإلكترونات من − إلى +</option><option value="n"${WEL=='n'?' selected':''}>بلا حركة</option></select></label></div>
+  <div class="wgrp"><button type="button" data-wtool="undo"${S.hist.length?'':' disabled'} title="تراجع" aria-label="تراجع">↶</button><button type="button" data-wtool="redo"${S.fut.length?'':' disabled'} title="إعادة" aria-label="إعادة">↷</button></div>
+  <div class="wgrp"><button type="button" data-wtool="zout" title="تصغير" aria-label="تصغير"${S.zoom<=1?' disabled':''}>➖</button><span class="wz">${Math.round(S.zoom*100)}%</span><button type="button" data-wtool="zin" title="تكبير" aria-label="تكبير"${S.zoom>=2.5?' disabled':''}>➕</button></div>
+  <div class="wgrp"><button type="button" data-wtool="power" class="${S.off?'off':'onp'}" aria-pressed="${!S.off}">${S.off?'⏻ التغذية مفصولة':'⏻ التغذية تعمل'}</button></div>
+  ${WV=='bb'?`<label class="wgrp wbbc"><input type="checkbox" id="wbbc"${C.bb?' checked':''}> توصيل تلقائي عبر شرائح اللوحة</label>`:''}</div>
   ${wStat(C,live,S)}<div class="wcanvas"><svg id="wbd" class="wsvg${WV!='sch'?' real':''}${WV=='bb'?' bb':''}" style="width:${S.zoom*100}%;min-width:${S.zoom>1?Math.round(600*S.zoom)+'px':'0'}" viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="لوحة التوصيل">${wBoard(S,live)}</svg></div><p class="wswipe">➕ للتكبير، ثم حرّك اللوحة بإصبعك · أو استخدم «🔗 توصيل سريع» من خصائص العنصر</p>
   ${S.pick?`<div class="wpickbar" role="status">🔗 اختر الطرف الثاني لتوصيل <b>${S.pick}</b> (الأطراف المضيئة) <button type="button" data-wpk="x">إلغاء</button></div>`:''}${wRead(C,live)}<div class="wbtns">${free?'':'<button type="button" class="btn pri" data-wdo="check">✔ تحقق من التوصيل</button><button type="button" class="btn" data-wdo="hint">💡 تلميح</button>'}<button type="button" class="btn" data-wdo="reset">↺ ابدأ من جديد</button></div>
   <div id="wfbx" aria-live="polite">${free?'':wFb(W,S)}</div>`}
@@ -12711,6 +12745,7 @@ document.addEventListener('click',e=>{if(ST.v!='course'||ST.t!='wire'||!e.target
     if(a=='undo'&&S.hist.length){S.fut.push(JSON.stringify(S.C));S.C=JSON.parse(S.hist.pop());S.sel=null;S.pick=null;wChanged(true)}
     else if(a=='redo'&&S.fut.length){S.hist.push(JSON.stringify(S.C));S.C=JSON.parse(S.fut.pop());S.sel=null;S.pick=null;wChanged(true)}
     else if(a=='zin'){S.zoom=Math.min(2.5,S.zoom+.5);wRefresh()}else if(a=='zout'){S.zoom=Math.max(1,S.zoom-.5);wRefresh()}else if(a=='power'){S.off=!S.off;wRefresh()}return}
+  const wa=e.target.closest('[data-wadd]');if(wa){wAdd(wa.dataset.wadd);return}
   if(e.target.closest('[data-wpk]')){wst().pick=null;wRefresh();return}
   const vw=e.target.closest('[data-wview]');if(vw){wSetView('v',vw.dataset.wview);wRefresh();return}
   const md=e.target.closest('[data-wmode]');if(md){W5M[ST.c]=md.dataset.wmode;$('#app')&&paintSheet?paintSheet():paint();return}
@@ -12740,9 +12775,10 @@ document.addEventListener('change',e=>{if(ST.v!='course'||ST.t!='wire')return;co
   if(t.dataset&&t.dataset.wpr){wApply(true);return}
   if(t.id=='wmode'){p.v=t.value;wChanged();return}if(t.id=='wcol'){p.col=t.value;wChanged();return}
   if(t.id=='wlink'&&t.value){p.link=t.value;wChanged()}});
-document.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.wpr)e.target.classList.remove('err')});
+document.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.wpr)e.target.classList.remove('err');if(e.target.id=='wlibq')wLibShow(e.target.value)});
 document.addEventListener('keydown',e=>{if(ST.v!='course'||ST.t!='wire'||!$('#wbd'))return;const S=wst();
   if(e.key=='Enter'&&e.target.dataset&&e.target.dataset.wpr){e.preventDefault();wApply(false);return}
+  if(e.target.id=='wlibq'){if(e.key=='Enter'){e.preventDefault();const b=$('#wlibr [data-wadd]');if(b)b.click()}if(e.key=='Escape'){e.target.value='';wLibShow('')}return}
   if(e.key=='Escape'&&(S.pick||S.sel)){S.pick=null;S.sel=null;wRefresh()}
   if((e.key=='Delete'||e.key=='Backspace')&&S.sel&&!/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)){e.preventDefault();const b=$(S.sel.k=='w'?'[data-wp="delw"]':'[data-wp="del"]');if(b)b.click()}});
 /* v8: practical benefit of each library element: why it matters to you as a technician */
