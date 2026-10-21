@@ -812,7 +812,7 @@ body{font-size:16px;line-height:1.85}
 /* v15: multi-pin parts */
 .wpin{font-size:9px;font-weight:700;fill:var(--mute)!important;pointer-events:none}
 .wlv{fill:var(--paper);stroke:var(--mute);stroke-width:1.2}.wlv.hi{fill:#ff3b3b;stroke:#ff3b3b}
-.wseg{font-size:30px;font-weight:800;fill:#ff3b3b!important;font-family:ui-monospace,monospace;pointer-events:none}
+.w7seg{font-size:30px;font-weight:800;fill:#ff3b3b!important;font-family:ui-monospace,monospace;pointer-events:none}
 .wpart.wsym>g:first-of-type{opacity:.55}
 .wlib small{font-weight:600;color:var(--mute)}
 
@@ -874,7 +874,7 @@ body{font-size:16px;line-height:1.85}
 .wbar .wgrp{display:flex;align-items:center;gap:4px;padding:2px;border-radius:10px;background:var(--paper);border:1px solid var(--line)}
 .wbar button{font:inherit;font-size:.84rem;font-weight:700;border:0;border-radius:8px;padding:6px 10px;background:transparent;color:var(--ink);cursor:pointer;min-height:36px}
 .wbar button:disabled{opacity:.35;cursor:default}.wbar button:not(:disabled):hover{background:color-mix(in srgb,var(--acc) 10%,var(--paper))}
-.wbar .wseg button.on{background:var(--acc);color:#fff}
+.wbar .wviews button.on{background:var(--acc);color:#fff}
 .wbar .wz{font-family:ui-monospace,monospace;font-size:.8rem;color:var(--mute);min-width:38px;text-align:center}
 .wbar button.onp{color:var(--ok)}.wbar button.off{background:var(--bad);color:#fff}
 .wbar .wflow{display:flex;align-items:center;gap:4px;padding:0 6px;font-weight:700}.wbar .wflow select{font:inherit;font-size:.84rem;border:0;background:transparent;color:var(--ink);padding:6px 2px}
@@ -889,7 +889,7 @@ body{font-size:16px;line-height:1.85}
 .wlibr button b{font-size:.86rem}.wlibr button small{font-size:.72rem;color:var(--mute)}
 .wlibr button.first,.wlibr button:hover{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 8%,var(--paper))}
 .wlib select{flex:1 1 220px}
-@media(max-width:600px){.wbar{gap:6px;padding:6px}.wbar .wseg{flex-basis:100%;justify-content:space-between}.wbar .wseg button{flex:1;padding:6px 4px}.wbar .wflow{flex:1}.wbar .wflow select{flex:1}}
+@media(max-width:600px){.wbar{gap:6px;padding:6px}.wbar .wviews{flex-basis:100%;justify-content:space-between}.wbar .wviews button{flex:1;padding:6px 4px}.wbar .wflow{flex:1}.wbar .wflow select{flex:1}}
 
 /* v19: library browser with symbols */
 .wlibtg{font:inherit;font-size:.86rem;font-weight:700;border:1.5px solid var(--acc);color:var(--acc);background:var(--paper);border-radius:10px;padding:8px 12px;cursor:pointer}
@@ -12602,7 +12602,7 @@ function wPartSvg(p,live,S){const T=WT[p.t],two=W2L(p),cxy=wCtr(p),cx=cxy[0],cy=
     const L=(live.L||{})[p.id];
     if(B=='logic'&&L){const k=WLIN[T.fn];wPins(p).slice(k).forEach((q,j)=>{const [x,y]=P(q[1]-7,q[2]-7);fx+=`<circle cx="${x}" cy="${y}" r="4" class="wlv${L[j]?' hi':''}"/>`})}
     if(B=='io'&&L){wPins(p).slice(0,4).forEach((q,j)=>{const [x,y]=P(q[1]+6,q[2]-6);fx+=`<circle cx="${x}" cy="${y}" r="3.5" class="wlv${L[j]?' hi':''}"/>`});(p.q||[]).forEach((b,j)=>{const q=wPins(p)[4+j],[x,y]=P(q[1]-6,q[2]-6);fx+=`<circle cx="${x}" cy="${y}" r="3.5" class="wlv${b?' hi':''}"/>`})}
-    if(B=='seg7'&&L){const [x,y]=P(30,0);bd=`<text class="wseg" x="${x}" y="${y+12}" text-anchor="middle">${L[0]<10?L[0]:'–'}</text>`}
+    if(B=='seg7'&&L){const [x,y]=P(30,0);bd=`<text class="w7seg" x="${x}" y="${y+12}" text-anchor="middle">${L[0]<10?L[0]:'–'}</text>`}
     if(B=='tl'&&L){['#ff3b3b','#ffc400','#2bd46b'].forEach((c,j)=>{const [x,y]=P(30,-14+14*j);if(L[j])fx+=`<circle cx="${x}" cy="${y}" r="7" style="fill:${c};stroke:none;filter:drop-shadow(0 0 4px ${c})"/>`})}
     if(B=='t555'&&L){const [x,y]=P(66,-8);bd=`<text class="wst" x="${x}" y="${y}">${L[0]?'⎍ 1':'⎍ 0'}</text>`}}
   if(st=='burn')bd=`<text class="wbad" x="${cx-n[0]*30}" y="${cy-n[1]*30+6}" text-anchor="middle">💥</text>`;
@@ -12714,7 +12714,7 @@ function wBody(){const free=wFree(),W=lesson().wire,S=wst(),C=S.C,live=wLiveSim(
   const src=live&&C.parts.find(p=>wB(p)=='src'&&Math.abs(live.V[p.id])<.3*Math.abs(wSrcV(p)));
   const warn=live&&live.short?`<div class="wwarn">⚠️ قصر في الدائرة!${src?` تيار ${src.id} ${wfA(Math.abs(live.I[src.id]))}.`:''} في الواقع تسخن الأسلاك بسرعة وقد تحترق.</div>`:live&&Object.values(live.st).includes('burn')?'<div class="wwarn">💥 احترق عنصر! الجهد أو التيار أكبر من المسموح. غيّر القيم أو التوصيل.</div>':live&&live.mblown?'<div class="wwarn">💥 احترق فيوز الأفوميتر: مر فيه تيار كبير على وضع A.</div>':live&&live.acDiode?'<div class="wwarn">ℹ️ أشباه الموصلات والدوائر المنطقية تُحاكى مع المصدر المستمر. مع المتردد استخدم قنطرة التقويم لتحويله إلى مستمر أولًا.</div>':'';
   return `${free?'':wReq(W,S)}${wLib()}<div id="wpan">${wPanel(S)}</div>${warn}<div class="wbar" role="toolbar" aria-label="أدوات مختبر التوصيل">
-  <div class="wgrp wseg" role="group" aria-label="طريقة العرض"><button type="button" class="${WV=='real'?'on':''}" data-wview="real" aria-pressed="${WV=='real'}">🖼 واقعي</button><button type="button" class="${WV=='bb'?'on':''}" data-wview="bb" aria-pressed="${WV=='bb'}">🧱 لوحة تجارب</button><button type="button" class="${WV=='sch'?'on':''}" data-wview="sch" aria-pressed="${WV=='sch'}">📐 مخطط</button></div>
+  <div class="wgrp wviews" role="group" aria-label="طريقة العرض"><button type="button" class="${WV=='real'?'on':''}" data-wview="real" aria-pressed="${WV=='real'}">🖼 واقعي</button><button type="button" class="${WV=='bb'?'on':''}" data-wview="bb" aria-pressed="${WV=='bb'}">🧱 لوحة تجارب</button><button type="button" class="${WV=='sch'?'on':''}" data-wview="sch" aria-pressed="${WV=='sch'}">📐 مخطط</button></div>
   <div class="wgrp"><label class="wflow">⚡<select id="wel" aria-label="عرض حركة التيار"><option value="c"${WEL=='c'?' selected':''}>التيار من + إلى −</option><option value="e"${WEL=='e'?' selected':''}>الإلكترونات من − إلى +</option><option value="n"${WEL=='n'?' selected':''}>بلا حركة</option></select></label></div>
   <div class="wgrp"><button type="button" data-wtool="undo"${S.hist.length?'':' disabled'} title="تراجع" aria-label="تراجع">↶</button><button type="button" data-wtool="redo"${S.fut.length?'':' disabled'} title="إعادة" aria-label="إعادة">↷</button></div>
   <div class="wgrp"><button type="button" data-wtool="zout" title="تصغير" aria-label="تصغير"${S.zoom<=1?' disabled':''}>➖</button><span class="wz">${Math.round(S.zoom*100)}%</span><button type="button" data-wtool="zin" title="تكبير" aria-label="تكبير"${S.zoom>=2.5?' disabled':''}>➕</button></div>
