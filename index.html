@@ -890,6 +890,20 @@ body{font-size:16px;line-height:1.85}
 .wlibr button.first,.wlibr button:hover{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 8%,var(--paper))}
 .wlib select{flex:1 1 220px}
 @media(max-width:600px){.wbar{gap:6px;padding:6px}.wbar .wseg{flex-basis:100%;justify-content:space-between}.wbar .wseg button{flex:1;padding:6px 4px}.wbar .wflow{flex:1}.wbar .wflow select{flex:1}}
+
+/* v19: library browser with symbols */
+.wlibtg{font:inherit;font-size:.86rem;font-weight:700;border:1.5px solid var(--acc);color:var(--acc);background:var(--paper);border-radius:10px;padding:8px 12px;cursor:pointer}
+.wlibtg.on{background:var(--acc);color:#fff}
+.wlibp{margin:8px 0 10px;max-height:420px;overflow:auto;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);padding:6px 10px}
+.wlg{border-bottom:1px dashed var(--line);padding:4px 0}.wlg:last-child{border-bottom:0}
+.wlg summary{cursor:pointer;font-weight:800;padding:6px 2px}.wlg summary small{color:var(--mute);font-weight:600}
+.wlgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:6px;padding:4px 0 8px}
+.wltile{font:inherit;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;min-height:84px}
+.wltile:hover,.wltile:focus-visible{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 8%,var(--paper))}
+.wltile span{font-size:.74rem;line-height:1.25;text-align:center}.wltile.sym{opacity:.7}
+.wico{width:58px;height:40px;flex:none;color:var(--ink)}.wico text{fill:currentColor;stroke:none;font-size:11px}
+.wlibr button{flex-direction:row;align-items:center;gap:8px}.wlibr .wico{width:46px;height:32px}.wlibr button span{display:flex;flex-direction:column}
+@media(max-width:600px){.wlgrid{grid-template-columns:repeat(3,1fr)}.wlibp{max-height:360px}}
 </style>
 <header id="topbar" class="topbar"></header>
 <main class="wrap"><div id="app"></div></main>
@@ -12637,14 +12651,22 @@ function wBoard(S,live){const C=S.C,sel=S.sel||{},real=WV!='sch',bb=WV=='bb';
   C.parts.forEach(p=>h+=wPartSvg(p,live,S));h+=el;
   Object.keys(deg).forEach(t=>{if(deg[t]>1){const q=wTerm(C,t);if(q)h+=`<circle class="wjn" cx="${q[0]}" cy="${q[1]}" r="${real?5.5:4.5}"/>`}});
   return h+'<line id="wrub" class="wrub" x1="0" y1="0" x2="0" y2="0" style="display:none"/>'}
-function wLib(){const G=wLibGroups(),n=new Set(G.flatMap(g=>g[1])).size;return `<div class="wlib"><span>📚 مكتبة المادة <small>(${n} عنصرًا)</small></span><div class="wsrch"><input id="wlibq" type="search" inputmode="search" autocomplete="off" placeholder="🔍 ابحث عن عنصر: مقاومة، LED، ترانزستور، 7805، فيوز…" aria-label="ابحث في مكتبة المادة" aria-controls="wlibr"><div id="wlibr" class="wlibr" role="listbox" aria-label="نتائج البحث"></div></div><select id="wlib" aria-label="مكتبة عناصر المادة: اختر عنصرًا لإضافته إلى اللوحة"><option value="">اختر عنصرًا لإضافته إلى اللوحة…</option>${G.map(g=>`<optgroup label="${g[0]}">${g[1].map(t=>`<option value="${t}">${WT[t].n}${WT[t].b=='sym'?' (رمز توضيحي)':''}</option>`).join('')}</optgroup>`).join('')}</select></div>`}
+/* component symbol for the library (same schematic symbol as the main library page) */
+const WICO={};
+function wIcon(tp){if(WICO[tp])return WICO[tp];const T=WT[tp],d={t:tp,r:0,x:0,y:0,on:T.st?T.st[2]:0,v:'V',col:'r',q:[0,0,0,0]};let g='';try{g=wGlyphRaw(d,false)}catch(e){}
+  const pn=wPins(d),ys=pn.map(q=>q[2]).concat([-30,30]),y1=Math.min(...ys)-4,y2=Math.max(...ys)+4;
+  return WICO[tp]=`<svg class="wico" viewBox="-6 ${y1} 72 ${y2-y1}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${g}</svg>`}
+function wLib(){const S=wst(),G=wLibGroups(),n=new Set(G.flatMap(g=>g[1])).size,open=!!S.libOpen;
+  return `<div class="wlib"><span>📚 مكتبة المادة <small>(${n} عنصرًا)</small></span><div class="wsrch"><input id="wlibq" type="search" inputmode="search" autocomplete="off" placeholder="🔍 ابحث عن عنصر: مقاومة، LED، ترانزستور، 7805، فيوز…" aria-label="ابحث في مكتبة المادة" aria-controls="wlibr"><div id="wlibr" class="wlibr" role="listbox" aria-label="نتائج البحث"></div></div>
+  <button type="button" class="wlibtg${open?' on':''}" data-wlibt="1" aria-expanded="${open}">${open?'▴ إخفاء المكتبة':'▾ تصفح كل العناصر برموزها'}</button></div>
+  ${open?`<div class="wlibp">${G.map((g,k)=>`<details class="wlg"${k==0?' open':''}><summary>${g[0]} <small>(${g[1].length})</small></summary><div class="wlgrid">${g[1].map(tp=>`<button type="button" class="wltile${WT[tp].b=='sym'?' sym':''}" data-wadd="${tp}" title="${WT[tp].n}">${wIcon(tp)}<span>${WT[tp].n}</span></button>`).join('')}</div></details>`).join('')}</div>`:''}`}
 /* library search: Arabic-aware matching on the name, the type code and the library's unit/English hint */
 const wNorm=s=>String(s||'').toLowerCase().replace(/[\u064B-\u0652\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/\bال/g,'').replace(/(^|\s)ال/g,'$1');
 const WSYN={'موتور':'محرك','ماتور':'محرك','لمبه':'مصباح','لمبة':'مصباح','سويتش':'مفتاح','سويش':'مفتاح','ريلاي':'مرحل','ريلي':'مرحل','كنتاكتر':'كونتاكتور','بطاريه':'بطاريه','حساس':'حساس','ترانس':'محول','ترانسفورمر':'محول','دايود':'ثنائي','ديود':'ثنائي','كباستور':'مكثف','كاباسيتور':'مكثف','مقاومه':'مقاومه','ميتر':'ميتر','افوميتر':'افوميتر','ملتيميتر':'افوميتر','بريكر':'قاطع','سلك':'وصله','جرس':'جرس','بوق':'بوق','بوابه':'and or not','ic':'دوائر'};
 function wLibSearch(q){let n=wNorm(q).trim();if(!n)return [];n=n.split(/\s+/).map(w=>WSYN[w]?wNorm(WSYN[w]):w).join(' ');const G=wLibGroups(),seen=new Set(),out=[];
   G.forEach(g=>g[1].forEach(tp=>{if(seen.has(tp))return;const T=WT[tp],hay=wNorm([T.n,tp,T.sy||'',(SYMS[T.sy||tp]||{}).u||''].join(' '));if(n.split(/\s+/).every(w=>hay.includes(w))){seen.add(tp);out.push([tp,g[0]])}}));
   const sc=tp=>{const nm=wNorm(WT[tp].n);return nm.startsWith(n)?0:nm.includes(n)?1:2};return out.sort((a,b)=>sc(a[0])-sc(b[0])).slice(0,14)}
-function wLibShow(q){const r=$('#wlibr');if(!r)return;const L=wLibSearch(q);r.innerHTML=!q.trim()?'':L.length?L.map(([tp,g],i)=>`<button type="button" role="option" data-wadd="${tp}" class="${i?'':'first'}"><b>${WT[tp].n}</b><small>${g.replace('⭐ ','')}${WT[tp].b=='sym'?' · رمز توضيحي':''}</small></button>`).join(''):'<p class="nolab">لا توجد نتائج. جرّب اسمًا آخر أو اختر من القائمة.</p>'}
+function wLibShow(q){const r=$('#wlibr');if(!r)return;const L=wLibSearch(q);r.innerHTML=!q.trim()?'':L.length?L.map(([tp,g],i)=>`<button type="button" role="option" data-wadd="${tp}" class="${i?'':'first'}">${wIcon(tp)}<span><b>${WT[tp].n}</b><small>${g.replace('⭐ ','')}${WT[tp].b=='sym'?' · رمز توضيحي':''}</small></span></button>`).join(''):'<p class="nolab">لا توجد نتائج. جرّب اسمًا آخر أو اختر من القائمة.</p>'}
 function wPanel(S){const C=S.C;
   if(S.pick){const i=S.pick.indexOf('.'),id=S.pick.slice(0,i),s=S.pick.slice(i+1),pp=wPart0(C,id);return `<div class="wpan pick">🔗 اخترت ${pp&&W2L(pp)?(s=='a'?'الطرف الأول (+)':'الطرف الثاني'):'الطرف '+s} من <b>${id}</b>. اضغط الآن طرفًا آخر لتوصيل سلك بينهما، أو اضغط مساحة فارغة للإلغاء.</div>`}
   const sel=S.sel;if(sel&&sel.k=='w'&&C.wires[sel.i]){const w=C.wires[sel.i];return `<div class="wpan">سلك بين <b>${w[0]}</b> و<b>${w[1]}</b> <button type="button" class="btn" data-wp="delw">🗑 حذف السلك</button></div>`}
@@ -12745,6 +12767,7 @@ document.addEventListener('click',e=>{if(ST.v!='course'||ST.t!='wire'||!e.target
     if(a=='undo'&&S.hist.length){S.fut.push(JSON.stringify(S.C));S.C=JSON.parse(S.hist.pop());S.sel=null;S.pick=null;wChanged(true)}
     else if(a=='redo'&&S.fut.length){S.hist.push(JSON.stringify(S.C));S.C=JSON.parse(S.fut.pop());S.sel=null;S.pick=null;wChanged(true)}
     else if(a=='zin'){S.zoom=Math.min(2.5,S.zoom+.5);wRefresh()}else if(a=='zout'){S.zoom=Math.max(1,S.zoom-.5);wRefresh()}else if(a=='power'){S.off=!S.off;wRefresh()}return}
+  const lt=e.target.closest('[data-wlibt]');if(lt){const S=wst();S.libOpen=!S.libOpen;wRefresh();return}
   const wa=e.target.closest('[data-wadd]');if(wa){wAdd(wa.dataset.wadd);return}
   if(e.target.closest('[data-wpk]')){wst().pick=null;wRefresh();return}
   const vw=e.target.closest('[data-wview]');if(vw){wSetView('v',vw.dataset.wview);wRefresh();return}
