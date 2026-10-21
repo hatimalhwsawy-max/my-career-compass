@@ -13119,12 +13119,12 @@ function pgPublic(){const wait=!ACC.known&&ACC.ready!==false;
    ['🔌','مختبر توصيل ومحاكاة','تبني الدائرة بنفسك من مكتبة عناصر المادة، وتكتب القيم، وترى الجهد والتيار كما في الورشة.'],['🏫','أين تتدرب في المملكة','دليل معاهد الشراكات الاستراتيجية الخمسين حسب المنطقة والقطاع.'],
    ['🔄','تصحيح المسار','خطة عملية بخطوات واضحة إذا قررت تغيير تخصصك.'],['⭐','تقدّم محفوظ','نقاط ومستويات، ويُحفظ تقدمك في حسابك على أي جهاز.']];
   return `<header class="hero hero2"><div><span class="eyebrow">دليلك من الثانوية إلى سوق العمل</span><h1>بوصلتي المهنية</h1><p>منصة تعليمية عربية مجانية للتخصصات التقنية في المملكة العربية السعودية: تساعدك على اكتشاف تخصصك، وتعلّم أساسياته في لوحات تفاعلية، وتجربة الدوائر في مختبر يحاكي الواقع، ومعرفة أين تتدرب.</p>
-  <div class="chipr" style="margin-top:14px">${wait?'<span class="nolab">⏳ جارٍ التحقق من حسابك…</span>':'<button type="button" class="btn pri" data-acctab="up">✨ أنشئ حسابًا مجانيًا</button><button type="button" class="btn" data-acctab="in">👤 تسجيل الدخول</button>'}</div></div>${heroArt}</header>
+  <div class="chipr" style="margin-top:14px">${wait?'<span class="nolab">⏳ جارٍ التحقق من حسابك…</span>':'<button type="button" class="btn pri" data-acctab="in">👤 تسجيل الدخول</button>'}</div></div>${heroArt}</header>
   <section class="sec"><h2>ماذا تقدم المنصة؟</h2><div class="pubg">${F.map(f=>`<div class="pubc"><span class="em">${f[0]}</span><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join('')}</div></section>
-  <div class="lockn"><span>🔒</span><div><b>المحتوى التعليمي متاح للمسجلين فقط.</b><p>التسجيل مجاني ويستغرق دقيقة، ويحفظ تقدمك وينقله معك بين أجهزتك.</p></div>${wait?'':'<button type="button" class="btn pri" data-acctab="up">أنشئ حسابك ‹</button>'}</div>`}
+  <div class="lockn"><span>🔒</span><div><b>المحتوى التعليمي متاح للمسجلين فقط.</b><p>التسجيل مجاني ويستغرق دقيقة، ويحفظ تقدمك وينقله معك بين أجهزتك.</p></div></div>`}
 {const _p=paint;paint=function(){if(accGuest()){clearTimers();paintTop();ST.v='home';$('#app').innerHTML=pgPublic();return}_p()}}
 document.addEventListener('click',e=>{if(!accGuest())return;const b=e.target.closest('[data-go]');if(!b||b.dataset.go=='v:home')return;e.preventDefault();e.stopPropagation();
-  const m=$('#navmenu');if(m)m.hidden=true;toast('🔒','هذا المحتوى للمسجلين فقط. أنشئ حسابًا مجانيًا أو سجّل الدخول','info',2800);accOpen(ACC.known?'up':'in')},true);
+  const m=$('#navmenu');if(m)m.hidden=true;toast('🔒','هذا المحتوى للمسجلين فقط. سجّل الدخول للمتابعة','info',2800);accOpen('in')},true);
 accInit();
 boot();
 </script>
