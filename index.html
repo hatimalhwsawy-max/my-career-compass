@@ -919,6 +919,25 @@ body{font-size:16px;line-height:1.85}
 .wdir{font-size:18px;font-weight:900;fill:#1565c0!important;stroke:none;pointer-events:none}
 .wspin.ccw{animation-direction:reverse}
 .wpb button[aria-pressed="true"]{border-color:var(--acc);color:var(--acc)}
+/* v21: easier value editing + moving */
+.wvl2{display:flex;flex-direction:column;gap:6px;margin:8px 0;padding:8px;border:1px solid var(--line,#ddd);border-radius:10px}
+.wvl2 .wvn{font-weight:700;font-size:.92em}
+.wvr{display:flex;align-items:center;gap:6px;direction:ltr}
+.wvr input{flex:1;min-width:0;font-size:1.15em;padding:8px 10px;text-align:center;border-radius:8px}
+.wstep{min-width:44px;min-height:44px;border-radius:10px;border:1px solid var(--line,#ccc);background:var(--card,#f6f6f6);font-size:1.1em;cursor:pointer;color:inherit}
+.wstep:active{transform:scale(.94)}
+.wvr .wu{min-width:30px;font-weight:700}
+.wchips{display:flex;flex-wrap:wrap;gap:6px}
+.wchip{padding:6px 10px;border-radius:999px;border:1px solid var(--line,#ccc);background:transparent;color:inherit;cursor:pointer;font-size:.85em;direction:ltr}
+.wchip.on{background:var(--pri,#2563eb);color:#fff;border-color:transparent}
+.wnud{display:inline-flex;gap:4px}
+.wnud .btn{min-width:42px;min-height:42px;padding:0}
+.wmvh circle{fill:var(--pri,#2563eb);fill-opacity:.9;stroke:#fff;stroke-width:2;cursor:move}
+.wmvh text{fill:#fff;font-size:15px;pointer-events:none}
+.wlbl[data-wedit]{cursor:pointer;text-decoration:underline dotted}
+.wpf{flex-wrap:wrap;min-width:0;max-width:100%}
+.wvl2{flex:1 1 100%;min-width:0;max-width:100%;box-sizing:border-box}
+.wvr input{width:0}
 </style>
 <header id="topbar" class="topbar"></header>
 <main class="wrap"><div id="app"></div></main>
@@ -12691,7 +12710,8 @@ function wPartSvg(p,live,S){const T=WT[p.t],two=W2L(p),cxy=wCtr(p),cx=cxy[0],cy=
   let rd='';if(live&&['am','vm','dmm','meg','ohmm','wm'].includes(B)&&(art==null||!['am','vm','dmm'].includes(B))){const r=wRd(p,live),t=B=='wm'?wN(+(r||0).toFixed(2))+' W':(p.t=='DMM'&&p.v=='Ω')||B=='meg'||B=='ohmm'?wfR(r):B=='am'||p.v=='A'?wfA(r):wfV(r);rd=`<text class="wrdt" x="${cx-n[0]*36}" y="${cy-n[1]*36+4}" text-anchor="${n[0]>.5?'end':n[0]<-.5?'start':'middle'}">${t}${live.ac&&!(live.dcIds||[]).includes(p.id)&&!['meg','ohmm'].includes(B)&&p.v!='Ω'?' ~':''}</text>`}
   const tm=wPins(p).map(q=>{const [tx,ty]=P(q[1],q[2]),id=p.id+'.'+q[0];return `<circle class="wterm${S.pick==id?' pk':S.pick&&!S.pick.startsWith(p.id+'.')?' tg':''}" cx="${tx}" cy="${ty}" r="5.5"/><circle data-wt="${id}" class="wthit" cx="${tx}" cy="${ty}" r="${WHIT}"/>`}).join('');
   const hb=two?'x="5" y="-20" width="50" height="40"':'x="4" y="-28" width="52" height="56"';
-  return `<g class="${cls}" data-wpart="${p.id}">${fx}<g transform="translate(${p.x},${p.y}) rotate(${p.r})${p.mh?' translate(60 0) scale(-1 1)':''}${p.mv?' scale(1 -1)':''}">${G.g}<rect data-wc="${p.id}" class="whit" ${hb}/></g><g class="wup">${up}</g>${bd}<text class="wlbl" x="${lx}" y="${ly}" text-anchor="${an}"><tspan class="wid">${p.id}</tspan> ${wVal(p)}</text>${rd}${tm}</g>`}
+  const sel1=S.sel&&S.sel.k=='c'&&S.sel.id==p.id,mvh=sel1?(()=>{const q=[cx+n[0]*(two?52:64),cy+n[1]*(two?52:64)];return `<g class="wmvh"><circle data-wc="${p.id}" cx="${q[0]}" cy="${q[1]}" r="${WHIT>13?17:12}"/><text x="${q[0]}" y="${q[1]+5}" text-anchor="middle">✥</text></g>`})():'';
+  return `<g class="${cls}" data-wpart="${p.id}">${fx}<g transform="translate(${p.x},${p.y}) rotate(${p.r})${p.mh?' translate(60 0) scale(-1 1)':''}${p.mv?' scale(1 -1)':''}">${G.g}<rect data-wc="${p.id}" class="whit" ${hb}/></g><g class="wup">${up}</g>${bd}<text class="wlbl" data-wedit="${p.id}" x="${lx}" y="${ly}" text-anchor="${an}"><tspan class="wid">${p.id}</tspan> ${wVal(p)}</text>${rd}${tm}${mvh}</g>`}
 /* right-angle wire: leave each pin in its outward direction first */
 /* both L-shapes are scored by how many part bodies and already-drawn wires they would run over; the cleaner one wins */
 function wRoute(C,t1,t2,drawn){const a=wTerm(C,t1),b=wTerm(C,t2);if(!a||!b)return null;if(Math.abs(a[0]-b[0])<1||Math.abs(a[1]-b[1])<1){if(drawn)drawn.push([a,b]);return `M${a[0]} ${a[1]}L${b[0]} ${b[1]}`}
@@ -12740,13 +12760,13 @@ function wPanel(S){const C=S.C;
   const sel=S.sel;if(sel&&sel.k=='w'&&C.wires[sel.i]){const w=C.wires[sel.i];return `<div class="wpan">سلك بين <b>${w[0]}</b> و<b>${w[1]}</b> <button type="button" class="btn" data-wp="delw">🗑 حذف السلك</button></div>`}
   const p=sel&&sel.k=='c'&&wPart0(C,sel.id);if(!p)return '<div class="wpan muted">👆 اضغط أي عنصر على اللوحة لتظهر خصائصه هنا وتكتب قيمه بنفسك. لتوصيل سلك: اضغط طرفًا (الدائرة الصغيرة) ثم طرفًا آخر، أو اسحب من طرف إلى طرف.</div>';
   const T0=WT[p.t];if(T0.b=='sym')return `<div class="wpan"><div class="wph"><b>${p.id}</b><span>${T0.n} · <i dir="ltr">${wEn(p.t)}</i></span></div><p class="nolab wtip">رمز توضيحي للمخطط (سلامة، لحام، هواء مضغوط، أدوات قياس يدوية…) ولا يدخل في الحسابات الكهربائية.</p><div class="wpb"><button type="button" class="btn" data-wp="rot">↻ تدوير</button><button type="button" class="btn" data-wp="del">🗑 حذف</button></div></div>`;
-  const prs=(T0.pr||[]).map(q=>`<label class="wvl">${q[1]} <input type="text" inputmode="decimal" autocomplete="off" value="${+p[q[0]]}" data-wpr="${q[0]}" aria-label="${q[1]}"> <span>${q[2]}</span></label>`).join('');
+  const prs=(T0.pr||[]).map(q=>{const ch=wChips(q,p);return `<div class="wvl2"><span class="wvn">${q[1]}</span><div class="wvr"><button type="button" class="wstep" data-wstep="${q[0]}:-1" aria-label="أنقص">▼</button><input type="text" inputmode="decimal" autocomplete="off" value="${+p[q[0]]}" data-wpr="${q[0]}" aria-label="${q[1]}"><button type="button" class="wstep" data-wstep="${q[0]}:1" aria-label="زد">▲</button><span class="wu">${q[2]}</span></div>${ch?`<div class="wchips">${ch}</div>`:''}</div>`}).join('');
   const mode=p.t=='DMM'?`<label class="wvl">الوضع <select id="wmode">${Object.keys(WMODE).map(m=>`<option value="${m}"${p.v==m?' selected':''}>${WMODE[m]}</option>`).join('')}</select></label>`:'';
   const col=p.t=='LED'?`<label class="wvl">اللون <select id="wcol">${Object.keys(WLEDC).map(c=>`<option value="${c}"${(p.col||'r')==c?' selected':''}>${WLEDC[c][0]} (${WLEDC[c][1]} V)</option>`).join('')}</select></label>`:'';
   const ks=C.parts.filter(x=>['coil','relay','ton'].includes(wB(x))),link=['no','nc','kmc'].includes(T0.b)?`<label class="wvl">تابع للملف <select id="wlink">${ks.length?ks.map(k=>`<option${p.link==k.id?' selected':''}>${k.id}</option>`).join(''):'<option value="">أضف ملف كونتاكتور أو مرحّلًا أولًا</option>'}</select></label>`:'';
   const tog=T0.tg?(p.on?T0.tg[0]:T0.tg[1]):'',qs=T0.b=='io'?(p.q||[0,0,0,0]).map((b,j)=>`<button type="button" class="btn${b?' pri':''}" data-wp="q${j}">Q${j} ${b?'⏻ ON':'OFF'}</button>`).join(''):'';
   const pins=W2L(p)?'':`<p class="nolab wtip">الأطراف: ${wPins(p).map(q=>q[0]).join(' · ')}${['logic','io','uln','l293','seg7'].includes(T0.b)?' — المداخل والمخارج المنطقية تُقاس بالنسبة للطرف السالب للمصدر (الأرضي).':''}</p>`;
-  return `<div class="wpan"><div class="wph"><b>${p.id}</b><span>${T0.n} · <i dir="ltr">${wEn(p.t)}</i></span></div><div class="wpf">${prs}${mode}${col}${link}</div>${pins}${prs?'<p class="nolab wtip">اكتب القيمة ثم اضغط Enter أو «تطبيق». يُقبل: 4.7k = 4700، 220m = 0.22، والأرقام العربية.</p>':''}<div class="wpb">${prs?'<button type="button" class="btn pri" data-wp="apply">✔ تطبيق القيم</button>':''}${tog?`<button type="button" class="btn" data-wp="tog">${tog}</button>`:''}${qs}${WPOL.includes(p.t)?'<button type="button" class="btn" data-wp="flip">⇄ اعكس الاتجاه</button>':''}<button type="button" class="btn" data-wp="mh" aria-pressed="${!!p.mh}">⇋ مرآة أفقية</button><button type="button" class="btn" data-wp="mv" aria-pressed="${!!p.mv}">⇵ مرآة رأسية</button><button type="button" class="btn" data-wp="rot">↻ تدوير</button><button type="button" class="btn" data-wp="del">🗑 حذف</button></div>${wQC(S,p)}</div>`}
+  return `<div class="wpan"><div class="wph"><b>${p.id}</b><span>${T0.n} · <i dir="ltr">${wEn(p.t)}</i></span></div><div class="wpf">${prs}${mode}${col}${link}</div>${pins}${prs?'<p class="nolab wtip">اكتب الرقم فيُطبّق تلقائيًا، أو استخدم ▲▼، أو اختر قيمة جاهزة. يُقبل: 4.7k = 4700، 220m = 0.22، والأرقام العربية.</p>':''}<div class="wpb"><span class="wnud" role="group" aria-label="تحريك العنصر"><button type="button" class="btn" data-wnud="-1:0" aria-label="يمين">→</button><button type="button" class="btn" data-wnud="0:-1" aria-label="أعلى">↑</button><button type="button" class="btn" data-wnud="0:1" aria-label="أسفل">↓</button><button type="button" class="btn" data-wnud="1:0" aria-label="يسار">←</button></span>${tog?`<button type="button" class="btn" data-wp="tog">${tog}</button>`:''}${qs}${WPOL.includes(p.t)?'<button type="button" class="btn" data-wp="flip">⇄ اعكس الاتجاه</button>':''}<button type="button" class="btn" data-wp="mh" aria-pressed="${!!p.mh}">⇋ مرآة أفقية</button><button type="button" class="btn" data-wp="mv" aria-pressed="${!!p.mv}">⇵ مرآة رأسية</button><button type="button" class="btn" data-wp="rot">↻ تدوير</button><button type="button" class="btn" data-wp="del">🗑 حذف</button></div>${wQC(S,p)}</div>`}
 const wPinNm=(p,n)=>W2L(p)?(n=='a'?(WT[p.t].pol?'الطرف 1 (+)':'الطرف 1'):(WT[p.t].pol?'الطرف 2 (−)':'الطرف 2')):n;
 /* quick connect: pick a pin of this part and any other pin from a list — no precise tapping needed on phones */
 function wQC(S,p){const C=S.C,mine=wPins(p).map(q=>`<option value="${p.id}.${q[0]}">${wPinNm(p,q[0])}</option>`).join('');
@@ -12754,6 +12774,13 @@ function wQC(S,p){const C=S.C,mine=wPins(p).map(q=>`<option value="${p.id}.${q[0
   const ws=C.wires.map((w,i)=>[w,i]).filter(([w])=>w[0].split('.')[0]==p.id||w[1].split('.')[0]==p.id);
   return `<div class="wqc"><b>🔗 توصيل سريع</b><label>من <select id="wqf">${mine}</select></label><label>إلى <select id="wqt">${others||'<option value="">أضف عنصرًا آخر أولًا</option>'}</select></label><button type="button" class="btn pri" data-wp="qc">وصّل</button>
   ${ws.length?`<div class="wqcl">${ws.map(([w,i])=>`<span>${w[0]} ↔ ${w[1]} <button type="button" data-wp="dw${i}" aria-label="حذف هذا السلك">✕</button></span>`).join('')}</div>`:''}</div>`}
+/* common values per unit, and the standard E12 ladder for the ▲▼ steppers */
+const WPRE={'Ω':[10,47,100,220,330,470,1000,2200,4700,10000,100000],'V':[1.5,3,5,9,12,24,48,110,220,380],'W':[1,3,5,10,25,60,100,500,1000,2000],'A':[.5,1,2,5,10,16,20,32],'µF':[1,10,47,100,470,1000,2200],'mH':[1,10,50,100,500,1000],'Hz':[50,60,100,1000],'mA':[4,8,12,16,20],'°C':[0,25,50,100,150],'s':[1,2,3,5,10],'VA':[10,50,100,500,1000]};
+const WE12=[1,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2];
+function wChips(q,p){const L=(WPRE[q[2]]||[]).filter(v=>v>=q[4]&&v<=q[5]);if(q[0]=='pf')return [.7,.75,.8,.85,.9,1].map(v=>`<button type="button" class="wchip${p.pf==v?' on':''}" data-wset="${q[0]}:${v}">${v}</button>`).join('');return L.map(v=>`<button type="button" class="wchip${p[q[0]]==v?' on':''}" data-wset="${q[0]}:${v}">${wN(v)} ${q[2]}</button>`).join('')}
+function wStepV(v,dir,q){if(q[2]=='Ω'||q[2]=='µF'||q[2]=='mH'){const e=Math.floor(Math.log10(v)+1e-9),m=v/Math.pow(10,e);let i=WE12.findIndex(x=>x>=m-1e-9);if(i<0)i=0;if(dir>0){if(Math.abs(WE12[i]-m)<1e-9)i++;return i>=12?Math.pow(10,e+1):WE12[i]*Math.pow(10,e)}else{if(i==0)return WE12[11]*Math.pow(10,e-1);const j=Math.abs(WE12[i]-m)<1e-9?i-1:i-1;return WE12[j]*Math.pow(10,e)}}
+  if(q[0]=='pf')return Math.round((v+dir*.05)*100)/100;const st=q[2]=='V'&&v<20?.5:q[2]=='mA'?1:q[2]=='°C'?5:Math.max(Math.pow(10,Math.floor(Math.log10(Math.abs(v)||1))-1),.01);return +(v+dir*st).toPrecision(6)}
+function wSetPr(p,k,v){const q=(WT[p.t].pr||[]).find(x=>x[0]==k);if(!q)return;v=+(+v).toPrecision(6);if(!(v>=q[4]&&v<=q[5])){toast('⚠️',`${q[1]} بين ${wN(q[4])} و${wN(q[5])} ${q[2]}`,'no',2000);return}p[k]=v;wChanged()}
 function wStx(p,s){const st=s.st[p.id],V=Math.abs(s.V[p.id]||0),B=wB(p);if(B=='sym')return 'رمز توضيحي';if(st=='burn')return '<span class="bad">💥 احترق</span>';if(st=='blown')return '<span class="bad">احترق</span>';if(st=='trip')return '<span class="bad">فصل (حمل زائد)</span>';
   if(s.ac&&['led','diode','bjt','mos','scr','opto','logic','reg'].includes(B)&&!(s.dcIds||[]).includes(p.id))return '<span class="bad">يعمل مع المستمر فقط</span>';
   if(s.info[p.id])return s.info[p.id];
@@ -12782,7 +12809,7 @@ const wTimed=C=>wHasT(C)||C.parts.some(p=>p.t=='T555'||p.t=='TON');
 const wSpeed=S=>S.tsp&&S.tsp!='auto'?+S.tsp:(wHasT(S.C)?.1:1);
 function wLiveSim(S,dt){if(S.off)return null;const tr=wHasT(S.C),live=wSim(S.C,{},{mem:S.mem,dt:tr?(dt||1e-5):0,t:S.mem.t||0});if(live)S.mem=Object.assign({},live.mem,{t:S.mem.t||0});return live}
 function wTickSet(S){const need=wTimed(S.C)&&!S.off;if(need&&!WTICK)WTICK=setInterval(()=>{if(ST.v!='course'||ST.t!='wire'||!$('#wbd')){clearInterval(WTICK);WTICK=null;return}const s=wst();if(!wTimed(s.C)||s.off){clearInterval(WTICK);WTICK=null;return}
-  const ae=document.activeElement;if(ae&&/INPUT|SELECT|TEXTAREA/.test(ae.tagName)&&ae.closest('#wpan'))return;
+  if(WD)return;const ae=document.activeElement;if(ae&&/INPUT|SELECT|TEXTAREA/.test(ae.tagName)&&ae.closest('#wpan'))return;
   const tot=.1*wSpeed(s),n=5;let live=null;for(let k=0;k<n;k++){s.mem.t=(s.mem.t||0)+tot/n;live=wLiveSim(s,tot/n)}
   if(live){s.trace=s.trace||{};s.C.parts.forEach(p=>{const b=wB(p);if(b=='cap'||b=='ind'){const L=s.trace[p.id]=s.trace[p.id]||[];L.push(b=='cap'?live.V[p.id]||0:live.I[p.id]||0);if(L.length>150)L.shift()}})}
   const bd=$('#wbd'),rd=$('.wread'),stt=$('.wstat');if(bd)bd.innerHTML=wBoard(s,live);if(rd){const d=document.createElement('div');d.innerHTML=wRead(s.C,live);rd.replaceWith(d.firstElementChild)}if(stt){const d=document.createElement('div');d.innerHTML=wStat(s.C,live,s);if(d.firstElementChild)stt.replaceWith(d.firstElementChild)}},100);if(!need&&WTICK){clearInterval(WTICK);WTICK=null}}
@@ -12810,7 +12837,9 @@ function wireHtml(){const W=lesson().wire;if(!W)return '<div class="empty">لا 
   <div class="mk mk-field"><span class="mk-l">ملاحظة التوصيل</span><div><ul class="wnotes">${W.n.map(n=>`<li>${n}</li>`).join('')}</ul></div></div>`}
   <details class="whow"><summary>كيف أستخدم المختبر؟</summary><ol><li>اختر العنصر من «مكتبة المادة» فيظهر على اللوحة وتظهر خصائصه فوقها.</li><li>اكتب القيمة في خانتها ثم اضغط Enter أو «تطبيق القيم».</li><li>لتوصيل سلك: اضغط طرفًا (الدائرة الصغيرة) ثم طرفًا آخر، أو اسحب من طرف إلى طرف. النقطة السوداء تعني تفرعًا (أكثر من سلك على الطرف).</li><li>اضغط العنصر لتعديله أو تدويره أو عكسه أو حذفه، واسحبه لتحريكه. اضغط السلك لحذفه.</li><li>جرّب الأزرار والمفاتيح من خصائصها، وراقب القراءات مباشرة${free?'':'، ثم اضغط «تحقق»'}.</li></ol></details>
   <div id="wbox">${wBody()}</div></div>`}
-function wRefresh(){const b=$('#wbox');if(!b)return;const c=$('.wcanvas'),sl=c?c.scrollLeft:0,ae=document.activeElement,fo=ae&&ae.dataset&&ae.dataset.wpr;b.innerHTML=wBody();const n=$('.wcanvas');if(n)n.scrollLeft=sl;if(fo){const i=document.querySelector(`[data-wpr="${fo}"]`);if(i){i.focus();i.select&&i.select()}}}
+/* keep whatever the user just touched (board or panel) still on screen when the panel above grows/shrinks */
+let WANC='#wbd';document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('#wbox'))WANC=e.target.closest('#wpan')?'#wpan':'#wbd'},true);
+function wRefresh(){const b=$('#wbox');if(!b)return;const c=$('.wcanvas'),sl=c?c.scrollLeft:0,ae=document.activeElement,fo=ae&&ae.dataset&&ae.dataset.wpr,a0=$(WANC),t0=a0&&a0.getBoundingClientRect().top;b.innerHTML=wBody();const n=$('.wcanvas');if(n)n.scrollLeft=sl;const a1=$(WANC);if(a1&&t0!=null){const d=a1.getBoundingClientRect().top-t0;if(Math.abs(d)>2)scrollBy(0,d)}if(fo){const i=document.querySelector(`[data-wpr="${fo}"]`);if(i){i.focus();const L=i.value.length;try{i.setSelectionRange(L,L)}catch(e){}}}}
 
 /* ---------- checking + hints ---------- */
 function wRun(){const W=lesson().wire,S=wst(),X=wCtx(S.C),G=wGoals(W,X);return {G,X,ok:G.length==wTitles(W).length&&G.every(x=>x.ok)}}
@@ -12832,12 +12861,17 @@ function wApply(quiet){const S=wst(),p=S.sel&&S.sel.k=='c'&&wPart0(S.C,S.sel.id)
 /* ---------- interactions ---------- */
 const wPt=e=>{const s=$('#wbd');if(!s)return null;const p=s.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const q=p.matrixTransform(s.getScreenCTM().inverse());return [q.x,q.y]};
 let WD=null;
-document.addEventListener('pointerdown',e=>{if(ST.v!='course'||ST.t!='wire'||e.button>0)return;const tm=e.target.closest('[data-wt]'),bd=e.target.closest('[data-wc]');
+document.addEventListener('pointerdown',e=>{if(ST.v!='course'||ST.t!='wire'||e.button>0)return;let tm=e.target.closest('[data-wt]'),bd=e.target.closest('[data-wc]');
+  /* a neighbour's pin circle lying over a body must not steal the move: the body wins unless the pin belongs to that same part */
+  if(tm&&!e.target.closest('.wmvh')){const b2=document.elementsFromPoint(e.clientX,e.clientY).map(x=>x.closest&&x.closest('[data-wc]')).find(Boolean);if(b2&&tm.dataset.wt.split('.')[0]!=b2.dataset.wc){tm=null;bd=b2}}
   if(tm)WD={m:'wire',from:tm.dataset.wt};else if(bd)WD={m:'move',id:bd.dataset.wc,p0:wPt(e)};else return;WD.x=e.clientX;WD.y=e.clientY;WD.go=false});
 document.addEventListener('pointermove',e=>{if(!WD)return;if(!WD.go){if(Math.hypot(e.clientX-WD.x,e.clientY-WD.y)<6)return;WD.go=true}e.preventDefault();const q=wPt(e);if(!q)return;
   if(WD.m=='wire'){const a=wTerm(wst().C,WD.from),l=$('#wrub');if(a&&l){l.style.display='';l.setAttribute('x1',a[0]);l.setAttribute('y1',a[1]);l.setAttribute('x2',q[0]);l.setAttribute('y2',q[1])}
     document.querySelectorAll('.wthit.ov').forEach(x=>x.classList.remove('ov'));const el=document.elementFromPoint(e.clientX,e.clientY),t=el&&el.closest&&el.closest('[data-wt]');if(t)t.classList.add('ov');return}
-  if(WD.m=='move'&&WD.p0){const gg=document.querySelector(`[data-wpart="${WD.id}"]`);if(gg)gg.setAttribute('transform',`translate(${wSnap(q[0]-WD.p0[0])},${wSnap(q[1]-WD.p0[1])})`)}},{passive:false});
+  if(WD.m=='move'&&WD.p0){const C=wst().C,p=wPart0(C,WD.id);if(!p)return;if(!WD.o)WD.o=[p.x,p.y];const dx=wSnap(q[0]-WD.p0[0]),dy=wSnap(q[1]-WD.p0[1]);if(WD.dx===dx&&WD.dy===dy)return;WD.dx=dx;WD.dy=dy;
+    const gg=document.querySelector(`[data-wpart="${WD.id}"]`);if(gg)gg.setAttribute('transform',`translate(${dx},${dy})`);p.x=WD.o[0]+dx;p.y=WD.o[1]+dy;
+    C.wires.forEach((w,i)=>{if(w[0].split('.')[0]!=p.id&&w[1].split('.')[0]!=p.id)return;const d=WV=='real'?wCurve(C,w[0],w[1]):wRoute(C,w[0],w[1],[]);const g=document.querySelector(`[data-ww="${i}"]`);if(g&&d)g.querySelectorAll('path').forEach(x=>x.setAttribute('d',d))});
+    document.querySelectorAll('.wel,.wjn').forEach(x=>x.style.display='none');p.x=WD.o[0];p.y=WD.o[1]}},{passive:false});
 document.addEventListener('pointerup',e=>{if(!WD)return;const d=WD;WD=null;if(!d.go)return;window.__wNoClick=Date.now();const el=document.elementFromPoint(e.clientX,e.clientY);
   if(d.m=='wire'){const t=el&&el.closest&&el.closest('[data-wt]');if(t&&t.dataset.wt!==d.from)wWire(d.from,t.dataset.wt);else wRefresh();return}
   const q=wPt(e),p=wPart0(wst().C,d.id);if(q&&p&&d.p0){p.x+=wSnap(q[0]-d.p0[0]);p.y+=wSnap(q[1]-d.p0[1]);wClamp(p);wst().sel={k:'c',id:p.id}}wChanged()});
@@ -12848,6 +12882,10 @@ document.addEventListener('click',e=>{if(ST.v!='course'||ST.t!='wire'||!e.target
     else if(a=='redo'&&S.fut.length){S.hist.push(JSON.stringify(S.C));S.C=JSON.parse(S.fut.pop());S.sel=null;S.pick=null;wChanged(true)}
     else if(a=='zin'){S.zoom=Math.min(2.5,S.zoom+.5);wRefresh()}else if(a=='zout'){S.zoom=Math.max(1,S.zoom-.5);wRefresh()}else if(a=='power'){S.off=!S.off;wRefresh()}else if(a=='t0'){S.mem={t:0};S.trace={};wRefresh()}return}
   const lt=e.target.closest('[data-wlibt]');if(lt){const S=wst();S.libOpen=!S.libOpen;wRefresh();return}
+  const st=e.target.closest('[data-wstep]');if(st){const S=wst(),p=S.sel&&S.sel.k=='c'&&wPart0(S.C,S.sel.id);if(p){const [k,d]=st.dataset.wstep.split(':'),q=WT[p.t].pr.find(x=>x[0]==k);wSetPr(p,k,wStepV(+p[k],+d,q))}return}
+  const ws=e.target.closest('[data-wset]');if(ws){const S=wst(),p=S.sel&&S.sel.k=='c'&&wPart0(S.C,S.sel.id);if(p){const [k,v]=ws.dataset.wset.split(':');wSetPr(p,k,+v)}return}
+  const nu=e.target.closest('[data-wnud]');if(nu){const S=wst(),p=S.sel&&S.sel.k=='c'&&wPart0(S.C,S.sel.id);if(p){const [dx,dy]=nu.dataset.wnud.split(':').map(Number);p.x+=dx*10;p.y+=dy*10;wClamp(p);wChanged()}return}
+  const le=e.target.closest('[data-wedit]');if(le){const S=wst();S.pick=null;S.sel={k:'c',id:le.dataset.wedit};wRefresh();wFocusVal();return}
   const wa=e.target.closest('[data-wadd]');if(wa){wAdd(wa.dataset.wadd);return}
   if(e.target.closest('[data-wpk]')){wst().pick=null;wRefresh();return}
   const vw=e.target.closest('[data-wview]');if(vw){wSetView('v',vw.dataset.wview);wRefresh();return}
@@ -12880,7 +12918,10 @@ document.addEventListener('change',e=>{if(ST.v!='course'||ST.t!='wire')return;co
   if(t.dataset&&t.dataset.wpr){wApply(true);return}
   if(t.id=='wmode'){p.v=t.value;wChanged();return}if(t.id=='wcol'){p.col=t.value;wChanged();return}
   if(t.id=='wlink'&&t.value){p.link=t.value;wChanged()}});
-document.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.wpr)e.target.classList.remove('err');if(e.target.id=='wlibq')wLibShow(e.target.value)});
+let WTYP=null;
+function wFocusVal(){const i=document.querySelector('[data-wpr]');const pn=$('#wpan');if(pn)pn.scrollIntoView({behavior:'smooth',block:'center'});if(i)setTimeout(()=>{i.focus();i.select()},250)}
+document.addEventListener('dblclick',e=>{if(ST.t!='wire')return;const b=e.target.closest('[data-wc]');if(b){const S=wst();S.sel={k:'c',id:b.dataset.wc};wRefresh();wFocusVal()}});
+document.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.wpr){e.target.classList.remove('err');clearTimeout(WTYP);const el=e.target;WTYP=setTimeout(()=>{const S=wst(),p=S.sel&&S.sel.k=='c'&&wPart0(S.C,S.sel.id),q=p&&(WT[p.t].pr||[]).find(x=>x[0]==el.dataset.wpr),v=wNum(el.value);if(p&&q&&v>=q[4]&&v<=q[5]&&v!==p[q[0]]){p[q[0]]=v;wChanged()}},650)}if(e.target.id=='wlibq')wLibShow(e.target.value)});
 document.addEventListener('keydown',e=>{if(ST.v!='course'||ST.t!='wire'||!$('#wbd'))return;const S=wst();
   if(e.key=='Enter'&&e.target.dataset&&e.target.dataset.wpr){e.preventDefault();wApply(false);return}
   if(e.target.id=='wlibq'){if(e.key=='Enter'){e.preventDefault();const b=$('#wlibr [data-wadd]');if(b)b.click()}if(e.key=='Escape'){e.target.value='';wLibShow('')}return}
