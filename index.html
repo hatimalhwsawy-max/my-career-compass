@@ -956,6 +956,17 @@ body{font-size:16px;line-height:1.85}
 .whowp{margin:6px 0 8px;padding:8px 10px;border-radius:10px;background:color-mix(in srgb,var(--acc,#2563eb) 7%,var(--paper,#fff));border:1px solid color-mix(in srgb,var(--acc,#2563eb) 30%,transparent);font-size:.9em;line-height:1.7}
 .whowp summary{cursor:pointer;font-weight:800}
 .whowp p{margin:4px 0}
+/* v23: undo group + recently used parts */
+.wundo{display:inline-flex;gap:4px}
+.wundo button{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:6px 12px;font-weight:700}
+.wundo button i{font-style:normal;font-size:1.3em;line-height:1}
+.wundo button:disabled{opacity:.45}
+.wrec{display:flex;flex-wrap:wrap;align-items:center;gap:6px;width:100%;margin-top:6px}
+.wrec button{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line,#ccc);border-radius:10px;background:var(--paper,#fff);color:inherit;cursor:pointer;padding:4px 8px;min-height:40px;font-size:.88em}
+.wrec button svg{width:30px;height:20px;flex:none}
+.wrec .wrec1{border:2px solid var(--acc,#2563eb);font-weight:800;background:color-mix(in srgb,var(--acc,#2563eb) 9%,var(--paper,#fff))}
+.wrecl{font-size:.82em;opacity:.8}
+@media(max-width:520px){.wundo{width:100%}.wundo button{flex:1;justify-content:center}.wrec .wrec1{width:100%;justify-content:center}}
 </style>
 <header id="topbar" class="topbar"></header>
 <main class="wrap"><div id="app"></div></main>
@@ -12751,7 +12762,7 @@ const W5={},W5M={};
 const wFree=()=>W5M[ST.c]=='free';
 const wKey=()=>wFree()?'F.'+ST.c:ST.c+'.'+ST.l;
 const wSKey=()=>wFree()?'wf.'+ST.c:'wc.'+ST.c+'.'+ST.l;
-function wst(){const k=wKey();if(!W5[k])W5[k]={C:store.get(wSKey(),null)||{parts:[],wires:[]},sel:null,pick:null,res:null,hint:null,hl:[],hn:0,hk:'',mem:{t:0},hist:[],fut:[],zoom:1,off:false};W5[k].last=JSON.stringify(W5[k].C);return W5[k]}
+function wst(){const k=wKey();if(!W5[k])W5[k]={C:store.get(wSKey(),null)||{parts:[],wires:[]},sel:null,pick:null,res:null,hint:null,hl:[],hn:0,hk:'',mem:{t:0},hist:[],fut:[],zoom:1,off:false};if(W5[k].last==null)W5[k].last=JSON.stringify(W5[k].C);return W5[k]}
 const wireDone=()=>!!(store.get('wire.'+ST.c,{})[ST.l]);
 const wPart0=(C,id)=>C.parts.find(p=>p.id==id);
 const wPinXY=(p,s)=>{const q=wPins(p).find(x=>x[0]==s);if(!q)return null;const d=wLoc(p,q[1],q[2]);return [p.x+d[0],p.y+d[1]]};
@@ -12768,8 +12779,12 @@ function wLibGroups(){const deps=wDepsOf(ST.c),W=lesson().wire||{need:[]},own=ne
   SYMGRP.forEach(g=>{const L=[];g[1].forEach(k=>{const t=wT(k);if(WT[t]&&!L.includes(t)){L.push(t);seen.add(t)}});if(L.length)G.push([g[0],L])});
   const rest=Object.keys(SYMS).map(wT).filter(t=>WT[t]&&!seen.has(t));if(rest.length)G.push(['رموز أخرى',[...new Set(rest)]]);
   G.push(['عناصر مساعدة للمختبر',Object.keys(WT).filter(t=>!SYMS[t]&&!Object.values(WSYM2T).includes(t)).concat(['TX','LI','K','KNO','KNC','PB','PBC','RV','BZ']).filter((t,i,a)=>a.indexOf(t)==i)]);return G}
+const wRecK=()=>'wrec.'+ST.c,wRec=()=>(store.get(wRecK(),[])||[]).filter(t=>WT[t]);
+function wRecPush(t){store.set(wRecK(),[t].concat(wRec().filter(x=>x!==t)).slice(0,6))}
+function wRecBar(){const L=wRec();if(!L.length)return '';const l=L[0];
+  return `<div class="wrec"><button type="button" class="wrec1" data-wadd="${l}" title="أضف ${WT[l].n} آخر">${wIcon(l)}<span>➕ أضف ${WT[l].n} آخر</span></button>${L.length>1?`<span class="wrecl">🕘 استخدمتها مؤخرًا:</span>${L.slice(1).map(tp=>`<button type="button" class="wrecb" data-wadd="${tp}" title="${WT[tp].n}">${wIcon(tp)}<span>${WT[tp].n}</span></button>`).join('')}`:''}</div>`}
 function wAdd(t){const W=wFree()?{}:lesson().wire||{},S=wst(),C=S.C,T0=WT[t];if(!T0)return;if(C.parts.filter(p=>p.t==t).length>=WMAX){toast('ℹ️',`الحد الأقصى ${WMAX} من «${T0.n}»`,'info',2000);return}
-  let k=1;while(C.parts.some(p=>p.id==T0.p+k))k++;const p={id:T0.p+k,t,r:wIsSrc({t})&&T0.pn.length==2&&T0.pn[1][1]==60?90:0,x:0,y:0},d0=(W.def||{})[t]||{};
+  wRecPush(t);let k=1;while(C.parts.some(p=>p.id==T0.p+k))k++;const p={id:T0.p+k,t,r:wIsSrc({t})&&T0.pn.length==2&&T0.pn[1][1]==60?90:0,x:0,y:0},d0=(W.def||{})[t]||{};
   (T0.pr||[]).forEach(q=>p[q[0]]=d0[q[0]]!=null?d0[q[0]]:q[3]);if(t=='DMM')p.v=d0.v||'V';if(t=='LED')p.col=d0.col||'r';if(T0.st)p.on=T0.st[2];if(T0.b=='io')p.q=[0,0,0,0];
   const coils=C.parts.filter(x=>['coil','relay','ton'].includes(wB(x)));if(['no','nc','kmc'].includes(T0.b))p.link=coils.length?coils[0].id:'KM1';
   const cs=(p.r==90?[[50,150],[50,280]]:[]).concat([70,170,270,350].flatMap(y=>[130,250,370,490].map(x=>[x,y]))).concat([[560,170],[560,270]]),used=C.parts.map(wCtr),c=cs.find(q=>used.every(u=>Math.hypot(u[0]-q[0],u[1]-q[1])>85))||[320,200];
@@ -12865,7 +12880,7 @@ function wIcon(tp){if(WICO[tp])return WICO[tp];const T=WT[tp],d={t:tp,r:0,x:0,y:
   const pn=wPins(d),ys=pn.map(q=>q[2]).concat([-30,30]),y1=Math.min(...ys)-4,y2=Math.max(...ys)+4;
   return WICO[tp]=`<svg class="wico" viewBox="-6 ${y1} 72 ${y2-y1}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${g}</svg>`}
 function wLib(){const S=wst(),G=wLibGroups(),n=new Set(G.flatMap(g=>g[1])).size,open=!!S.libOpen;
-  return `<div class="wlib"><span>📚 مكتبة المادة <small>(${n} عنصرًا)</small></span><div class="wsrch"><input id="wlibq" type="search" inputmode="search" autocomplete="off" placeholder="🔍 ابحث عن عنصر: مقاومة، LED، ترانزستور، 7805، فيوز…" aria-label="ابحث في مكتبة المادة" aria-controls="wlibr"><div id="wlibr" class="wlibr" role="listbox" aria-label="نتائج البحث"></div></div>
+  return `<div class="wlib"><span>📚 مكتبة المادة <small>(${n} عنصرًا)</small></span><div class="wsrch"><input id="wlibq" type="search" inputmode="search" autocomplete="off" placeholder="🔍 ابحث عن عنصر: مقاومة، LED، ترانزستور، 7805، فيوز…" aria-label="ابحث في مكتبة المادة" aria-controls="wlibr"><div id="wlibr" class="wlibr" role="listbox" aria-label="نتائج البحث"></div></div>${wRecBar()}
   <button type="button" class="wlibtg${open?' on':''}" data-wlibt="1" aria-expanded="${open}">${open?'▴ إخفاء المكتبة':'▾ تصفح كل العناصر برموزها'}</button></div>
   ${open?`<div class="wlibp">${G.map((g,k)=>`<details class="wlg"${k==0?' open':''}><summary>${g[0]} <small>(${g[1].length})</small></summary><div class="wlgrid">${g[1].map(tp=>`<button type="button" class="wltile${WT[tp].b=='sym'?' sym':''}" data-wadd="${tp}" title="${WT[tp].n}">${wIcon(tp)}<span>${WT[tp].n}<em dir="ltr">${wEn(tp)}</em></span></button>`).join('')}</div></details>`).join('')}</div>`:''}`}
 /* library search: Arabic-aware matching on the name, the type code and the library's unit/English hint */
@@ -12938,6 +12953,9 @@ const wRunSt=S=>S.off?'stop':S.pause?'pause':'play';
 function wRunBar(S){const m=wRunSt(S),b=(k,ic,tx,ti)=>`<button type="button" data-wrun="${k}" class="${m==k?'on':''}" aria-pressed="${m==k}" title="${ti}"><i aria-hidden="true">${ic}</i><span>${tx}</span></button>`;
   return `<div class="wgrp wrun" role="group" aria-label="تشغيل الدائرة">${b('play','▶','تشغيل','شغّل الدائرة (مسافة)')}${b('pause','⏸','إيقاف مؤقت','جمّد الدائرة والزمن والقراءات كما هي (مسافة)')}${b('stop','⏹','إيقاف تام','افصل كل شيء وأعد الزمن والمكثفات للصفر')}</div>`}
 function wRunDo(k){const S=wst();if(k=='play'){S.off=false;S.pause=false}else if(k=='pause'){if(S.off)return;S.pause=true}else{S.off=true;S.pause=false;S.mem={t:0};S.trace={}}wRefresh()}
+function wUndo(redo){const S=wst();if(redo){if(!S.fut.length)return;S.hist.push(JSON.stringify(S.C));S.C=JSON.parse(S.fut.pop())}else{if(!S.hist.length)return;S.fut.push(JSON.stringify(S.C));S.C=JSON.parse(S.hist.pop())}S.sel=null;S.pick=null;wChanged(true)}
+document.addEventListener('keydown',e=>{if(ST.v!='course'||ST.t!='wire'||!$('#wbd')||!(e.ctrlKey||e.metaKey))return;const k=(e.key||'').toLowerCase(),a=e.target;if(a&&(/INPUT|SELECT|TEXTAREA/.test(a.tagName)||a.isContentEditable))return;
+  if(k=='z'||k=='ي'){e.preventDefault();wUndo(e.shiftKey)}else if(k=='y'||k=='غ'){e.preventDefault();wUndo(true)}});
 document.addEventListener('keydown',e=>{if(e.key!==' '||ST.v!='course'||ST.t!='wire'||!$('#wbd')||e.ctrlKey||e.altKey||e.metaKey)return;const a=e.target;if(a&&(/INPUT|SELECT|TEXTAREA|BUTTON|SUMMARY|A/.test(a.tagName)||a.isContentEditable))return;e.preventDefault();wRunDo(wRunSt(wst())=='play'?'pause':'play')});
 function wStat(C,live,S){if(!C.parts.length)return '';if(S.off)return '<div class="wstat off">⏹ الدائرة متوقفة تمامًا: لا يمر تيار، وأُعيد الزمن والمكثفات إلى الصفر. اضغط ▶ تشغيل.</div>';if(!live)return '';
   const src=C.parts.filter(p=>['src','pv'].includes(wB(p)));if(!src.length)return '';const I=src.reduce((s,p)=>s+Math.abs(live.I[p.id]||0),0),P=src.reduce((s,p)=>s+(live.ac&&live.P[p.id]!=null?Math.abs(live.P[p.id]):Math.abs((live.V[p.id]||0)*(live.I[p.id]||0))),0);
@@ -12947,9 +12965,9 @@ function wBody(){const free=wFree(),W=lesson().wire,S=wst(),C=S.C,live=wLiveSim(
   const warn=live&&live.short?`<div class="wwarn">⚠️ قصر في الدائرة!${src?` تيار ${src.id} ${wfA(Math.abs(live.I[src.id]))}.`:''} في الواقع تسخن الأسلاك بسرعة وقد تحترق.</div>`:live&&Object.values(live.st).includes('burn')?'<div class="wwarn">💥 احترق عنصر! الجهد أو التيار أكبر من المسموح. غيّر القيم أو التوصيل.</div>':live&&live.mblown?'<div class="wwarn">💥 احترق فيوز الأفوميتر: مر فيه تيار كبير على وضع A.</div>':live&&live.acDiode?'<div class="wwarn">ℹ️ أشباه الموصلات والدوائر المنطقية تُحاكى مع المصدر المستمر. مع المتردد استخدم قنطرة التقويم لتحويله إلى مستمر أولًا.</div>':'';
   return `${free?'':wReq(W,S)}${wLib()}<div id="wpan">${wPanel(S)}</div>${warn}<div class="wbar" role="toolbar" aria-label="أدوات مختبر التوصيل">
   ${wRunBar(S)}
+  <div class="wgrp wundo" role="group" aria-label="التراجع"><button type="button" data-wtool="undo"${S.hist.length?'':' disabled'} title="رجوع خطوة (Ctrl+Z)"><i aria-hidden="true">↶</i><span>رجوع خطوة</span></button><button type="button" data-wtool="redo"${S.fut.length?'':' disabled'} title="إعادة الخطوة (Ctrl+Y)"><i aria-hidden="true">↷</i><span>إعادة</span></button></div>
   <div class="wgrp wviews" role="group" aria-label="طريقة العرض"><button type="button" class="${WV=='real'?'on':''}" data-wview="real" aria-pressed="${WV=='real'}">🖼 واقعي</button><button type="button" class="${WV=='bb'?'on':''}" data-wview="bb" aria-pressed="${WV=='bb'}">🧱 لوحة تجارب</button><button type="button" class="${WV=='sch'?'on':''}" data-wview="sch" aria-pressed="${WV=='sch'}">📐 مخطط</button></div>
   <div class="wgrp"><label class="wflow">⚡<select id="wel" aria-label="عرض حركة التيار"><option value="c"${WEL=='c'?' selected':''}>التيار من + إلى −</option><option value="e"${WEL=='e'?' selected':''}>الإلكترونات من − إلى +</option><option value="n"${WEL=='n'?' selected':''}>بلا حركة</option></select></label></div>
-  <div class="wgrp"><button type="button" data-wtool="undo"${S.hist.length?'':' disabled'} title="تراجع" aria-label="تراجع">↶</button><button type="button" data-wtool="redo"${S.fut.length?'':' disabled'} title="إعادة" aria-label="إعادة">↷</button></div>
   <div class="wgrp"><button type="button" data-wtool="zout" title="تصغير" aria-label="تصغير"${S.zoom<=1?' disabled':''}>➖</button><span class="wz">${Math.round(S.zoom*100)}%</span><button type="button" data-wtool="zin" title="تكبير" aria-label="تكبير"${S.zoom>=2.5?' disabled':''}>➕</button></div>
   ${wTimed(C)?`<div class="wgrp"><label class="wflow">⏱<select id="wtsp" aria-label="سرعة المحاكاة"><option value="auto"${!S.tsp||S.tsp=='auto'?' selected':''}>سرعة تلقائية</option><option value="1"${S.tsp=='1'?' selected':''}>زمن حقيقي</option><option value="0.1"${S.tsp=='0.1'?' selected':''}>أبطأ ×10</option><option value="0.01"${S.tsp=='0.01'?' selected':''}>أبطأ ×100</option></select></label></div>`:''}
   ${WV=='bb'?`<label class="wgrp wbbc"><input type="checkbox" id="wbbc"${C.bb?' checked':''}> توصيل تلقائي عبر شرائح اللوحة</label>`:''}</div>
@@ -13004,8 +13022,7 @@ document.addEventListener('pointerup',e=>{if(!WD)return;const d=WD;WD=null;if(!d
 document.addEventListener('pointercancel',()=>{WD=null});
 document.addEventListener('click',e=>{if(ST.v!='course'||ST.t!='wire'||!e.target.closest('.wire'))return;if(window.__wNoClick&&Date.now()-window.__wNoClick<350){window.__wNoClick=0;return}
   const tl=e.target.closest('[data-wtool]');if(tl){const S=wst(),a=tl.dataset.wtool;
-    if(a=='undo'&&S.hist.length){S.fut.push(JSON.stringify(S.C));S.C=JSON.parse(S.hist.pop());S.sel=null;S.pick=null;wChanged(true)}
-    else if(a=='redo'&&S.fut.length){S.hist.push(JSON.stringify(S.C));S.C=JSON.parse(S.fut.pop());S.sel=null;S.pick=null;wChanged(true)}
+    if(a=='undo')wUndo(false);else if(a=='redo')wUndo(true)
     else if(a=='zin'){S.zoom=Math.min(2.5,S.zoom+.5);wRefresh()}else if(a=='zout'){S.zoom=Math.max(1,S.zoom-.5);wRefresh()}else if(a=='power'){S.off=!S.off;wRefresh()}else if(a=='t0'){S.mem={t:0};S.trace={};wRefresh()}return}
   const rb=e.target.closest('[data-wrun]');if(rb){wRunDo(rb.dataset.wrun);return}
   const lt=e.target.closest('[data-wlibt]');if(lt){const S=wst();S.libOpen=!S.libOpen;wRefresh();return}
