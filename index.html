@@ -967,6 +967,118 @@ body{font-size:16px;line-height:1.85}
 .wrec .wrec1{border:2px solid var(--acc,#2563eb);font-weight:800;background:color-mix(in srgb,var(--acc,#2563eb) 9%,var(--paper,#fff))}
 .wrecl{font-size:.82em;opacity:.8}
 @media(max-width:520px){.wundo{width:100%}.wundo button{flex:1;justify-content:center}.wrec .wrec1{width:100%;justify-content:center}}
+/* v24: course-deck sheets (worked solutions) */
+.dsol{margin:6px 0 14px;padding:8px 12px;border:1px dashed var(--line,#ccc);border-radius:10px}
+.dsol summary{cursor:pointer;font-weight:800;color:var(--acc,#2563eb)}
+.dex{display:flex;flex-wrap:wrap;gap:6px 22px;font-family:ui-monospace,monospace;font-weight:700}
+.tt td.hi{font-weight:800;color:var(--acc,#2563eb)}
+/* v25: specs box */
+.wspec{margin:6px 0 10px;padding:8px 10px;border-radius:10px;border:1px solid var(--line,#ccc);font-size:.9em}
+.wspec table{width:100%;border-collapse:collapse;margin-top:4px}
+.wspec th{text-align:start;font-weight:700;padding:4px 6px 4px 0;white-space:nowrap;vertical-align:middle;width:1%}
+.wspec td{padding:4px 0}
+.wsb{display:inline-block;width:90px;height:8px;border-radius:4px;background:var(--line,#ddd);overflow:hidden;vertical-align:middle;margin-inline-end:6px}
+.wsb i{display:block;height:100%;background:#1b8a4b}
+.wsb.warn i{background:#f0a400}.wsb.bad i{background:#c62828}
+@media(max-width:520px){.wspec th{white-space:normal}}
+/* v26: action sheet (mobile first) */
+.wsheet{position:fixed;left:0;right:0;bottom:0;z-index:45;max-height:58vh;overflow:auto;overscroll-behavior:contain;background:var(--paper,#fff);color:var(--ink,#111);border-top:2px solid var(--ink,#222);border-radius:18px 18px 0 0;box-shadow:0 -12px 32px rgba(0,0,0,.22);padding:0 12px calc(12px + env(safe-area-inset-bottom));margin:0}
+.wsheet.min{max-height:none;overflow:visible}
+.wsheet.min .wshb{display:none}
+.wshh{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;padding:8px 0 4px;background:var(--paper,#fff)}
+.wsht{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wsht small{opacity:.75}
+.wshg,.wshx{min-width:44px;min-height:40px;border-radius:12px;border:1px solid var(--line,#ccc);background:var(--paper,#fff);color:inherit;font-size:1.1em;cursor:pointer}
+.wsha{position:sticky;top:52px;z-index:2;display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;background:var(--paper,#fff);scrollbar-width:thin}
+.wsha button{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:60px;min-height:56px;padding:6px 6px;border:1px solid var(--line,#ccc);border-radius:12px;background:var(--paper,#fff);color:inherit;font-size:.76em;font-weight:700;cursor:pointer}
+.wsha button i{font-style:normal;font-size:1.4em;line-height:1}
+.wsha button:active{transform:scale(.95)}
+.wsha .dang{color:#c62828;border-color:#e8a1a1}
+.wsheet .wph{display:none}
+.wsheet .wpan{border:0;padding:0;margin:0;background:transparent}
+.wsheet .wpb .btn[data-wp="rot"],.wsheet .wpb .btn[data-wp="mh"],.wsheet .wpb .btn[data-wp="mv"],.wsheet .wpb .btn[data-wp="del"],.wsheet .wpb .btn[data-wp="flip"]{display:none}
+.wshpad{height:52vh}.wshpad.min{height:140px}
+.wpanph{font-size:.9em}
+@media(min-width:900px){.wsheet{left:auto;right:18px;bottom:18px;width:420px;max-height:80vh;border:2px solid var(--ink,#222);border-radius:18px}.wshpad{display:none}}
+/* v26: Arduino boards + code panel */
+.ardt{fill:#fff!important;stroke:none!important;font:800 15px/1 sans-serif;text-anchor:middle;letter-spacing:1px}
+.ardt.b{font-size:20px}.ardt.s{font-size:7px;font-weight:600;letter-spacing:0}.ardt.l{text-anchor:start}
+.wpin.wpb{font-size:7.5px}
+.wcode{margin:12px 0;padding:12px;border:1.5px solid var(--ink,#222);border-radius:14px;background:color-mix(in srgb,#00878f 6%,var(--paper,#fff))}
+.wch,.wcex{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:8px}
+.wch b{flex:1;min-width:160px}
+.wcex label{display:flex;align-items:center;gap:6px;flex:1;min-width:200px}.wcex select{flex:1;min-height:40px}
+#wcode{width:100%;box-sizing:border-box;min-height:260px;font:13.5px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;background:#1e1f24;color:#e8eaed;border-radius:10px;border:1px solid #444;padding:10px;tab-size:2;white-space:pre;overflow:auto;resize:vertical;caret-color:#ffcc00}
+.wcst{margin:8px 0;padding:8px 10px;border-radius:10px;background:var(--paper,#fff);border:1px solid var(--line,#ccc);font-size:.9em}
+.wlinks{margin:8px 0}.wlinks>div{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.wal{padding:4px 8px;border-radius:999px;border:1px solid var(--line,#ccc);font-size:.82em;background:var(--paper,#fff)}
+.wal.ok{border-color:#1b8a4b}.wal.warn{border-color:#f0a400;background:color-mix(in srgb,#f0a400 12%,var(--paper,#fff))}.wal.bad{border-color:#c62828}
+.wserh{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.wser{height:140px;overflow:auto;margin:6px 0 0;padding:8px 10px;background:#0d1117;color:#7ee787;border-radius:10px;font:12.5px/1.5 ui-monospace,Consolas,monospace;white-space:pre-wrap;text-align:left}
+/* v26: phones — larger board you scroll with a finger, shorter sheet */
+@media(max-width:620px){#wbd{--wmw:620px}.wsheet{max-height:46vh}.wshpad{height:42vh}}
+/* v27: PLC ladder editor */
+.plct{fill:#263238!important;stroke:none!important;font:800 11px/1 sans-serif;text-anchor:middle}.plct.w{fill:#fff!important;font-size:14px}.plct.s{font-size:7px;font-weight:700}.plct.l{text-anchor:start}
+.wplc{margin:12px 0;padding:12px;border:1.5px solid var(--ink,#222);border-radius:14px;background:color-mix(in srgb,#455a64 6%,var(--paper,#fff))}
+.wplst{padding:4px 10px;border-radius:999px;font-weight:800;font-size:.85em;border:1px solid var(--line,#ccc)}.wplst.run{background:#1b8a4b;color:#fff}.wplst.stop{background:#f0a400;color:#111}.wplst.nopw{background:#c62828;color:#fff}
+.lad{display:flex;flex-direction:column;gap:10px;margin:10px 0}
+.lrung{border:1px solid var(--line,#ccc);border-radius:12px;background:var(--paper,#fff);padding:8px}
+.lrh{display:flex;align-items:center;gap:8px;margin-bottom:6px}.lrh .lcm{flex:1;min-width:0;min-height:34px;border-radius:8px;border:1px solid var(--line,#ccc);padding:4px 8px}
+.lrb button{min-width:36px;min-height:34px;border-radius:8px;border:1px solid var(--line,#ccc);background:var(--paper,#fff);color:inherit;cursor:pointer}
+.lline{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:6px 2px;scrollbar-width:thin}
+.lrail{flex:none;width:4px;align-self:stretch;min-height:56px;background:#37474f;border-radius:2px}
+.lwire{flex:1;min-width:14px;height:3px;background:#90a4ae}
+.lblk{flex:none;display:flex;flex-direction:column;gap:6px;padding:4px;border-left:3px solid #90a4ae;border-right:3px solid #90a4ae;border-radius:6px;position:relative}
+.lbr{display:flex;align-items:center;gap:6px}
+.lct,.lco{flex:none;display:flex;align-items:center;gap:4px;padding:5px 6px;border:2px solid #90a4ae;border-radius:10px;background:var(--paper,#fff);font-size:.82em}
+.lct select,.lco select{max-width:150px;min-height:34px;font-size:.95em}
+.lct input,.lco input{width:52px;min-height:32px;text-align:center}
+.lsym{font:800 15px/1 ui-monospace,monospace;min-width:34px;text-align:center}
+.lct.on,.lco.on{border-color:#1b8a4b;background:color-mix(in srgb,#00e676 18%,var(--paper,#fff));box-shadow:0 0 0 2px #00e67655}
+.lct.on .lsym,.lco.on .lsym{color:#1b8a4b}
+.lx{min-width:28px;min-height:28px;border-radius:8px;border:0;background:transparent;color:#c62828;cursor:pointer;font-size:1em}
+.ladd{flex:none;min-height:34px;padding:4px 8px;border-radius:8px;border:1px dashed #607d8b;background:transparent;color:inherit;cursor:pointer;font-size:.8em;white-space:nowrap}
+.lmon{font:700 11px ui-monospace,monospace;color:#1b8a4b;min-width:70px}
+.wpvt{margin-top:10px}.wpvars>div{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.pv{display:inline-flex;gap:5px;align-items:center;padding:3px 8px;border-radius:999px;border:1px solid var(--line,#ccc);font:12px ui-monospace,monospace;background:var(--paper,#fff)}.pv.on{background:#1b8a4b;color:#fff;border-color:#1b8a4b}
+/* v28: compact, ordered element sheet */
+.wsheet{padding:0 10px calc(10px + env(safe-area-inset-bottom))}
+.wshh{padding:6px 0 2px}.wshg,.wshx{min-width:40px;min-height:36px;border-radius:10px}
+.wsha{top:44px;gap:5px;padding:2px 0 6px}
+.wsha button{min-width:50px;min-height:46px;padding:4px 3px;font-size:.7em;border-radius:10px}
+.wsha button i{font-size:1.2em}
+.wsheet .wpf{gap:6px}
+.wsheet .wvl2{margin:4px 0;padding:6px 8px;gap:4px;border-radius:10px}
+.wsheet .wvl2 .wvn{font-size:.85em}
+.wsheet .wvr input{font-size:1em;padding:6px}
+.wsheet .wstep{min-width:40px;min-height:40px}
+.wsheet .wchips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.wsheet .wchips::-webkit-scrollbar{display:none}
+.wsheet .wchip{flex:none;padding:5px 9px}
+.wsheet .wvl{margin:4px 0}
+.wsec{margin:6px 0;border:1px solid var(--line,#ccc);border-radius:10px;padding:0 10px;background:var(--paper,#fff)}
+.wsec>summary{cursor:pointer;font-weight:700;padding:9px 0;font-size:.88em}
+.wsecb{padding:0 0 8px}
+.wss{font-weight:600;font-size:.82em;margin-inline-start:6px;padding:2px 8px;border-radius:999px;display:inline-block;max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
+.wss.ok{background:color-mix(in srgb,#1b8a4b 14%,var(--paper,#fff))}.wss.warn{background:color-mix(in srgb,#f0a400 22%,var(--paper,#fff))}.wss.bad{background:color-mix(in srgb,#c62828 18%,var(--paper,#fff))}
+.wsheet .whowp.wsec{background:var(--paper,#fff);border:1px solid var(--line,#ccc);padding:0 10px;font-size:.88em}
+.wctl{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.wctl .btn{min-height:44px;flex:1 1 auto}
+.wsheet .wqc{border:0;padding:0;margin:0;background:transparent}
+.wsheet .wtip{font-size:.76em;margin:4px 0;opacity:.8}
+@media(min-width:900px){.wsheet{width:360px;max-height:70vh}}
+@media(max-width:620px){.wsheet{max-height:44vh}.wshpad{height:40vh}}
+/* code editor: Arabic comments read right-to-left on their own line */
+#wcode{unicode-bidi:plaintext;text-align:start}
+.lcdt{fill:#1b2e0b!important;stroke:none!important;font:700 13px/1 ui-monospace,Consolas,monospace;text-anchor:middle}
+.wcanvas{direction:ltr}
+body:has(.wsheet) .toast{bottom:calc(46vh + 12px)}
+@media(min-width:900px){body:has(.wsheet) .toast{bottom:22px}}
+.wsheet .wpan{display:block}.wsheet .wsec{display:block;width:auto}
+/* v29: smaller action icons in the element sheet */
+.wsha{gap:4px;padding:2px 0 5px}
+.wsha button{min-width:42px;min-height:40px;padding:3px 2px;gap:1px;font-size:.62em;border-radius:9px}
+.wsha button i{font-size:1.05em}
+.wshg,.wshx{min-width:36px;min-height:32px;font-size:1em}
 </style>
 <header id="topbar" class="topbar"></header>
 <main class="wrap"><div id="app"></div></main>
@@ -11863,6 +11975,84 @@ QX('wlq',3,[tQ('اختبار PT يحتاج قبل وضع الصبغة:',['تنظ
  tQ('اختبار الشد الإتلافي يقيس:',['مقاومة الوصلة حتى الكسر','لون اللحام','سطحه فقط','الوزن'],'Tensile test.'),
  tQ('لماذا يُؤهل اللحام باختبار وفق كود؟',['لإثبات قدرته على لحام سليم بالإجراء المعتمد','للزينة','لتوفير الوقت فقط','لا داعي'],'تأهيل اللحامين.'),
  tQ('RT يكشف بشكل جيد:',['المسامية واحتباس الخبث داخل اللحام','اللون فقط','الشقوق السطحية فقط','الحرارة'],'صورة إشعاعية للداخل.')]);
+/* ===== DE (الإلكترونيات الرقمية) · Sheet 1 aligned with the course deck ELM 238 · Unit 1 · Lesson 1 "Introduction to Digital Electronics" ===== */
+(()=>{const C=COURSES.find(c=>c.id=='dig');if(!C)return;const L=C.lessons[0];
+const B=s=>`<span class="mono" dir="ltr">${s}</span>`;
+/* worked conversions shared by the sheet and the lab */
+const dig2dec=b=>{const n=b.length;return b.split('').map((d,i)=>[+d,n-1-i])};
+const posTbl=b=>{const P=dig2dec(b);return `<div class="tw"><table class="tt" dir="ltr"><tr><th>Binary position</th>${P.map(p=>`<th>2<sup>${p[1]}</sup> = ${1<<p[1]}</th>`).join('')}</tr><tr><th>Binary digit</th>${P.map(p=>`<td class="${p[0]?'hi':''}">${p[0]}</td>`).join('')}</tr><tr><th>Value</th>${P.map(p=>`<td>${p[0]?1<<p[1]:0}</td>`).join('')}</tr></table></div>`};
+const divTbl=n=>{const R=[];let q=n;if(!q)R.push([0,0,0]);while(q>0){R.push([q,Math.floor(q/2),q%2]);q=Math.floor(q/2)}
+  return `<div class="tw"><table class="tt" dir="ltr"><tr><th>Division</th><th>Quotient</th><th>Remainder</th></tr>${R.map(r=>`<tr><td>${r[0]} ÷ 2</td><td>${r[1]}</td><td class="hi">${r[2]}</td></tr>`).join('')}</table></div><p class="lbl">اقرأ البواقي من الأسفل إلى الأعلى ↑ : ${B(n.toString(2)+'₂')}</p>`};
+const sol=(qs,a)=>`<details class="dsol"><summary>أظهر الحل</summary>${a}</details>`;
+
+L.t='أنظمة العد';
+L.unit='ELM 238 · Unit 1 · Lesson 1';
+L.sum=['الدوائر الرقمية تفهم حالتين فقط: 0 (مطفأ) و 1 (يعمل)، لذلك تستخدم النظام الثنائي.',
+  `من الثنائي إلى العشري: اضرب كل خانة في وزنها (1، 2، 4، 8…) ثم اجمع. مثال ${B('110₂ = 6₁₀')}.`,
+  `من العشري إلى الثنائي: اقسم على 2 مرارًا واقرأ البواقي من الأسفل إلى الأعلى. مثال ${B('13₁₀ = 1101₂')}.`];
+L.sf=['N₁₀ = Σ (bit × 2ⁿ)','Decimal: base 10 (0–9)','Binary: base 2 (0, 1)'];
+L.why={elnx:'كل متحكم دقيق ومسجل وذاكرة يخزن القيم بالثنائي؛ تقرأ بها السجلات وتضبط المخارج بتًا بتًا.',
+  inst:'إشارات الحساسات الرقمية والبروتوكولات (Modbus وHART) ترسل القيم بالثنائي والسداسي عشري.',
+  mech:'مداخل ومخارج الـPLC تُعنون وتُقرأ بالبتات، وكل حساس On/Off هو بت واحد.',
+  net:'عناوين IP وأقنعة الشبكة تُحسب بالثنائي.',sw:'كل البيانات في البرمجة تُخزن بتات؛ التحويل أساس فهم الأنواع والعمليات على البتات.',
+  ai:'الأوزان والصور والنصوص تُخزن في الذاكرة أعدادًا ثنائية.'};
+L.gl=[['Digital electronics','الإلكترونيات الرقمية','Circuits that work with two levels only: 0 and 1'],['Number system','نظام العد','A way of representing quantities using specific symbols'],
+  ['Base (Radix)','الأساس','How many symbols the system uses: 10 for decimal, 2 for binary'],['Decimal (Base 10)','النظام العشري','The human standard: 0, 1, 2 … 9'],
+  ['Binary (Base 2)','النظام الثنائي','The computer’s language: 0 and 1 only'],['Bit','بت','One binary digit: 0 or 1'],
+  ['Positional weight','وزن الخانة','The power of the base for each position: 2⁰ = 1, 2¹ = 2, 2² = 4 …'],
+  ['MSB / LSB','الخانة الأعلى / الأدنى','Most significant bit (left) / least significant bit (right)'],
+  ['Quotient / Remainder','ناتج القسمة / الباقي','Used in the divide-by-2 method']];
+L.en={tt:'Number Systems',t:'Introduction to Digital Electronics: decimal vs. binary',
+  sum:`<p><b>Unit 1 · Lesson 1 (ELM 238).</b> By the end of this lesson you will be able to explain what binary numbers are, compare the decimal and binary systems, and predict the outputs of simple logic gates (next sheet).</p>
+<ul><li><b>Number system</b>: a way of representing quantities using specific symbols.</li><li><b>Decimal (base 10)</b>: the human standard, 10 symbols 0–9. Example: 203.</li><li><b>Binary (base 2)</b>: the computer’s language, 2 symbols 0 and 1. Example: 110011.</li></ul>
+<h4>Binary → Decimal</h4><p>Multiply each digit by its power of 2, then add: 110₂ = 1×2² + 1×2¹ + 0×2⁰ = 4 + 2 + 0 = <b>6₁₀</b>.</p>
+<h4>Decimal → Binary (divide by 2)</h4><ol><li>Divide the decimal number by 2.</li><li>Write 1 if there is a remainder, 0 if there is none.</li><li>Repeat with the quotient.</li><li>Stop when the quotient = 0.</li><li>Read the remainders from bottom to top.</li></ol><p>Example: 13₁₀ = <b>1101₂</b>.</p>`};
+
+L.learn=`<div class="note">📘 هذه اللوحة متوافقة مع مقرر <b dir="ltr">ELM 238</b>: الوحدة 1، الدرس 1 «مدخل إلى الإلكترونيات الرقمية».</div>
+<h3 class="dsec">ابدأ بسؤال</h3><ul><li>كيف يعرف هاتفك متى يعمل ومتى ينطفئ؟</li><li>كيف تفهم الآلات الأعداد؟ ولماذا يستخدم الحاسب 0 و 1 فقط؟</li><li>كيف تصنع مفاتيح بسيطة أنظمة ذكية؟</li></ul>
+<p>الجواب في فكرة واحدة: كل دائرة رقمية مبنية من ملايين المفاتيح الصغيرة (الترانزستورات). المفتاح له حالتان فقط: <b>يعمل = 1</b> و<b>مطفأ = 0</b>. لذلك تكتب الآلة كل عدد وكل حرف وكل صورة بهذين الرمزين.</p>
+<h3 class="dsec">أهداف الدرس</h3><ol><li>تشرح ما هي الأعداد الثنائية.</li><li>تقارن بين النظامين العشري والثنائي.</li><li>تتوقع خرج البوابات المنطقية البسيطة (في اللوحة التالية «البوابات المنطقية»).</li></ol>
+<h3 class="dsec">لغة الآلات: العشري مقابل الثنائي</h3>
+<div class="tw"><table class="kv kvx"><tr><th>المفهوم</th><th>التعريف</th><th>مثال</th></tr>
+<tr><td><b>نظام العد</b> <small dir="ltr">Number System</small></td><td>طريقة لتمثيل الكميات باستخدام رموز محددة.</td><td>—</td></tr>
+<tr><td><b>العشري</b> <small dir="ltr">Base 10</small></td><td>نظام البشر: 10 رموز من 0 إلى 9.</td><td>${B('203')} = 2×100 + 0×10 + 3×1</td></tr>
+<tr><td><b>الثنائي</b> <small dir="ltr">Base 2</small></td><td>لغة الحاسب: رمزان فقط 0 و 1، وكل رمز يسمى <b>بت</b>.</td><td>${B('110011')}</td></tr></table></div>
+<p>في العشري تزيد قيمة الخانة 10 أضعاف كلما اتجهت يسارًا (1، 10، 100…). وفي الثنائي تزيد <b>ضعفين</b> فقط (1، 2، 4، 8، 16…).</p>
+<h3 class="dsec">وزن كل خانة</h3><div class="eq">... 128 &nbsp; 64 &nbsp; 32 &nbsp; 16 &nbsp; 8 &nbsp; 4 &nbsp; 2 &nbsp; 1</div>
+<h3 class="dsec">من الثنائي إلى العشري</h3><p><b>الخطوة 1:</b> اضرب كل رقم في وزنه (قوة العدد 2). <b>الخطوة 2:</b> اجمع النواتج.</p>
+<p>مثال: ${B('110₂')}</p>${posTbl('110')}<div class="eq">1×2² + 1×2¹ + 0×2⁰ = 4 + 2 + 0 = 6 &nbsp;⇒&nbsp; 110₂ = 6₁₀</div>
+<p>مثال أطول: ${B('110011₂')}. الخانات التي قيمتها 1 أوزانها 32 و 16 و 2 و 1، والخانتان 8 و 4 قيمتهما 0 فلا تُجمعان.</p>${posTbl('110011')}<div class="eq">32 + 16 + 0 + 0 + 2 + 1 = 51 &nbsp;⇒&nbsp; 110011₂ = 51₁₀</div>
+<div class="note">الأصفار على اليسار لا تغير القيمة: ${B('0110₂')} = ${B('110₂')} = 6.</div>
+<h4>تمرين: حوّل إلى العشري</h4><ol class="dex" dir="ltr"><li>100</li><li>110</li><li>0110</li><li>1111</li><li>0011</li><li>100110</li></ol>
+${sol(0,`<ul dir="ltr"><li>100 → 4</li><li>110 → 6</li><li>0110 → 6</li><li>1111 → 8 + 4 + 2 + 1 = 15</li><li>0011 → 2 + 1 = 3</li><li>100110 → 32 + 4 + 2 = 38</li></ul>`)}
+<h3 class="dsec">من العشري إلى الثنائي (القسمة على 2)</h3><ol><li>اقسم العدد العشري على 2.</li><li>اكتب <b>1</b> إذا كان هناك باقٍ، و<b>0</b> إذا لم يكن.</li><li>كرر القسمة على ناتج القسمة.</li><li>توقف عندما يصبح ناتج القسمة 0.</li><li>اقرأ البواقي <b>من الأسفل إلى الأعلى</b>.</li></ol>
+<p>مثال: حوّل ${B('13₁₀')} إلى الثنائي.</p>${divTbl(13)}<div class="eq">13₁₀ = 1101₂ &nbsp;(تحقق: 8 + 4 + 0 + 1 = 13)</div>
+<h4>تمرين: حوّل إلى الثنائي</h4><ol class="dex" dir="ltr"><li>11</li><li>4</li><li>17</li><li>25</li><li>100</li></ol>
+${sol(1,`<ul dir="ltr"><li>11₁₀ = 1011₂</li><li>4₁₀ = 100₂</li><li>17₁₀ = 10001₂</li><li>25₁₀ = 11001₂</li><li>100₁₀ = 1100100₂</li></ul><p>تحقق دائمًا بالعكس: 1100100₂ = 64 + 32 + 4 = 100.</p>`)}
+<h3 class="dsec">للتوسع: أنظمة أخرى ستقابلها</h3><ul><li><b>السداسي عشري</b> (Hex): كل 4 بتات تساوي رمزًا واحدًا من 0 إلى F، مثل ${B('1010 1111 = AF')}. يُستخدم لاختصار الأعداد الثنائية الطويلة.</li><li><b>الثماني</b> (Octal): كل 3 بتات رمز من 0 إلى 7.</li><li><b>BCD</b>: كل رقم عشري يُكتب في 4 بتات مستقلة، ويُستخدم في شاشات العرض.</li><li><b>مكمل الاثنين</b>: تمثيل الأعداد السالبة، فالبت الأيسر 1 يعني سالبًا.</li></ul>
+<div class="note">في المختبر: اكتب أي عدد أو اضغط على البتات، وسترى خطوات التحويل بالطريقتين كما في الدرس.</div>`;
+
+/* lab: keep the bit-flip board and add the two worked methods for the current number */
+const o0=L.lab.out;L.lab.out=s=>{const n=s.n,b=n.toString(2);
+  return o0(s)+`<h3 class="dsec">خطوات التحويل للعدد ${n}</h3><p><b>ثنائي → عشري:</b></p>${posTbl(b)}<div class="eq" dir="ltr">${b.split('').map((d,i)=>`${d}×2${'⁰¹²³⁴⁵⁶⁷'[b.length-1-i]}`).join(' + ')} = ${n}</div><p><b>عشري → ثنائي (القسمة على 2):</b></p>${divTbl(n)}`};
+
+/* quiz: questions from the deck added to the existing bank */
+const Q=(q,o,e,qe,ee)=>({q,o,a:0,e,qe,ee});
+L.q=L.q.concat([
+  Q('حوّل العدد الثنائي 1111 إلى العشري:',['15','16','14','11'],'8 + 4 + 2 + 1 = 15.','Convert 1111₂ to decimal:','8 + 4 + 2 + 1 = 15.'),
+  Q('حوّل العدد الثنائي 100110 إلى العشري:',['38','36','26','46'],'32 + 4 + 2 = 38.','Convert 100110₂ to decimal:','32 + 4 + 2 = 38.'),
+  Q('العدد الثنائي 0011 يساوي بالعشري:',['3','11','6','1'],'الأصفار على اليسار لا تغير القيمة: 2 + 1 = 3.','0011₂ in decimal is:','Leading zeros do not change the value: 2 + 1 = 3.'),
+  Q('110011₂ يساوي بالعشري:',['51','49','35','61'],'32 + 16 + 2 + 1 = 51.','110011₂ equals:','32 + 16 + 2 + 1 = 51.'),
+  Q('حوّل العدد العشري 17 إلى الثنائي:',['10001','10010','11000','10111'],'17 = 16 + 1، فالخانتان 16 و 1 فقط قيمتهما 1.','Convert 17₁₀ to binary:','17 = 16 + 1.'),
+  Q('حوّل العدد العشري 25 إلى الثنائي:',['11001','10011','11010','10101'],'25 = 16 + 8 + 1.','Convert 25₁₀ to binary:','25 = 16 + 8 + 1.'),
+  Q('حوّل العدد العشري 100 إلى الثنائي:',['1100100','1010100','1100010','1000100'],'100 = 64 + 32 + 4.','Convert 100₁₀ to binary:','100 = 64 + 32 + 4.'),
+  Q('حوّل العدد العشري 11 إلى الثنائي:',['1011','1101','1001','1110'],'11 = 8 + 2 + 1.','Convert 11₁₀ to binary:','11 = 8 + 2 + 1.'),
+  Q('في طريقة القسمة على 2، كيف تُقرأ البواقي لتكوين العدد الثنائي؟',['من الأسفل إلى الأعلى','من الأعلى إلى الأسفل','من اليمين إلى اليسار','لا يهم الترتيب'],'آخر باقٍ هو الخانة الأعلى (MSB) فيُكتب أولًا.','In the divide-by-2 method, the remainders are read:','The last remainder is the MSB.'),
+  Q('متى تتوقف عن القسمة على 2؟',['عندما يصبح ناتج القسمة 0','عندما يصبح الباقي 0','بعد 4 قسمات دائمًا','عندما يصبح الناتج 1'],'نتوقف عند ناتج القسمة 0 ثم نقرأ البواقي.','When do you stop dividing by 2?','When the quotient becomes 0.'),
+  Q('كم رمزًا يستخدم النظام الثنائي؟',['2: الرمزان 0 و 1','10: من 0 إلى 9','16: من 0 إلى F','8: من 0 إلى 7'],'الثنائي أساسه 2.','How many symbols does binary use?','Base 2: 0 and 1.'),
+  Q('لماذا يستخدم الحاسب النظام الثنائي؟',['لأن دوائره مفاتيح لها حالتان فقط: يعمل ومطفأ','لأنه أسرع في الكتابة اليدوية','لأن العشري لا يمكن تخزينه أبدًا','لأن الثنائي أقصر من العشري دائمًا'],'الترانزستور يعمل كمفتاح: 1 يعمل و 0 مطفأ.','Why do computers use binary?','Their circuits are switches with two states: ON and OFF.'),
+  Q('وزن الخانة الرابعة من اليمين في النظام الثنائي هو:',['8 = 2³','4 = 2²','16 = 2⁴','3'],'الخانات من اليمين: 1، 2، 4، 8.','The weight of the 4th bit from the right is:','Positions from the right: 1, 2, 4, 8.')]);
+})();
 /* ===== v15 wiring lab — engine. Every symbol of the main library (SYMS) is available; electrical parts are simulated by behaviour "b".
    Two-pin parts use pins a (x=0, the + / anode side) and b (x=60); multi-pin parts list their pins in "pn".
    Complex nodal analysis (DC = 0 Hz, AC phasors) with companion models: diodes/Zener/MOV, BJT/MOSFET/IGBT/SCR/TRIAC, op-amp, regulators,
@@ -11885,8 +12075,8 @@ const WT={
  FT:{p:'FT',b:'tx',pol:1,x:'M0 0H12M48 0H60',pr:[['ma','تيار الإشارة','mA',12,4,20]]},LT:{p:'LT',b:'tx',pol:1,x:'M0 0H12M48 0H60',pr:[['ma','تيار الإشارة','mA',12,4,20]]},
  ACCEL:{p:'VT',b:'tx',pol:1,x:'M0 4H16M44 4H60',pn:[['a',0,4],['b',60,4]],pr:[['ma','تيار الإشارة','mA',12,4,20]]},
  CALB:{p:'CAL',b:'isrc',pol:1,x:'M23 13V34M37 13V34',pn:[['a',23,34],['b',37,34]],pr:[['ma','التيار المحقون','mA',12,0,24]]},
- R:{p:'R',b:'res',pr:[['v','المقاومة','Ω',100,.001,1e8]]},
- RV:{n:'مقاومة متغيرة',sy:'POT',p:'RV',b:'res',pr:[['v','المقاومة','Ω',1000,.001,1e8]]},
+ R:{p:'R',b:'res',pr:[['v','المقاومة','Ω',100,.001,1e8],['pw','القدرة المقننة','W',.25,.0625,1000]]},
+ RV:{n:'مقاومة متغيرة',sy:'POT',p:'RV',b:'res',pr:[['v','المقاومة','Ω',1000,.001,1e8],['pw','القدرة المقننة','W',2,.0625,1000]]},
  NTC:{n:'ثيرمستور NTC (حساس حرارة)',p:'NT',b:'res',pr:[['v','المقاومة عند الحرارة الحالية','Ω',10000,.1,1e8]]},
  LDR:{p:'LD',b:'res',pr:[['v','المقاومة عند الإضاءة الحالية','Ω',1000,1,1e8]]},
  RTD:{p:'RT',b:'res',pr:[['v','المقاومة','Ω',100,1,1e5]]},
@@ -11905,7 +12095,7 @@ const WT={
  DEV:LD(12,12,{n:'جهاز (حمل عام)',p:'X',g:'<path d="M0 0H16M44 0H60"/><rect x="16" y="-12" width="28" height="24" rx="4"/><path d="M22-4H38M22 4H38"/>'}),
  PC:LD(220,250,{p:'PC',x:'M0 -10H12M48-10H60',pn:[['a',0,-10],['b',60,-10]]}),RTR:LD(12,12,{p:'RO',x:'M0 3H8M52 3H60',pn:[['a',0,3],['b',60,3]]}),
  SWT:LD(12,10,{p:'SW',x:'M0 0H6M54 0H60'}),SRV:LD(220,400,{p:'SV',x:'M0 0H12M48 0H60'}),HMI:LD(24,15,{p:'HM',x:'M0-5H8M52-5H60',pn:[['a',0,-5],['b',60,-5]]}),RTU:LD(24,10,{p:'RU',x:'M0 0H10M50 0H60'}),
- C:{p:'C',b:'cap',pr:[['v','السعة','µF',10,1e-6,1e6]]},CE:{p:'CE',b:'cap',pol:1,pr:[['v','السعة','µF',100,.1,1e6]]},CB:{p:'CB',b:'cap',pr:[['v','السعة','µF',100,.1,1e6]]},
+ C:{p:'C',b:'cap',pr:[['v','السعة','µF',10,1e-6,1e6],['vr','جهد التحمل','V',50,1,1e5]]},CE:{p:'CE',b:'cap',pol:1,pr:[['v','السعة','µF',100,.1,1e6],['vr','جهد التحمل','V',25,1,1000]]},CB:{p:'CB',b:'cap',pr:[['v','السعة','µF',100,.1,1e6],['vr','جهد التحمل','V',450,1,1e5]]},
  RCAP:{p:'RC',b:'rcap',pn:[['C',0,0],['H',44,-14],['F',44,14]],pr:[['vh','سعة الضاغط (H)','µF',35,.1,500],['vf','سعة المروحة (F)','µF',5,.1,500]]},
  LI:{n:'ملف حثّي L',sy:'L',p:'LI',b:'ind',pr:[['v','المحاثة','mH',100,1e-3,1e6]]},
  XTAL:{p:'XT',b:'open'},SPARK:{p:'SK',b:'open'},
@@ -11929,7 +12119,7 @@ const WT={
  CTU:{p:'CT',b:'ctu',x:'M48 12H60',pn:[['CU',0,-12],['R',0,12],['Q1',60,-12],['Q2',60,12]],pr:[['pv','القيمة المضبوطة','',3,1,999],VHP.slice(0,3).concat([24,1,250])]},
  IN:{n:'مدخل PLC / متحكم',p:'I',b:'in',g:'<path d="M0 0H15M45 0H60"/>',u:['r','IN'],pr:[['rv','جهد المدخل','V',24,1,250]]},
  IO:{p:'IO',b:'io',pn:[['I0',0,-21],['I1',0,-7],['I2',0,7],['I3',0,21],['Q0',60,-21],['Q1',60,-7],['Q2',60,7],['Q3',60,21]],pr:[VHP.slice(0,3).concat([24,1,250])]},
- MCU:{p:'U',b:'io',pn:[['I0',4,-16],['I1',4,-4],['I2',4,8],['I3',4,20],['Q0',56,-16],['Q1',56,-4],['Q2',56,8],['Q3',56,20]],pr:[VHP]},
+ MCU:{p:'U',b:'io',pn:[['I0',4,-16],['I1',4,-4],['I2',4,8],['I3',4,20],['Q0',56,-16],['Q1',56,-4],['Q2',56,8],['Q3',56,20],['VCC',30,-36],['GND',30,38]],pr:[VHP]},
  FUSE:{p:'F',b:'fuse',pr:[['v','قيمة الفيوز','A',2,.01,5000]]},
  MCB:{p:'QF',b:'mcb',st:['مغلق','مفصول',1],tg:['⏏ افصل القاطع','⏻ أعد تشغيل القاطع'],pr:[['v','تيار القاطع','A',10,.5,5000]]},
  OL:{p:'OL',b:'ol',pr:[['v','تيار الضبط','A',5,.1,1000]]},
@@ -12000,8 +12190,8 @@ const wfA=i=>{const a=Math.abs(i);return a<1?(i*1000).toFixed(a<.01?1:0)+' mA':i
 const wfV=v=>v.toFixed(Math.abs(v)<10?2:1)+' V';
 const wfR=r=>!isFinite(r)||r>1e8?'∞ Ω':r>=1e6?+(r/1e6).toPrecision(3)+' MΩ':r>=1000?+(r/1000).toPrecision(3)+' kΩ':+r.toPrecision(3)+' Ω';
 function wVal(p){const T=WT[p.t],B=T.b;if(B=='sym')return 'رمز توضيحي';if(p.t=='DMM')return WMODE[p.v]||'';if(p.t=='LED')return WLEDC[p.col||'r'][0];
-  let s=(T.pr||[]).filter(q=>q[0]!='pf'&&q[0]!='vh').map(q=>wN(p[q[0]])+' '+q[2]).join(' · ');
-  if(T.st)s=(s?s+' · ':'')+(p.on?T.st[0]:T.st[1]);if(B=='no'||B=='nc'||B=='kmc')s='← '+(p.link||'؟');if(B=='io')s=(s?s+' · ':'')+'Q='+(p.q||[0,0,0,0]).join('');return s}
+  let s=(T.pr||[]).filter(q=>!['pf','vh','pw','vr'].includes(q[0])).map(q=>wN(p[q[0]])+' '+q[2]).join(' · ');
+  if(T.st)s=(s?s+' · ':'')+(p.on?T.st[0]:T.st[1]);if(B=='no'||B=='nc'||B=='kmc')s='← '+(p.link||'؟');if(B=='io')s=(s?s+' · ':'')+((p.prog||'man')=='man'?'Q='+(p.q||[0,0,0,0]).join(''):'⚙ '+{fol:'تتبع',inv:'عكس',log:'منطق',blink:'وميض',cnt:'عدّاد'}[p.prog]);return s}
 
 /* ---------- PV panel: single-diode style curve I = Isc − I0(e^(V/a) − 1) ---------- */
 const wPVa=p=>.055*p.voc,wPVi0=p=>p.isc/(Math.exp(p.voc/wPVa(p))-1);
@@ -12028,17 +12218,24 @@ const WLOG={and:(a)=>[a[0]&&a[1]],or:(a)=>[a[0]||a[1]],nand:(a)=>[!(a[0]&&a[1])]
   ha:(a)=>[a[0]!==a[1],a[0]&&a[1]],fa:(a)=>{const s=(+a[0])+(+a[1])+(+a[2]);return [s%2==1,s>=2]}};
 const WLIN={and:2,or:2,nand:2,nor:2,xor:2,xnor:2,not:1,ha:2,fa:3,d:2,t:2,jk:3,cnt:1,sr:3};
 
+/* ---------- built-in programs for the microcontroller / I/O module ---------- */
+const WPROG={man:'يدوي: أزرار Q0–Q3',fol:'المخارج تتبع المداخل (Qn = In)',inv:'المخارج عكس المداخل (Qn = NOT In)',log:'منطق: Q0 = I0·I1، Q1 = I0+I1، Q2 = I2·I3، Q3 = I2+I3',blink:'وميض: Q0 وQ1 يتبادلان كل 0.5 ثانية',cnt:'عدّاد ثنائي: Q0–Q3 تعدّ ثانية بثانية'};
+function wProg(p,ins,t){const m=p.prog||'man';if(m=='fol')return ins.slice();if(m=='inv')return ins.map(x=>x?0:1);
+  if(m=='log')return [ins[0]&&ins[1],ins[0]||ins[1],ins[2]&&ins[3],ins[2]||ins[3]].map(x=>x?1:0);
+  if(m=='blink'){const b=Math.floor(t*2)%2==0?1:0;return [b,1-b,0,0]}
+  if(m=='cnt'){const c=Math.floor(t+1e-9)%16;return [c&1,c>>1&1,c>>2&1,c>>3&1]}
+  return (p.q||[0,0,0,0]).map(x=>x?1:0)}
 /* ---------- simulator ---------- */
 /* opt: mem {K coils, Q logic states, clk previous inputs, scr latches, ton starts, t time}, init (= mem.K, legacy), rev, night, noBlow, nosplit */
 function wSim(C,over={},opt={}){if(!opt.nosplit&&C.parts.some(p=>p.t=='BRG')&&C.parts.some(p=>WT[p.t].ac))return wSimSplit(C,over,opt);return wSim1(C,over,opt)}
 function wSim1(C,over={},opt={}){
-  const act=C.parts.filter(p=>wIsSrc(p)||(p.t=='DMM'&&p.v=='Ω')||['logic','io','t555'].includes(wB(p)));if(!act.length)return null;
+  const act=C.parts.filter(p=>wIsSrc(p)||(p.t=='DMM'&&p.v=='Ω')||['logic','io','t555','ard'].includes(wB(p)));if(!act.length)return null;
   const R=wNodes(C),idx={},M0=opt.mem||{K:opt.init||{}},s0=act.find(p=>wPins(p).length==2),refK=R.gnd||(s0?s0.id+'.b':act[0].id+'.'+wPins(act[0])[0][0]);idx[R(refK)]=0;let n=1;
   C.parts.forEach(p=>wPins(p).forEach(q=>{const r=R(p.id+'.'+q[0]);if(idx[r]==null)idx[r]=n++}));
   const nd=(p,s)=>idx[R(p.id+'.'+s)],pin=(p,i)=>nd(p,wPins(p)[i][0]);
-  const acs=C.parts.find(p=>WT[p.t].ac),w=acs?2*Math.PI*acs.f:0,dead=!C.parts.some(p=>['src','pv','isrc','inv'].includes(wB(p))),sg1=opt.rev?-1:1,tnow=opt.t!=null?opt.t:(M0.t||0);
-  const SG={},TGT={},D={},F={},K=Object.assign({},M0.K||{}),TG={},PVV={},CCm={},TR={},OA={},SC=Object.assign({},M0.scr||{}),LQ={},XI={},RI={},GQ={},QS={},TNS=Object.assign({},M0.ton||{});
-  C.parts.forEach(p=>{if(p.t=='PV')PVV[p.id]=.8*p.voc});
+  const acs=C.parts.find(p=>WT[p.t].ac),w=acs?2*Math.PI*acs.f:0,dead=!C.parts.some(p=>['src','pv','isrc','inv','ard'].includes(wB(p))),sg1=opt.rev?-1:1,tnow=opt.t!=null?opt.t:(M0.t||0);
+  const IOQ={},SG={},TGT={},D={},F={},K=Object.assign({},M0.K||{}),TG={},PVV={},CCm={},TR={},OA={},SC=Object.assign({},M0.scr||{}),LQ={},XI={},RI={},GQ={},QS={},TNS=Object.assign({},M0.ton||{});
+  C.parts.forEach(p=>{if(p.t=='PV')PVV[p.id]=.8*p.voc;if(wB(p)=='io')IOQ[p.id]=wProg(p,[0,0,0,0],tnow)});
   const st=p=>over[p.id]!=null?over[p.id]:p.on;
   const linkOn=l=>!!K[l];
   const cl=p=>{const b=wB(p);return b=='no'?linkOn(p.link):b=='nc'?!linkOn(p.link):b=='mcb'?!!st(p)&&!F[p.id]:b=='fuse'||b=='ol'?!F[p.id]:!!st(p)};
@@ -12076,7 +12273,7 @@ function wSim1(C,over={},opt={}){
       case 'pv':{const k=pvc(p);g2(a,c,[k.g,0]);inj(a,k.J);inj(c,-k.J);break}
       case 'isrc':g2(a,c,[1e-6,0]);if(!CCm[p.id]){inj(a,p.ma/1000);inj(c,-p.ma/1000)}else{g2(a,c,[.1,0]);inj(a,2.4);inj(c,-2.4)}break;
       case 'tx':g2(a,c,[TG[p.id]||1e-3,0]);break;
-      case 'res':g2(a,c,[1/p.v,0]);break;
+      case 'res':g2(a,c,[F[p.id]?1e-9:1/p.v,0]);break;
       case 'load':{const k=dead&&(T.fil||T.mot)?10:1,G=k*p.w/(p.rv*p.rv);g2(a,c,[G,w&&p.pf&&p.pf<1?-G*Math.tan(Math.acos(p.pf)):0]);break}
       case 'coil':g2(a,c,[1/(p.rv*p.rv),0]);break;
       case 'in':g2(a,c,[.005/p.rv,0]);break;
@@ -12113,13 +12310,23 @@ function wSim1(C,over={},opt={}){
       case 'ton':g2(a,c,[1/(p.rv*p.rv),0]);g2(pin(p,2),pin(p,3),[GQ[p.id]?1e4:1e-9,0]);break;
       case 'ctu':g2(a,0,[1e-6,0]);g2(c,0,[1e-6,0]);g2(pin(p,2),pin(p,3),[GQ[p.id]?1e4:1e-9,0]);break;
       case 'logic':{const k=WLIN[T.fn],L=LQ[p.id]||[];for(let j=0;j<k;j++)g2(pin(p,j),0,[1e-6,0]);for(let j=k;j<wPins(p).length;j++)nort(pin(p,j),0,L[j-k]?(p.vh||5):0,1/25);break}
-      case 'io':{for(let j=0;j<4;j++)g2(pin(p,j),0,[p.t=='IO'?.005/p.vh:1e-6,0]);const q=p.q||[0,0,0,0];for(let j=0;j<4;j++)nort(pin(p,4+j),0,q[j]?p.vh:0,1/25);break}
+      case 'io':{const q=IOQ[p.id]||[0,0,0,0];
+        if(p.t=='MCU'){const Vc=pin(p,8),Gd=pin(p,9),on=QS[p.id]&&!F[p.id];g2(Vc,Gd,[on?.02/Math.max(1,p.vh):1e-6,0]);for(let j=0;j<4;j++)g2(pin(p,j),Gd,[1e-6,0]);
+          for(let j=0;j<4;j++){const o=pin(p,4+j);if(on)g2(o,q[j]?Vc:Gd,[1/25,0]);else g2(o,Gd,[1e-9,0])}}
+        else{for(let j=0;j<4;j++)g2(pin(p,j),0,[.005/p.vh,0]);for(let j=0;j<4;j++)nort(pin(p,4+j),0,q[j]?p.vh:0,2)}break}
       case 'uln':{const s=sgOf(p);for(let j=0;j<4;j++){g2(pin(p,j),0,[1/2700,0]);g2(pin(p,4+j),0,[s[j]?1:1e-9,0])}break}
       case 'l293':{const s=sgOf(p);g2(pin(p,3),0,[1e-4,0]);[0,1].forEach(j=>nort(pin(p,4+j),0,s[j],1));const ii=RI[p.id]||0;inj(pin(p,3),-ii);break}
       case 't555':{const Vc=pin(p,0),Gd=pin(p,1),O=pin(p,2);g2(Vc,Gd,[1/1000,0]);nort(O,Gd,sgOf(p)[0],1/20);break}
       case 'seg7':for(let j=0;j<4;j++)g2(pin(p,j),0,[1e-6,0]);break;
       case 'tl':for(let j=0;j<3;j++)g2(pin(p,j),pin(p,3),[1/300,0]);break;
       case 'cc':{g2(c,pin(p,3),[1e4,0]);g2(a,pin(p,2),[QS[p.id]?20:1e-9,0]);break}
+      case 'servo':case 'lcd':{const P=wPins(p),N=nm=>pin(p,P.findIndex(q=>q[0]==nm)),sv=B=='servo';g2(N(sv?'5V':'VCC'),N('GND'),[sv?1/500:1/250,0]);(sv?['SIG']:['SDA','SCL']).forEach(k=>g2(N(k),N('GND'),[1e-6,0]));break}
+      case 'plc':{const P=wPins(p),N=nm=>pin(p,P.findIndex(q=>q[0]==nm)),A=(opt.plc||{})[p.id]||{q:[]};g2(N('L+'),N('M'),[1/240,0]);for(let j=0;j<8;j++)g2(N('I0.'+j),N('1M'),[1/4000,0]);
+        for(let j=0;j<6;j++)g2(N('1L'),N('Q0.'+j),[A.q[j]?1e4:1e-9,0]);g2(N('AI0'),N('2M'),[1e-5,0]);break}
+      case 'ard':{const P=wPins(p),ix={};P.forEach((q,j)=>ix[q[0]]=pin(p,j));const gd=ix.GND,A=(opt.ard||{})[p.id]||null,n5=ix['5V'];
+        P.forEach(q=>{if(/^GND\d$/.test(q[0]))g2(ix[q[0]],gd,[1e4,0])});nort(n5,gd,5,20);nort(ix['3V3'],gd,3.3,2);g2(ix.VIN,gd,[1e-6,0]);
+        P.forEach(q=>{const k=q[0];if(!/^[DA]\d/.test(k))return;const nd=ix[k],m=A&&A.mode[k];
+          if(m=='o'){const pw=A.pwm[k];if(pw!=null)nort(nd,gd,5*pw/255,1/25);else g2(nd,A.out[k]?n5:gd,[1/25,0])}else if(m=='u'){g2(nd,n5,[1/35000,0]);g2(nd,gd,[1e-9,0])}else g2(nd,gd,[1e-9,0])});break}
       case 'inv':{const on=QS[p.id];g2(a,c,[1e-6,0]);const L=pin(p,2),Nn=pin(p,3);if(on){g2(L,Nn,[10,0]);inj(L,p.vo*10);inj(Nn,-p.vo*10)}else g2(L,Nn,[1e-9,0]);const ii=RI[p.id]||0;inj(a,-ii);inj(c,ii);break}
       default:g2(a,c,[cl(p)?1e4:1e-9,0])}});
     X=N?wSolveC(A,b):[];let ch=false;
@@ -12131,6 +12338,10 @@ function wSim1(C,over={},opt={}){
       {const nd2=dec(p);if(nd2){const o2=SG[p.id];if(!o2||nd2.some((x,j)=>Math.abs(x-o2[j])>1e-6)){SG[p.id]=nd2;ch=true}}}
       if(B=='src'&&p.il){const I=(sg1*wSrcV(p)-vr)/wRi(p);if(!CCm[p.id]&&I>p.il*1.0001){CCm[p.id]=1;ch=true}else if(CCm[p.id]&&vr>sg1*p.v){CCm[p.id]=0;ch=true}}
       if(B=='isrc'){if(!CCm[p.id]&&vr>24){CCm[p.id]=1;ch=true}}
+      if(B=='io'){const mcu=p.t=='MCU',gd=mcu?Vr(pin(p,9)):0,vs=mcu?Vr(pin(p,8))-gd:p.vh;
+        if(mcu){const on=vs>=.6*p.vh;if(!!QS[p.id]!==on){QS[p.id]=on;ch=true}if(!F[p.id]&&vs>1.3*p.vh+.3){F[p.id]=1;ch=true}}
+        const ins=[0,1,2,3].map(j=>Vr(pin(p,j))-gd>(mcu?Math.max(vs,.1):p.vh)/2?1:0),q=mcu&&!QS[p.id]?[0,0,0,0]:wProg(p,ins,tnow),o0=IOQ[p.id]||[0,0,0,0];
+        if(q.some((x,j)=>x!==o0[j])){IOQ[p.id]=q;ch=true}}
       if(!opt.noBlow&&!F[p.id]){const I=cAbs(v)*1e4;if(((B=='fuse'||B=='ol'||(B=='mcb'&&st(p)))&&I>1.1*p.v)||(B=='dmm'&&p.v=='A'&&I>10)){F[p.id]=1;ch=true}}
       if(B=='coil'||B=='relay'||B=='ton'){const e=cAbs(v)>=(K[p.id]?.35:.75)*p.rv?1:0;if((K[p.id]?1:0)!==e){K[p.id]=e;ch=true}}
       if(B=='ton'){if(K[p.id]&&TNS[p.id]==null)TNS[p.id]=tnow;if(!K[p.id])TNS[p.id]=null;const q=K[p.id]&&TNS[p.id]!=null&&tnow-TNS[p.id]>=p.pt?1:0;if((GQ[p.id]||0)!==q){GQ[p.id]=q;ch=true}}
@@ -12152,6 +12363,10 @@ function wSim1(C,over={},opt={}){
       if(B=='xfmr'){const n2=p.vp/p.vs,rs=.05*p.vs*p.vs/p.va+.01,E=cK(cS(V(pin(p,0)),V(pin(p,1))),1/n2),Vs=cS(V(pin(p,2)),V(pin(p,3))),Is=cK(cS(E,Vs),1/rs),o0=XI[p.id]||[0,0];
         if(cAbs(cS(Is,o0))>1e-6+1e-3*cAbs(Is)){XI[p.id]=cA(o0,cK(cS(Is,o0),.6));ch=true}}
       if(B=='logic'){const r=logicOut(p),o0=LQ[p.id]||[];if(r.o.some((x,j)=>!!x!==!!o0[j])){LQ[p.id]=r.o;ch=true}LQ[p.id+'#']=r}});
+    /* ratings are judged only on a settled solution, never on an intermediate iteration */
+    if(!ch&&opt.rate)C.parts.forEach(p=>{const B=wB(p);if(F[p.id]||!['res','diode'].includes(B))return;const v=cS(V(pin(p,0)),V(pin(p,1))),vr=v[0];
+      if(B=='res'&&p.pw&&cAbs(v)*cAbs(v)/p.v>3*p.pw){F[p.id]=1;ch=true}
+      if(B=='diode'&&D[p.id]){const id=Math.abs(D[p.id]>0?(vr-wVf(p))*20:(vr+p.vz)*20);if(id>3||(D[p.id]<0&&id*p.vz>1.5)){F[p.id]=1;ch=true}}});
     if(!ch)break}
   const o={V:{},I:{},st:{},K,ac:!!acs,dead,pf:{},P:{},ohm:{},cl:{},info:{},short:false,mblown:false,acDiode:false,mem:{K,Q:{},clk:{},scr:SC,ton:TNS,t:tnow,vc:Object.assign({},M0.vc||{}),il:Object.assign({},M0.il||{})}};
   C.parts.forEach(p=>{const B=wB(p),T=WT[p.t];if(B=='sym'||B=='gnd'){o.V[p.id]=0;o.I[p.id]=0;return}
@@ -12180,22 +12395,36 @@ function wSim1(C,over={},opt={}){
       case 'relay':case 'ton':o.info[p.id]=(K[p.id]?'الملف منشّط':'الملف غير منشّط')+(B=='ton'?` · التلامس ${GQ[p.id]?'مغلق':'مفتوح'}`:'');i=cM(v,[1/(p.rv*p.rv),0]);break;
       case 'ctu':{const q=(LQ[p.id]||{}).q||[0];o.info[p.id]=`العدّ = ${q[0]} من ${p.pv} · التلامس ${GQ[p.id]?'مغلق':'مفتوح'}`;break}
       case 'logic':{const r=LQ[p.id+'#']||{o:[],ins:[]},nm=wPins(p).map(x=>x[0]),k=WLIN[T.fn];o.info[p.id]=nm.slice(0,k).map((x,j)=>`${x}=${r.ins[j]?1:0}`).join(' ')+' ← '+nm.slice(k).map((x,j)=>`${x}=${r.o[j]?1:0}`).join(' ');o.L=o.L||{};o.L[p.id]=r.o;break}
-      case 'io':{const ins=[0,1,2,3].map(j=>Vr(pin(p,j))>p.vh/2?1:0);o.info[p.id]=`المداخل I=${ins.join('')} · المخارج Q=${(p.q||[0,0,0,0]).join('')}`;o.L=o.L||{};o.L[p.id]=ins;break}
+      case 'io':{const mcu=p.t=='MCU',gd=mcu?Vr(pin(p,9)):0,vs=mcu?Vr(pin(p,8))-gd:p.vh,on=!mcu||QS[p.id],q=on?IOQ[p.id]||[0,0,0,0]:[0,0,0,0],ins=on?[0,1,2,3].map(j=>Vr(pin(p,j))-gd>vs/2?1:0):[0,0,0,0];
+        const ip=[0,1,2,3].map(j=>{const vo=Vr(pin(p,4+j));return mcu?(on?(q[j]?(Vr(pin(p,8))-vo):(vo-gd))/25:0):(q[j]?p.vh-vo:-vo)*2});o.pinI=o.pinI||{};o.pinI[p.id]=ip;
+        if(mcu){v[0]=vs;i=[on&&!F[p.id]?.02*vs/Math.max(1,p.vh)+ip.reduce((s,x,j)=>s+(q[j]?Math.max(0,x):0),0):0,0];if(on&&ip.some(x=>Math.abs(x)>.04))o.st[p.id]='burn'}else if(ip.some(x=>Math.abs(x)>3))o.st[p.id]='burn';
+        const pr=WPROG[p.prog||'man'];o.info[p.id]=F[p.id]&&mcu?'💥 تلف: جهد التغذية أعلى من المسموح':!on?'متوقف: لا تغذية. صِل VCC بالموجب وGND بالسالب':`${mcu?'VCC = '+wfV(vs)+' · ':''}المداخل I=${ins.join('')} · المخارج Q=${q.join('')}${ip.some(x=>Math.abs(x)>(mcu?.02:2))?(mcu?' · ⚠️ تيار مخرج فوق 20 mA':' · ⚠️ تيار مخرج فوق 2 A'):''} · ${pr}`;
+        o.L=o.L||{};o.L[p.id]=ins;o.QO=o.QO||{};o.QO[p.id]=q;break}
       case 'uln':o.info[p.id]=[0,1,2,3].map(j=>`${j+1}:${Vr(pin(p,j))>2?'ON':'OFF'}`).join(' ');break;
       case 'l293':o.info[p.id]=`OUT1 = ${wfV(Vr(pin(p,4)))} · OUT2 = ${wfV(Vr(pin(p,5)))}`;break;
       case 't555':{const hi=Math.floor(tnow*2*p.f)%2==0;o.info[p.id]=`الخرج ${hi?'مرتفع':'منخفض'} (${wN(p.f)} Hz)`;o.L={...(o.L||{}),[p.id]:[hi]};break}
       case 'seg7':{const d=[0,1,2,3].reduce((s,j)=>s+((Vr(pin(p,j))>(p.vh||5)/2)?[8,4,2,1][j]:0),0);o.info[p.id]=`يعرض: ${d<10?d:'—'}`;o.L={...(o.L||{}),[p.id]:[d]};break}
       case 'tl':{const on=[0,1,2].map(j=>Vr(pin(p,j))-Vr(pin(p,3))>2);o.info[p.id]=['أحمر','أصفر','أخضر'].filter((x,j)=>on[j]).join(' + ')||'مطفأة';o.L={...(o.L||{}),[p.id]:on};break}
       case 'cc':{const vb=Vr(pin(p,2))-Vr(pin(p,3));o.info[p.id]=QS[p.id]?`يشحن · البطارية ${wfV(vb)}`:vb>=p.vmax-.2?'اكتمل الشحن':'لا شحن (جهد اللوح منخفض)';i=[0,0];break}
+      case 'servo':case 'lcd':{const P=wPins(p),V_=nm=>Vr(pin(p,P.findIndex(q=>q[0]==nm))),sv=B=='servo',vs=V_(sv?'5V':'VCC')-V_('GND');v[0]=vs;i=[vs/(sv?500:250),0];if(vs>7)o.st[p.id]='burn';
+        o.info[p.id]=vs>7?'💥 تلف: جهد أعلى من 6 V':vs<4?`لا تغذية: صِل ${sv?'5V':'VCC'} بـ5 V وGND بالسالب`:sv?'يعمل · الزاوية تأتي من إشارة SIG':'يعمل · يعرض ما يرسله الأردوينو عبر SDA/SCL';break}
+      case 'plc':{const P=wPins(p),V_=nm=>Vr(pin(p,P.findIndex(q=>q[0]==nm))),vs=V_('L+')-V_('M'),pwr=vs>=20.4&&vs<=28.8,m1=V_('1M'),In=[0,1,2,3,4,5,6,7].map(j=>V_('I0.'+j)-m1>=15?1:0),AI=Math.max(0,V_('AI0')-V_('2M'));
+        o.plcIn=o.plcIn||{};o.plcIn[p.id]={I:In,AI,pwr};v[0]=vs;i=[vs/240,0];const A=(opt.plc||{})[p.id],q=A?A.q:[],ic=[0,1,2,3,4,5].map(j=>q[j]?Math.abs(V_('1L')-V_('Q0.'+j))*1e4:0);if(vs>32)o.st[p.id]='burn';
+        o.info[p.id]=vs>32?'💥 تلف: جهد التغذية أعلى من 28.8 V':!pwr?`لا تغذية كافية: L+ − M = ${wfV(vs)} (المطلوب 24 V)`:`I = ${In.join('')} · Q = ${[0,1,2,3,4,5].map(j=>q[j]?1:0).join('')}${ic.some(x=>x>2)?' · ⚠️ تيار تلامس مخرج فوق 2 A':''}${AI>.05?' · AI0 = '+wfV(AI):''}`;break}
+      case 'ard':{const P=wPins(p),j0=P.findIndex(q=>q[0]=='GND'),gd=Vr(pin(p,j0)),v5=Vr(pin(p,P.findIndex(q=>q[0]=='5V')))-gd,A=(opt.ard||{})[p.id]||null,pv={},pi={};let worst=0;
+        P.forEach((q,j)=>{const k=q[0],vv=Vr(pin(p,j))-gd;pv[k]=vv;if(A&&A.mode[k]=='o'){const pw=A.pwm[k],src=pw!=null?5*pw/255:(A.out[k]?v5:0),ii=(src-vv)/25;pi[k]=ii;worst=Math.max(worst,Math.abs(ii))}});
+        o.pinV=o.pinV||{};o.pinV[p.id]=pv;o.pinI=o.pinI||{};o.pinI[p.id]=pi;v[0]=v5;i=[Object.values(pi).reduce((s,x)=>s+Math.max(0,x),0),0];if(worst>.04)o.st[p.id]='burn';
+        o.info[p.id]=!A?'متصل بالـUSB (5 V) · لا يوجد برنامج يعمل':`البرنامج يعمل · 5V = ${wfV(v5)}${worst>.04?' · 💥 تيار طرف فوق 40 mA':worst>.02?' · ⚠️ تيار طرف فوق 20 mA':''}`;break}
       case 'inv':{const vl=Vr(pin(p,2))-Vr(pin(p,3)),Il=QS[p.id]?(p.vo-vl)*10:0;o.info[p.id]=QS[p.id]?`يعمل · خرج ${wfV(vl)} ~ · ${wfA(Il)}`:'متوقف (جهد الدخل خارج المدى)';if(Il*p.vo>1.2*p.w)o.st[p.id]='burn';i=[RI[p.id]||0,0];break}
       case 'kmc':o.info[p.id]=linkOn(p.link)?'التلامسات مغلقة':'التلامسات مفتوحة';break;
-      default:{let y=[1e-9,0];if(B=='res')y=[1/p.v,0];else if(B=='load'){const k=dead&&(T.fil||T.mot)?10:1,G=k*p.w/(p.rv*p.rv);y=[G,w&&p.pf&&p.pf<1?-G*Math.tan(Math.acos(p.pf)):0]}
+      default:{let y=[1e-9,0];if(B=='res')y=[F[p.id]?1e-9:1/p.v,0];else if(B=='load'){const k=dead&&(T.fil||T.mot)?10:1,G=k*p.w/(p.rv*p.rv);y=[G,w&&p.pf&&p.pf<1?-G*Math.tan(Math.acos(p.pf)):0]}
         else if(B=='coil')y=[1/(p.rv*p.rv),0];else if(B=='in')y=[.005/p.rv,0];else if(B=='cap'&&!w&&opt.dt){const G=p.v*1e-6/opt.dt,vp=(M0.vc||{})[p.id]||0;o.mem.vc[p.id]=v[0];o.V[p.id]=v[0];o.I[p.id]=G*(v[0]-vp);if(p.t=='CE'&&v[0]<-1)o.st[p.id]='burn';return}else if(B=='ind'&&!w&&opt.dt){const G=opt.dt/(p.v*1e-3),ip=(M0.il||{})[p.id]||0,il=ip+G*v[0];o.mem.il[p.id]=il;o.V[p.id]=v[0];o.I[p.id]=il;return}else if(B=='cap')y=w?[0,w*p.v*1e-6]:[1e-9,0];else if(B=='ind')y=cD([1,0],[.05,w*p.v*1e-3]);
         else if(B=='am')y=[1e4,0];else if(B=='vm')y=[1e-7,0];else if(B=='tx')y=[TG[p.id]||1e-3,0];else if(wIsSw(p)||B=='fuse'||B=='ol')y=[cl(p)?1e4:1e-9,0];i=cM(v,y)}}
     o.V[p.id]=acs?cAbs(v):v[0];o.I[p.id]=acs?cAbs(i):i[0];
     if(WT[p.t].ac){const s=cM(v,[i[0],-i[1]]),S=cAbs(s);o.P[p.id]=s[0];o.pf[p.id]=S>1e-9?Math.abs(s[0])/S:1}
     if(wIsSw(p)||B=='fuse'||B=='ol')o.cl[p.id]=cl(p);
-    if(F[p.id]){o.st[p.id]=B=='fuse'||B=='dmm'?'blown':'trip';if(B=='dmm')o.mblown=true}
+    if(F[p.id]){o.st[p.id]=B=='res'||B=='diode'||B=='io'?'burn':B=='fuse'||B=='dmm'?'blown':'trip';if(B=='dmm')o.mblown=true}
+    if(opt.rate&&B=='cap'&&p.vr&&Math.abs(o.V[p.id]||0)>1.15*p.vr)o.st[p.id]='burn';
     if(B=='led'&&o.I[p.id]>.03)o.st[p.id]='burn';
     if((B=='load'||B=='coil'||B=='in'||B=='relay'||B=='ton')&&Math.abs(o.V[p.id])>1.25*p.rv)o.st[p.id]='burn';
     if(p.t=='CE'&&(acs||v[0]<-1))o.st[p.id]='burn';
@@ -12586,7 +12815,8 @@ function wChipArt(p){const P=wPins(p),xs=P.map(q=>q[1]),ys=P.map(q=>q[2]);const 
   if(t=='BRG')return P.map(q=>`<path class="lead" d="M30 0L${q[1]} ${q[2]}"/>`).join('')+`<rect x="16" y="-14" width="28" height="28" rx="3" fill="url(#gChp)" stroke="#000"/><text x="30" y="3" class="rtx w">~ + −</text>`;
   if(t=='REG'||t=='LM317')return P.map(q=>`<path class="lead" d="M30 4L${q[1]} ${q[2]}"/>`).join('')+`<rect x="18" y="-20" width="24" height="8" rx="1" fill="url(#gMet)"/><rect x="16" y="-13" width="28" height="20" rx="2" fill="url(#gChp)"/><text x="30" y="1" class="rtx w">${t=='REG'?'7805':'317'}</text>`;
   if(t=='SEG7'||t=='TL'||wB(p)=='gnd'||B=='sym')return null;
-  const x1=Math.min(...xs)+10,x2=Math.max(...xs)-10,y1=Math.min(...ys,-18)-6,y2=Math.max(...ys,18)+6;
+  /* the MCU's supply pins sit on the top and bottom edges, so its body is sized from the side pins only */
+  const sy=t=='MCU'?P.filter(q=>q[1]<=5||q[1]>=55).map(q=>q[2]):ys,x1=Math.min(...xs)+10,x2=Math.max(...xs)-10,y1=Math.min(...sy,-18)-6,y2=Math.max(...sy,18)+6;
   return P.map(q=>{const ex=q[1]<=5?x1:q[1]>=55?x2:q[1],ey=q[1]<=5||q[1]>=55?q[2]:q[2]<0?y1:y2;return `<path class="lead" d="M${ex} ${ey}L${q[1]} ${q[2]}"/>`}).join('')+`<rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" rx="3" fill="${t=='MCU'||t=='IO'?'#0f6e8c':'url(#gChp)'}" stroke="#000"/><circle cx="${x1+5}" cy="${y1+5}" r="1.8" fill="#888"/><text x="${(x1+x2)/2}" y="${(y1+y2)/2+3}" class="rtx w">${t=='OPAMP'?'op-amp':t=='T555'?'NE555':t}</text>`}
 function wArt(p){const B=wB(p),f=WT_ART[B];let g=f?f(p):null;if(g==null&&wPins(p).length>2)g=wChipArt(p);return g}
 /* current in every wire from KCL: each part's pin current is known (multi-pin parts take the remainder of their node); wires inside a node form a tree that is peeled from its leaves */
@@ -12752,11 +12982,546 @@ const WHOWT={AC:['الطرفان: الطور L (الأحمر) والمحايد N
   SCOPE:['المسبار (a) على النقطة المراد قياسها، والمرجع (b) على الأرضي أو السالب.','يعرض الجهد على شاشته، ومع المكثفات والملفات يظهر منحنى التغير مع الزمن تحت جدول القراءات.'],
   LCR:['افصل العنصر عن الدائرة، ثم صِل طرفي الجهاز على طرفيه.','يقيس المقاومة والسعة والمحاثة؛ هنا تظهر المقاومة على شاشته.'],
   CABT:['افصل الكابل من الطرفين، وصِل الجهاز على طرفي الموصل المراد فحصه.','قيمة قريبة من 0 Ω = استمرارية، وOL = قطع في الكابل.'],
+  MCU:['VCC إلى موجب مصدر بجهد المتحكم (مثل 5 V) وGND إلى سالبه؛ بدونهما لا يعمل. المداخل I0–I3 تُقرأ بالنسبة لـGND، وكل مخرج Q إلى حمل صغير (LED مع مقاومة 220–330 Ω) ثم إلى GND.','اختر «البرنامج» من الخصائص: يدوي، أو المخارج تتبع المداخل، أو عكسها، أو منطق AND/OR، أو وميض، أو عدّاد. لا تسحب أكثر من 20 mA من أي مخرج؛ فوق 40 mA يتلف المخرج، وجهد VCC الأعلى من المقنن يتلف المتحكم.'],
+  IO:['المداخل I0–I3 بين خط الإشارة والسالب (0 V) بجهد الوحدة (مثل 24 V)، والمخارج Q0–Q3 إلى الأحمال ثم إلى السالب.','اختر «البرنامج» من الخصائص أو شغّل المخارج يدويًا، وراقب مؤشرات المداخل والمخارج.'],
+  ARD:['اللوحة تتغذى من الـUSB تلقائيًا. خذ الموجب من 5V (أو 3V3) والسالب من GND. صِل كل طرف مخرج (D2–D13) بالحمل عبر مقاومة (LED مع 220 Ω) ثم إلى GND، وكل مدخل (زر أو حساس) إلى طرف D أو A.','اكتب الكود في «💻 كود الأردوينو» تحت اللوحة ثم اضغط «⬆ رفع وتشغيل»، أو اختر مثالًا و«🧩 ابنِ دائرة المثال». الأطراف ~3 ~5 ~6 ~9 ~10 ~11 تدعم PWM عبر analogWrite، وA0–A5 تقرأ الجهد 0–5 V بـanalogRead (0–1023). لا تتجاوز 20 mA لكل طرف.'],
+  NANO:['مثل الأونو بحجم أصغر: 5V وGND للتغذية، وD2–D13 للمداخل والمخارج الرقمية، وA0–A7 للمداخل التناظرية (A6 وA7 تناظرية فقط).','اكتب الكود في «💻 كود الأردوينو» ثم اضغط «⬆ رفع وتشغيل». نفس أوامر الأونو تمامًا.'],
+  PLC:['التغذية: L+ إلى +24 V وM إلى 0 V. المداخل: 1M إلى 0 V، وكل زر أو حساس من +24 V إلى I0.x. المخارج ريليه: 1L إلى +24 V وكل حمل (ملف كونتاكتور، لمبة بيان، صمام) من Q0.x إلى 0 V. التناظري 0–10 V بين AI0 و2M.','اكتب البرنامج في «🪜 برنامج السلّم» تحت اللوحة من القوائم، أو اختر تطبيقًا جاهزًا و«🧩 ابنِ التطبيق». ▶ = RUN، و⏹ = STOP. يتابع جدول المتغيرات حالة كل مدخل ومخرج ومؤقت وعداد لحظيًا.'],
+  MEGA:['مثل الأونو بأطراف أكثر: D0–D21 في الأعلى وA0–A15 في الأسفل، و5V وGND للتغذية. أطراف I2C هنا D20 (SDA) وD21 (SCL).','نفس أوامر الأونو. A0 في الميجا رقمه 54، فاكتب A0 بالاسم. الأطراف 2–13 تدعم PWM.'],
+  SERVO:['البني GND إلى السالب، والأحمر 5V إلى 5V، والبرتقالي SIG إلى طرف رقمي (مثل D9).','في الكود: #include <Servo.h> ثم Servo myServo; وmyServo.attach(9); وmyServo.write(90); للزاوية من 0 إلى 180 درجة.'],
+  LCD:['GND إلى السالب، وVCC إلى 5V، وSDA إلى A4، وSCL إلى A5 (في الميجا D20 وD21).','في الكود: LiquidCrystal_I2C lcd(0x27, 16, 2); ثم lcd.init(); lcd.backlight(); lcd.setCursor(0, 0); lcd.print("Hello");'],
   KMC:null};
+/* live operating point against the part's real limits, shown under the usage note */
+function wSpecBox(p,live,S){const B=wB(p),free=wFree(),V=live?Math.abs(live.V[p.id]||0):0,I=live?Math.abs(live.I[p.id]||0):0,st=live&&live.st[p.id],rows=[];
+  const bar=(x,lim,u,f)=>{const r=lim>0?x/lim:0,c=r>1?'bad':r>.8?'warn':'ok';return `<span class="wsb ${c}"><i style="width:${Math.min(100,r*100).toFixed(0)}%"></i></span><span class="mono">${f(x)} / ${f(lim)} ${u}</span> <small>(${Math.round(r*100)}%)</small>`};
+  const fw=x=>x<1?+x.toFixed(3)+'':wN(+x.toFixed(2));
+  /* supply or rated voltage: the ideal is to sit right at the rating, so colour by closeness to it */
+  const near=(x,nom,u)=>{const r=nom>0?x/nom:0,c=r>=.9&&r<=1.1?'ok':(r>=.6&&r<1.25)?'warn':'bad';return `<span class="wsb ${c}"><i style="width:${Math.min(100,r/1.25*100).toFixed(0)}%"></i></span><span class="mono">${x.toFixed(2)} V</span> <small>(المقنن ${wN(nom)} ${u} · ${c=='ok'?'مناسب':r<1?'منخفض':'مرتفع'})</small>`};
+  if(B=='res'&&p.pw){rows.push(['القدرة المبددة P = V × I',bar(V*I,p.pw,'W',fw)]);rows.push(['الحالة',st=='burn'?'💥 احترقت (تجاوزت 3 أضعاف قدرتها) فأصبحت دائرة مفتوحة':V*I>p.pw?'🔥 ساخنة جدًا: اختر مقاومة بقدرة أكبر':V*I>.8*p.pw?'دافئة: قريبة من حدها':'آمنة'])}
+  else if(B=='led'){rows.push(['التيار',bar(I*1000,20,'mA',x=>x.toFixed(1))]);rows.push(['الحالة',st=='burn'?'💥 احترق (أكثر من 30 mA)':I>.02?'إضاءة شديدة: قلّل التيار بمقاومة أكبر':I>5e-4?'يضيء بشكل طبيعي':'مطفأ'])}
+  else if(B=='cap'&&p.vr){rows.push(['الجهد على المكثف',bar(V,p.vr,'V',x=>x.toFixed(x<10?2:1))]);if(st=='burn')rows.push(['الحالة','💥 تلف: تجاوز جهد التحمل'+(p.t=='CE'?' أو عُكست قطبيته':'')])}
+  else if(B=='diode'){rows.push(['التيار الأمامي',bar(I,1,'A',x=>x.toFixed(3))]);if(st=='burn')rows.push(['الحالة','💥 احترق: تيار أو قدرة أعلى من المسموح'])}
+  else if(B=='load'){rows.push(['الجهد على الحمل',near(V,p.rv,'V')]);rows.push(['القدرة الفعلية',`<span class="mono">${fw(V*I)} W</span> من ${wN(p.w)} W المقننة`])}
+  else if(B=='src'){rows.push(['التيار المسحوب',`<span class="mono">${wfA(I)}</span>`]);rows.push(['القدرة المسلّمة',`<span class="mono">${fw(V*I)} W</span>`])}
+  else if(B=='io'&&live){const ip=(live.pinI||{})[p.id]||[0,0,0,0];if(p.t=='MCU')rows.push(['جهد التغذية VCC',near(V,p.vh,'V')]);
+    ip.forEach((x,j)=>{if(Math.abs(x)>1e-4)rows.push([`تيار المخرج Q${j}`,p.t=='MCU'?bar(Math.abs(x)*1000,20,'mA',y=>y.toFixed(1)):bar(Math.abs(x),2,'A',y=>y.toFixed(2))])})}
+  else if(B=='ard'&&live){const ip=(live.pinI||{})[p.id]||{};rows.push(['جهد الطرف 5V',near(V,5,'V')]);Object.keys(ip).forEach(k=>{if(Math.abs(ip[k])>1e-4)rows.push([`تيار الطرف ${k}`,bar(Math.abs(ip[k])*1000,20,'mA',y=>y.toFixed(1))])})}
+  if(!rows.length)return '';
+  const hd=rows[rows.length>1&&rows[1][0]=='الحالة'?1:0],hs=String(hd[1]).replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim(),bad=/احترق|تلف|💥/.test(hs),warn=/🔥|⚠️|ساخنة|منخفض|مرتفع|شديدة/.test(hs);
+  return `<details class="wspec wsec" data-wsec="spec"${WDET.spec?' open':''}><summary>📋 المواصفات <span class="wss ${bad?'bad':warn?'warn':'ok'}">${!live?'شغّل الدائرة':hs.slice(0,48)}</span></summary>${!live?'<p class="nolab">شغّل الدائرة لترى القيم الفعلية.</p>':''}<table>${rows.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('')}</table>${(B=='res'&&p.pw)||(B=='cap'&&p.vr)?`<p class="nolab">${free?'في المحاكاة الحرة يحترق العنصر إذا تجاوز حده كما في الواقع.':'في التمرين تُعرض الحدود للمعرفة فقط ولا يحترق العنصر بسببها.'}</p>`:''}</details>`}
 function wHow(p){const T=WT[p.t];return WHOWT[p.t]||WHOW[T.b]||['صِل أطرافه حسب أسمائها الظاهرة على اللوحة: التغذية (+ و −) أولًا، ثم الإشارات.','غيّر القيم من الخصائص وراقب جدول القراءات.']}
 let WHOWO=true;try{WHOWO=localStorage.getItem('bp.whow')!='0'}catch(e){}
-function wHowBox(p){const h=wHow(p);return `<details class="whowp"${WHOWO?' open':''}><summary>💡 طريقة التوصيل والاستخدام</summary><p><b>🔌 التوصيل:</b> ${h[0]}</p><p><b>🛠 الاستخدام:</b> ${h[1]}</p></details>`}
+function wHowBox(p){const h=wHow(p);return `<details class="whowp wsec" data-wsec="how"${WDET.how?' open':''}><summary>💡 طريقة التوصيل والاستخدام</summary><p><b>🔌 التوصيل:</b> ${h[0]}</p><p><b>🛠 الاستخدام:</b> ${h[1]}</p></details>`}
 document.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('whowp')){WHOWO=e.target.open;try{localStorage.setItem('bp.whow',WHOWO?'1':'0')}catch(x){}}},true);
+/* ===== v26 wiring lab — Arduino boards (Uno / Nano): an Arduino-C sketch runs as a JS generator, linked pin-by-pin to the circuit simulator ===== */
+const ARD_PWM=['D3','D5','D6','D9','D10','D11'];
+WT.ARD={n:'أردوينو أونو',p:'ARD',b:'ard',box:[0,-70,320,140],only:['emb'],pwm:ARD_PWM,
+  pn:[['GND',20,-70]].concat([13,12,11,10,9,8,7,6,5,4,3,2,1,0].map((d,i)=>['D'+d,40+20*i,-70]),[['3V3',60,70],['5V',80,70],['GND2',100,70],['GND3',120,70],['VIN',140,70]],[0,1,2,3,4,5].map(a=>['A'+a,200+20*a,70])),
+  g:'<rect x="0" y="-70" width="320" height="140" rx="8"/><text x="160" y="-6">ARDUINO</text><text x="160" y="14">UNO</text>'};
+WT.NANO={n:'أردوينو نانو',p:'NANO',b:'ard',box:[0,-40,300,80],only:['emb'],pwm:ARD_PWM,
+  pn:[12,11,10,9,8,7,6,5,4,3,2].map((d,i)=>['D'+d,20+20*i,-40]).concat([['GND',240,-40],['D0',260,-40],['D1',280,-40],['D13',20,40],['3V3',40,40]],[0,1,2,3,4,5,6,7].map(a=>['A'+a,60+20*a,40]),[['5V',220,40],['GND2',240,40],['VIN',260,40]]),
+  g:'<rect x="0" y="-40" width="300" height="80" rx="6"/><text x="150" y="5">ARDUINO NANO</text>'};
+WT.MEGA={n:'أردوينو ميجا 2560',p:'MEGA',b:'ard',box:[0,-70,500,140],only:['emb'],aoff:54,i2c:['D20','D21'],pwm:[2,3,4,5,6,7,8,9,10,11,12,13].map(d=>'D'+d),
+  pn:[['GND',20,-70]].concat([13,12,11,10,9,8,7,6,5,4,3,2,1,0].map((d,i)=>['D'+d,40+20*i,-70]),[14,15,16,17,18,19,20,21].map((d,i)=>['D'+d,330+20*i,-70]),[['3V3',60,70],['5V',80,70],['GND2',100,70],['GND3',120,70],['VIN',140,70]],[...Array(16).keys()].map(a=>['A'+a,180+20*a,70])),
+  g:'<rect x="0" y="-70" width="500" height="140" rx="8"/><text x="250" y="5">ARDUINO MEGA 2560</text>'};
+WT.ARD.i2c=WT.NANO.i2c=['A4','A5'];
+/* hobby servo: 5 V supply + a signal pin driven by the Servo library */
+WT.SERVO={n:'محرك سيرفو SG90',p:'SV',b:'servo',box:[0,-30,80,60],only:['emb'],pn:[['GND',20,30],['5V',40,30],['SIG',60,30]],
+  g:'<rect x="0" y="-30" width="80" height="50" rx="4"/><text x="40" y="0">SERVO</text>',
+  ico:`<svg class="wico" viewBox="-6 -40 72 80" aria-hidden="true"><rect x="4" y="-16" width="52" height="30" rx="4" fill="#1565c0" stroke="#0d47a1" stroke-width="2"/><circle cx="20" cy="-1" r="7" fill="#eee" stroke="#555"/><path d="M20-1L44-14" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>`};
+/* 16×2 character LCD with an I2C backpack: only 4 wires */
+WT.LCD={n:'شاشة LCD 16×2 (I2C)',p:'LCD',b:'lcd',box:[0,-45,200,90],only:['emb'],pn:[['GND',20,-45],['VCC',40,-45],['SDA',60,-45],['SCL',80,-45]],
+  g:'<rect x="0" y="-45" width="200" height="90" rx="4"/><text x="100" y="5">LCD 16x2</text>',
+  ico:`<svg class="wico" viewBox="-6 -40 72 80" aria-hidden="true"><rect x="0" y="-20" width="60" height="38" rx="3" fill="#1b5e20" stroke="#0d3d12" stroke-width="2"/><rect x="5" y="-13" width="50" height="24" fill="#7cb342"/><text x="30" y="-2" font-size="8" fill="#1b2e0b" text-anchor="middle" font-family="monospace">HELLO</text><text x="30" y="8" font-size="8" fill="#1b2e0b" text-anchor="middle" font-family="monospace">16x2</text></svg>`};
+WEN.ARD='Arduino Uno R3';WEN.NANO='Arduino Nano';WEN.MEGA='Arduino Mega 2560';WEN.SERVO='Micro Servo SG90';WEN.LCD='LCD 16x2 I2C';
+WLIB.emb=(WLIB.emb||[]).concat(['ARD','NANO','MEGA','SERVO','LCD']);
+WT.ARD.ico=WT.NANO.ico=`<svg class="wico" viewBox="-6 -40 72 80" aria-hidden="true"><rect x="0" y="-26" width="60" height="52" rx="5" fill="#00878f" stroke="#005c61" stroke-width="2"/><rect x="-5" y="-14" width="14" height="12" fill="#bbb"/><rect x="8" y="-23" width="48" height="5" fill="#222"/><rect x="24" y="2" width="28" height="9" fill="#111"/><text x="32" y="-4" font-size="9" fill="#fff" text-anchor="middle" font-family="sans-serif" font-weight="700">∞</text></svg>`;
+
+/* ---------- Arduino-C → JavaScript generator ---------- */
+const ARD_TY='(?:unsigned\\s+long\\s+long|unsigned\\s+long|unsigned\\s+int|unsigned\\s+char|unsigned\\s+short|long\\s+long|long\\s+int|unsigned|long|int|float|double|bool|boolean|byte|char|String|word|short|uint8_t|uint16_t|uint32_t|uint64_t|int8_t|int16_t|int32_t|int64_t|size_t|void)';
+const ARD_INT='(?:unsigned\\s+long|unsigned\\s+int|long|int|byte|char|word|uint8_t|uint16_t|uint32_t|int16_t|int32_t)';
+function ardMatch(s,i,open,close){let d=0;for(let k=i;k<s.length;k++){const c=s[k];if(c==open)d++;else if(c==close){d--;if(d==0)return k}}return -1}
+function ardTranspile(src){const strs=[];let s='',i=0;const n=src.length;
+  /* comments out, string and char literals lifted out so no rewrite touches them */
+  while(i<n){const c=src[i],d=src[i+1];
+    if(c=='/'&&d=='/'){while(i<n&&src[i]!='\n')i++;continue}
+    if(c=='/'&&d=='*'){i+=2;while(i<n&&!(src[i]=='*'&&src[i+1]=='/')){if(src[i]=='\n')s+='\n';i++}i+=2;continue}
+    if(c=='"'||c=="'"){let j=i+1;while(j<n&&src[j]!=c&&src[j]!='\n'){if(src[j]=='\\')j++;j++}strs.push(src.slice(i,j+1));s+='__S'+(strs.length-1)+'__';i=j+1;continue}
+    s+=c;i++}
+  s=s.replace(/^[ \t]*#include[^\n]*/gm,'').replace(/^[ \t]*#define[ \t]+(\w+)[ \t]+([^\n]+)/gm,'const $1 = $2;').replace(/^[ \t]*#[^\n]*/gm,'');
+  s=s.replace(/\b(static|volatile|inline|PROGMEM|register|extern)\b\s*/g,'').replace(/\bF\(\s*(__S\d+__)\s*\)/g,'$1');
+  s=s.replace(/\b(\d+\.\d*|\.\d+|\d+)[fF]\b/g,'$1').replace(/\b(\d+)(?:UL|ul|LL|ll|L|l|U|u)\b/g,'$1').replace(/\bB([01]{1,8})\b/g,'0b$1').replace(/\bNULL\b/g,'null');
+  s=s.replace(/\bsizeof\s*\(\s*(\w+)\s*\)\s*\/\s*sizeof\s*\(\s*\1\s*\[\s*0\s*\]\s*\)/g,'$1.length').replace(/\.length\(\)/g,'.length').replace(/(\w+)\.toInt\(\)/g,'parseInt($1)').replace(/(\w+)\.toFloat\(\)/g,'parseFloat($1)');
+  /* float variables print with 2 decimals like the real Serial.print, even when their value is whole */
+  const flt=new Set();s.replace(/\b(?:float|double)\s+([A-Za-z_]\w*)/g,(m,v)=>{flt.add(v);return m});
+  const sp=/\b\w+\.(?:print|println)\s*\(/g,SP=[];let sm;while((sm=sp.exec(s)))SP.push(sm.index+sm[0].length-1);
+  for(let h=SP.length-1;h>=0;h--){const op=SP[h],cl=ardMatch(s,op,'(',')');if(cl<0)continue;let d=0,e=op+1;for(;e<cl;e++){const c=s[e];if('([{'.includes(c))d++;else if(')]}'.includes(c))d--;else if(c==','&&d==0)break}
+    const a=s.slice(op+1,e);if(a.trim()&&(/\d+\.\d*|\.\d+/.test(a)||[...flt].some(v=>new RegExp('\\b'+v+'\\b').test(a))))s=s.slice(0,op+1)+'__F('+a+')'+s.slice(e)}
+  /* casts */
+  s=s.replace(/\(\s*(?:float|double)\s*\)\s*/g,'');
+  s=s.replace(new RegExp('\\(\\s*'+ARD_INT+'\\s*\\)\\s*\\(','g'),'Math.trunc(');
+  s=s.replace(new RegExp('\\(\\s*'+ARD_INT+'\\s*\\)\\s*([A-Za-z_]\\w*(?:\\[[^\\]]*\\])?|\\d+(?:\\.\\d+)?)','g'),'Math.trunc($1)');
+  /* functions become generators so delay() can pause them */
+  const fns=[];
+  s=s.replace(new RegExp('\\b'+ARD_TY+'\\s*[*&]?\\s*([A-Za-z_]\\w*)\\s*\\(([^()]*)\\)\\s*(\\{|;)','g'),(m,name,ps,end)=>{if(['if','for','while','switch','return','sizeof'].includes(name))return m;if(end==';')return '';fns.push(name);
+    const args=ps.trim()==''||ps.trim()=='void'?'':ps.split(',').map(x=>x.replace(/=.*$/,'').replace(/\[[^\]]*\]/g,'').trim().split(/[\s*&]+/).pop()).join(', ');return `function* ${name}(${args}) {`});
+  /* library objects: Servo, LiquidCrystal_I2C */
+  s=s.replace(/\bServo\s+([A-Za-z_]\w*(?:\s*,\s*[A-Za-z_]\w*)*)\s*;/g,(m,l)=>'let '+l.split(',').map(x=>x.trim()+' = new Servo()').join(', ')+';');
+  s=s.replace(/\b(LiquidCrystal_I2C|LiquidCrystal)\s+([A-Za-z_]\w*)\s*\(([^)]*)\)\s*;/g,'let $2 = new $1($3);');
+  /* arrays and objects */
+  s=s.replace(new RegExp('\\b'+ARD_TY+'\\s+([A-Za-z_]\\w*)\\s*(?:\\[[^\\]]*\\])+\\s*=\\s*(__S\\d+__)','g'),'let $1 = $2');
+  s=s.replace(new RegExp('\\b(?:const\\s+)?'+ARD_TY+'\\s+([A-Za-z_]\\w*)\\s*(?:\\[[^\\]]*\\])+\\s*=\\s*\\{','g'),'let $1 = __ARR{');
+  let k;while((k=s.indexOf('__ARR{'))>=0){const e=ardMatch(s,k+5,'{','}');if(e<0)break;s=s.slice(0,k)+'['+s.slice(k+6,e).replace(/\{/g,'[').replace(/\}/g,']')+']'+s.slice(e+1)}
+  s=s.replace(new RegExp('\\b'+ARD_TY+'\\s+([A-Za-z_]\\w*)\\s*\\[([^\\]]+)\\]\\s*;','g'),'let $1 = new Array($2).fill(0);');
+  /* scalars */
+  s=s.replace(new RegExp('\\bconst\\s+'+ARD_TY+'\\s+','g'),'const ');
+  s=s.replace(new RegExp('\\b'+ARD_TY+'\\s+(?=[A-Za-z_])','g'),'let ');
+  s=s.replace(/\blet\s+([A-Za-z_]\w*(?:\s*,\s*[A-Za-z_]\w*)*)\s*;/g,(m,l)=>'let '+l.split(',').map(x=>x.trim()+' = 0').join(', ')+';');
+  /* every call to a sketch function (and delay) is delegated with yield* */
+  const gens=fns.concat(['delay','delayMicroseconds']),re=new RegExp('(^|[^\\w.$])('+gens.join('|')+')\\s*\\(','g'),hits=[];let mm;
+  while((mm=re.exec(s)))hits.push(mm.index+mm[1].length);
+  for(let h=hits.length-1;h>=0;h--){const st=hits[h];if(/function\*\s*$/.test(s.slice(Math.max(0,st-12),st)))continue;const op=s.indexOf('(',st),cl=ardMatch(s,op,'(',')');if(cl<0)continue;s=s.slice(0,st)+'(yield* '+s.slice(st,cl+1)+')'+s.slice(cl+1)}
+  /* loops hand control back on every pass, so a busy-wait can never freeze the page */
+  const lre=/\b(for|while)\s*\(/g,L=[];while((mm=lre.exec(s)))L.push(mm.index);
+  for(let h=L.length-1;h>=0;h--){const op=s.indexOf('(',L[h]),cl=ardMatch(s,op,'(',')');if(cl<0)continue;let j=cl+1;while(/\s/.test(s[j]||''))j++;
+    if(s[j]=='{')s=s.slice(0,j+1)+' yield 0;'+s.slice(j+1);
+    else if(s[j]==';'){if(s.slice(0,L[h]).trimEnd().endsWith('}'))continue;s=s.slice(0,j)+'{ yield 0; }'+s.slice(j+1)}
+    else{let d=0,e=j;for(;e<s.length;e++){const c=s[e];if('({['.includes(c))d++;else if(')}]'.includes(c))d--;else if(c==';'&&d==0)break}s=s.slice(0,j)+'{ yield 0; '+s.slice(j,e+1)+' }'+s.slice(e+1)}}
+  s=s.replace(/\bdo\s*\{/g,'do { yield 0;');
+  s=s.replace(/__S(\d+)__/g,(m,q)=>strs[+q]);
+  const body=`"use strict";const {${Object.keys(ardApi({},{t:'ARD'})).join(',')}}=__api;function* delay(ms){yield Math.max(1e-6,+ms||0)}function* delayMicroseconds(us){yield Math.max(1e-6,(+us||0)/1000)}\n${s}\n;return {setup:typeof setup=='function'?setup:null,loop:typeof loop=='function'?loop:null};`;
+  return new Function('__api',body)}
+
+/* ---------- the Arduino API seen by the sketch ---------- */
+function ardApi(rt,board){const B=WT[board.t]||WT.ARD;
+  const ao=B.aoff||14,pn=x=>{const nm=typeof x=='string'?x:(x>=ao?'A'+(x-ao):'D'+x);if(!B.pn.some(q=>q[0]==nm))throw new Error(`الطرف ${nm} غير موجود في ${B.n}`);return nm};
+  const fmt=(x,f)=>{if(x&&x.__f)return (+x.v).toFixed(f!=null?f:2);if(typeof x=='number'){if(f==16)return Math.trunc(x).toString(16).toUpperCase();if(f==2)return Math.trunc(x).toString(2);if(f==8)return Math.trunc(x).toString(8);if(f==10||Number.isInteger(x))return String(Math.trunc(x));return x.toFixed(f!=null?f:2)}if(typeof x=='boolean')return x?'1':'0';return String(x)};
+  const out=t=>{rt.ser=((rt.ser||'')+t).slice(-6000)};
+  const api={HIGH:1,LOW:0,INPUT:0,OUTPUT:1,INPUT_PULLUP:2,LED_BUILTIN:13,PI:Math.PI,DEC:10,HEX:16,BIN:2,OCT:8,
+    pinMode:(p,m)=>{const k=pn(p);rt.mode[k]=m==1?'o':m==2?'u':'i';delete rt.pwm[k];rt.out[k]=0},
+    digitalWrite:(p,v)=>{const k=pn(p);if(rt.mode[k]=='o'){rt.out[k]=v?1:0;delete rt.pwm[k]}else rt.mode[k]=v?'u':'i'},
+    digitalRead:p=>{const k=pn(p);if(rt.mode[k]=='o')return rt.out[k]?1:0;const v=(rt.pv||{})[k];return v!=null?(v>2.5?1:0):(rt.mode[k]=='u'?1:0)},
+    analogRead:p=>{const k=typeof p=='number'&&p<ao&&p<16?'A'+p:pn(p);if(k[0]!='A')throw new Error('analogRead يعمل على الأطراف A0–A5 فقط');const v=(rt.pv||{})[k]||0;return Math.max(0,Math.min(1023,Math.round(v/5*1023)))},
+    analogWrite:(p,v)=>{const k=pn(p);v=Math.max(0,Math.min(255,Math.trunc(+v||0)));rt.mode[k]='o';if(B.pwm.includes(k)){rt.pwm[k]=v;rt.out[k]=v>0?1:0}else{rt.out[k]=v>=128?1:0;delete rt.pwm[k]}},
+    millis:()=>Math.floor((rt.wake-rt.t0)*1000),micros:()=>Math.floor((rt.wake-rt.t0)*1e6),
+    map:(x,a,b,c,d)=>Math.trunc((x-a)*(d-c)/(b-a)+c),constrain:(x,a,b)=>Math.min(b,Math.max(a,x)),
+    random:(a,b)=>b==null?Math.floor(Math.random()*a):Math.floor(a+Math.random()*(b-a)),randomSeed:()=>{},
+    abs:Math.abs,min:Math.min,max:Math.max,pow:Math.pow,sqrt:Math.sqrt,sq:x=>x*x,sin:Math.sin,cos:Math.cos,tan:Math.tan,floor:Math.floor,ceil:Math.ceil,round:Math.round,
+    bitRead:(x,b)=>(x>>b)&1,bitSet:(x,b)=>x|(1<<b),bitClear:(x,b)=>x&~(1<<b),lowByte:x=>x&255,highByte:x=>(x>>8)&255,isDigit:c=>/\d/.test(c),
+    tone:(p,f)=>{const k=pn(p);rt.mode[k]='o';rt.pwm[k]=128;rt.out[k]=1;rt.tone=f},noTone:p=>{const k=pn(p);delete rt.pwm[k];rt.out[k]=0;rt.tone=0},
+    Serial:{begin:()=>{rt.serOn=true},print:(x,f)=>out(fmt(x,f)),println:(x,f)=>out((x==null?'':fmt(x,f))+'\n'),write:x=>out(typeof x=='number'?String.fromCharCode(x):String(x)),available:()=>0,read:()=>-1,flush:()=>{}},
+    __F:v=>typeof v=='number'?{__f:1,v}:v,String:x=>x==null?'':typeof x=='number'&&!Number.isInteger(x)?x.toFixed(2):String(x)};
+  for(let k=0;k<16;k++)api['A'+k]=ao+k;
+  /* Servo library: 0–180°, the pulse (0.5–2.5 ms every 20 ms) is also driven on the pin */
+  api.Servo=class{attach(p){this.k=pn(p);rt.mode[this.k]='o';rt.servo=rt.servo||{};this.write(90);return 1}
+    write(a){if(!this.k)return;a=Math.max(0,Math.min(180,+a||0));if(a>180)a=180;this.a=a;rt.servo[this.k]=a;rt.pwm[this.k]=Math.round((0.5+2*a/180)/20*255);rt.out[this.k]=1}
+    writeMicroseconds(us){this.write((Math.max(500,Math.min(2500,+us||1500))-500)/2000*180)}read(){return this.a||0}attached(){return !!this.k}detach(){if(this.k){delete rt.pwm[this.k];rt.out[this.k]=0}}};
+  /* LiquidCrystal_I2C (16×2): the text lives on the board and the LCD part wired to its SDA/SCL shows it */
+  const LCD=class{constructor(){rt.lcd={rows:[' '.repeat(16),' '.repeat(16)],cx:0,cy:0,bl:0,on:1}}
+    init(){rt.lcd.bl=1}begin(){rt.lcd.bl=1}backlight(){rt.lcd.bl=1}noBacklight(){rt.lcd.bl=0}display(){rt.lcd.on=1}noDisplay(){rt.lcd.on=0}
+    clear(){rt.lcd.rows=[' '.repeat(16),' '.repeat(16)];rt.lcd.cx=0;rt.lcd.cy=0}home(){rt.lcd.cx=0;rt.lcd.cy=0}setCursor(c,r){rt.lcd.cx=Math.max(0,+c||0);rt.lcd.cy=Math.max(0,Math.min(1,+r||0))}
+    print(x,f){const s=fmt(x,f),L=rt.lcd;for(const ch of s){if(L.cy<2&&L.cx<16)L.rows[L.cy]=L.rows[L.cy].slice(0,L.cx)+ch+L.rows[L.cy].slice(L.cx+1);L.cx++}return s.length}
+    println(x,f){return this.print(x,f)}write(c){return this.print(typeof c=='number'?String.fromCharCode(c):c)}};
+  api.LiquidCrystal_I2C=LCD;api.LiquidCrystal=class extends LCD{constructor(){super();throw new Error('هذه الشاشة في المختبر بواجهة I2C: استخدم LiquidCrystal_I2C lcd(0x27, 16, 2); ووصّل SDA وSCL')}};
+  return api}
+
+/* ---------- runtime: one program per board, advanced in simulated time ---------- */
+const ARDRT={};
+const ardParts=C=>C.parts.filter(p=>wB(p)=='ard');
+function ardRt(p){const k=wKey(),M=ARDRT[k]=ARDRT[k]||{};return M[p.id]=M[p.id]||{mode:{},out:{},pwm:{},ser:'',err:'',inst:null,gen:null,wake:0,t0:0,pv:null,code:null,state:'idle'}}
+const ardErr=e=>{const m=String(e&&e.message||e);return /Unexpected|missing|expected|Invalid|unterminated/i.test(m)?'خطأ في صياغة الكود: '+m+' — راجع الأقواس { } والفواصل المنقوطة ;':/is not defined/.test(m)?'اسم غير معرّف: '+m.replace(' is not defined','')+' — عرّف المتغير أو تحقق من كتابة اسم الدالة':m};
+function ardUpload(p,t){const rt=ardRt(p);Object.assign(rt,{mode:{},out:{},pwm:{},gen:null,inst:null,err:'',state:'idle',ser:'',code:p.code!=null?p.code:ARD_EX.blink.c,tone:0});
+  try{const f=ardTranspile(rt.code);rt.inst=f(ardApi(rt,p));if(!rt.inst.loop)throw new Error('لا توجد دالة loop() في الكود');rt.t0=t;rt.wake=t;rt.gen=rt.inst.setup?rt.inst.setup():null;rt.state='run'}
+  catch(e){rt.err=ardErr(e);rt.state='err'}}
+function ardStep(rt,t){if(rt.state!='run')return;let ops=0,loops=0;
+  while(rt.wake<=t){if(!rt.gen){rt.gen=rt.inst.loop();loops++;rt.wake+=1e-5;if(loops>400)break}
+    let r;try{r=rt.gen.next()}catch(e){rt.err=ardErr(e);rt.state='err';rt.mode={};return}
+    if(r.done){rt.gen=null;continue}
+    const ms=+r.value||0;if(ms>0)rt.wake+=ms/1000;else{rt.wake+=2e-6;if(++ops>30000)break}}}
+/* called before each solve: start/stop with the run bar, then run the sketch up to the solve time */
+function ardSync(S,t){ardParts(S.C).forEach(p=>{const rt=ardRt(p);if(S.off){if(rt.state!='idle')Object.assign(rt,{state:'idle',mode:{},out:{},pwm:{},gen:null,inst:null});return}
+  if(rt.state=='idle')ardUpload(p,t);if(!S.pause)ardStep(rt,t)})}
+function ardStates(S){if(S.off)return null;const o={};ardParts(S.C).forEach(p=>{const rt=ardRt(p);if(rt.state=='run')o[p.id]={mode:rt.mode,out:rt.out,pwm:rt.pwm}});return o}
+/* PWM: a pin switches fully between 0 and 5 V, so the circuit is solved with each PWM pin low and high and the results are weighted by its duty cycle (average current, not average voltage — an LED at 20% duty still glows dimly) */
+function ardPwmSim(C,optBase,st){const pw=[];Object.keys(st||{}).forEach(id=>Object.keys(st[id].pwm||{}).forEach(k=>{const d=st[id].pwm[k]/255;if(d>0&&d<1)pw.push([id,k,d])}));
+  const mk=on=>{const o={};Object.keys(st||{}).forEach(id=>{const s0=st[id],out=Object.assign({},s0.out);Object.keys(s0.pwm||{}).forEach(k=>{const d=s0.pwm[k]/255;out[k]=d>=1?1:d<=0?0:(on&&on[0]==id&&on[1]==k?1:0)});o[id]={mode:s0.mode,out,pwm:{}}});return o};
+  const run=on=>wSim(C,{},Object.assign({},optBase,{ard:mk(on)}));const L=run(null);if(!pw.length||!L)return L;const H=pw.map(x=>run(x));
+  const mix=(a,get)=>{let v=get(L);if(typeof v!='number')return v;H.forEach((h,j)=>{const x=h&&get(h);if(typeof x=='number')v+=pw[j][2]*(x-get(L))});return v};
+  const out=Object.assign({},L);['V','I','P'].forEach(key=>{out[key]={};Object.keys(L[key]||{}).forEach(id=>out[key][id]=mix(0,s=>(s[key]||{})[id]))});
+  ['pinV','pinI'].forEach(key=>{out[key]={};Object.keys(L[key]||{}).forEach(id=>{out[key][id]={};Object.keys(L[key][id]).forEach(k=>out[key][id][k]=mix(0,s=>((s[key]||{})[id]||{})[k]||0))})});
+  out.st=Object.assign({},L.st);H.forEach(h=>{if(h)Object.keys(h.st).forEach(id=>{if(h.st[id]=='burn')out.st[id]='burn'})});
+  out.mem=Object.assign({},L.mem);['vc','il'].forEach(key=>{out.mem[key]={};Object.keys((L.mem||{})[key]||{}).forEach(id=>out.mem[key][id]=mix(0,s=>((s.mem||{})[key]||{})[id]||0))});return out}
+function ardFeed(S,live){ardParts(S.C).forEach(p=>{const rt=ardRt(p);rt.pv=live&&live.pinV?live.pinV[p.id]:null})}
+
+/* ---------- realistic board artwork ---------- */
+WT_ART.ard=p=>{const T=WT[p.t],b=T.box,uno=p.t!='NANO',mega=p.t=='MEGA',rt=ARDRT[wKey()]&&ARDRT[wKey()][p.id],l13=rt&&rt.state=='run'&&rt.mode.D13=='o'?(rt.pwm.D13!=null?rt.pwm.D13/255:rt.out.D13?1:0):0;
+  const top=T.pn.filter(q=>q[2]<0),bot=T.pn.filter(q=>q[2]>0),strip=L=>{const xs=L.map(q=>q[1]);return `<rect x="${Math.min(...xs)-8}" y="${L[0][2]+(L[0][2]<0?2:-12)}" width="${Math.max(...xs)-Math.min(...xs)+16}" height="10" rx="1.5" fill="#1b1b1b"/>`+L.map(q=>`<rect x="${q[1]-2}" y="${q[2]+(q[2]<0?5:-9)}" width="4" height="4" fill="#c9a227"/>`).join('')};
+  return `<rect x="${b[0]}" y="${b[1]}" width="${b[2]}" height="${b[3]}" rx="${uno?8:6}" fill="#00878f" stroke="#005c61" stroke-width="2"/>`+
+   (uno?`<rect x="-16" y="-44" width="40" height="30" rx="2" fill="url(#gMet)" stroke="#777"/><rect x="-10" y="12" width="32" height="28" rx="3" fill="#1b1b1b"/><circle cx="40" cy="-40" r="6" fill="#d32f2f" stroke="#7a1010"/><rect x="176" y="-6" width="120" height="26" rx="2" fill="#141414"/><text x="236" y="10" class="ardt s">${mega?'ATMEGA2560':'ATMEGA328P'}</text><text x="125" y="-14" class="ardt">ARDUINO</text><text x="125" y="8" class="ardt b">${mega?'MEGA 2560':'UNO'}</text>`
+       :`<rect x="-14" y="-12" width="26" height="24" rx="2" fill="url(#gMet)" stroke="#777"/><rect x="110" y="-14" width="56" height="28" rx="2" fill="#141414"/><text x="215" y="5" class="ardt">NANO</text>`)+
+   `<circle cx="${uno?66:40}" cy="${uno?-46:-18}" r="3.5" fill="#ffb300" opacity="${(.25+.75*l13).toFixed(2)}" ${l13>.05?'style="filter:drop-shadow(0 0 4px #ffb300)"':''}/><text x="${uno?74:48}" y="${uno?-43:-15}" class="ardt s l">L</text><circle cx="${uno?66:40}" cy="${uno?-34:-6}" r="3.5" fill="#00e676" style="filter:drop-shadow(0 0 3px #00e676)"/><text x="${uno?74:48}" y="${uno?-31:-3}" class="ardt s l">ON</text>`+(mega?strip(top.filter(q=>q[1]<320))+strip(top.filter(q=>q[1]>=320)):strip(top))+(uno?strip(bot.filter(q=>q[1]<170))+strip(bot.filter(q=>q[1]>=170)):strip(bot))};
+
+/* ---------- examples (each can also build its own circuit) ---------- */
+const ARD_EX={
+ blink:{n:'وميض LED (Blink)',c:`// وميض LED موصول بالطرف 13 عبر مقاومة 220 أوم
+void setup() {
+  pinMode(13, OUTPUT);      // الطرف 13 مخرج
+}
+
+void loop() {
+  digitalWrite(13, HIGH);   // تشغيل
+  delay(1000);              // انتظر ثانية
+  digitalWrite(13, LOW);    // إطفاء
+  delay(1000);
+}`,ckt:[['R','R1',{v:220},400,40,'D13','a'],['LED','LED1',{},520,40,'R1.b','a','GND']]},
+ button:{n:'زر يتحكم في LED',c:`// زر على الطرف 2 (مع مقاومة السحب الداخلية) يشغّل LED على الطرف 13
+const int buttonPin = 2;
+const int ledPin = 13;
+
+void setup() {
+  pinMode(buttonPin, INPUT_PULLUP);
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int state = digitalRead(buttonPin);   // مضغوط = LOW
+  if (state == LOW) {
+    digitalWrite(ledPin, HIGH);
+    Serial.println("الزر مضغوط");
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+  delay(100);
+}`,ckt:[['R','R1',{v:220},400,40,'D13','a'],['LED','LED1',{},520,40,'R1.b','a','GND'],['PB','PB1',{},400,250,'D2','a','GND2']]},
+ fade:{n:'تعتيم LED بالـPWM',c:`// تغيير شدة إضاءة LED على الطرف 9 بإشارة PWM
+int brightness = 0;
+int step = 5;
+
+void setup() {
+  pinMode(9, OUTPUT);
+}
+
+void loop() {
+  analogWrite(9, brightness);   // 0 إلى 255
+  brightness = brightness + step;
+  if (brightness <= 0 || brightness >= 255) {
+    step = -step;
+  }
+  delay(30);
+}`,ckt:[['R','R1',{v:220},400,40,'D9','a'],['LED','LED1',{},520,40,'R1.b','a','GND']]},
+ pot:{n:'قراءة تناظرية (مقسّم جهد)',c:`// قراءة الجهد على A0 وعرضه في الشاشة التسلسلية، والتحكم في إضاءة LED
+void setup() {
+  Serial.begin(9600);
+  pinMode(9, OUTPUT);
+}
+
+void loop() {
+  int value = analogRead(A0);           // 0 إلى 1023
+  float volts = value * 5.0 / 1023.0;
+  Serial.print("A0 = ");
+  Serial.print(value);
+  Serial.print("  V = ");
+  Serial.println(volts);
+  analogWrite(9, map(value, 0, 1023, 0, 255));
+  delay(500);
+}`,ckt:[['RV','RV1',{v:10000},400,250,'5V','a'],['R','R2',{v:10000},520,250,'RV1.b','a','GND2'],['R','R1',{v:220},400,40,'D9','a'],['LED','LED1',{},520,40,'R1.b','a','GND']],extra:[['A0','RV1.b']]},
+ traffic:{n:'إشارة مرور',c:`// إشارة مرور: أحمر 10، أصفر 9، أخضر 8
+const int RED = 10;
+const int YELLOW = 9;
+const int GREEN = 8;
+
+void setup() {
+  pinMode(RED, OUTPUT);
+  pinMode(YELLOW, OUTPUT);
+  pinMode(GREEN, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(GREEN, HIGH);
+  delay(3000);
+  digitalWrite(GREEN, LOW);
+  digitalWrite(YELLOW, HIGH);
+  delay(1000);
+  digitalWrite(YELLOW, LOW);
+  digitalWrite(RED, HIGH);
+  delay(3000);
+  digitalWrite(RED, LOW);
+}`,ckt:[['R','R1',{v:220},400,20,'D10','a'],['LED','LED1',{col:'r'},520,20,'R1.b','a','GND'],['R','R2',{v:220},400,100,'D9','a'],['LED','LED2',{col:'y'},520,100,'R2.b','a','GND'],['R','R3',{v:220},400,180,'D8','a'],['LED','LED3',{col:'g'},520,180,'R3.b','a','GND']]},
+ counter:{n:'عدّاد ثنائي بأربعة LED',c:`// عدّ من 0 إلى 15 وعرضه بالنظام الثنائي على الأطراف 2 إلى 5
+int leds[] = {2, 3, 4, 5};
+int count = 0;
+
+void setup() {
+  for (int i = 0; i < 4; i++) {
+    pinMode(leds[i], OUTPUT);
+  }
+  Serial.begin(9600);
+}
+
+void loop() {
+  for (int i = 0; i < 4; i++) {
+    digitalWrite(leds[i], bitRead(count, i));
+  }
+  Serial.println(count);
+  count = (count + 1) % 16;
+  delay(1000);
+}`,ckt:[['R','R1',{v:220},400,20,'D2','a'],['LED','LED1',{},520,20,'R1.b','a','GND'],['R','R2',{v:220},400,90,'D3','a'],['LED','LED2',{},520,90,'R2.b','a','GND'],['R','R3',{v:220},400,160,'D4','a'],['LED','LED3',{},520,160,'R3.b','a','GND'],['R','R4',{v:220},400,230,'D5','a'],['LED','LED4',{},520,230,'R4.b','a','GND']]},
+ night:{n:'إنارة ليلية بحساس ضوء LDR',c:`// تضيء الـLED عندما يقل الضوء (قراءة A0 منخفضة)
+const int threshold = 400;
+
+void setup() {
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int light = analogRead(A0);
+  Serial.println(light);
+  if (light < threshold) {
+    digitalWrite(13, HIGH);   // ظلام
+  } else {
+    digitalWrite(13, LOW);
+  }
+  delay(300);
+}`,ckt:[['LDR','LDR1',{v:5000},400,250,'5V','a'],['R','R2',{v:10000},520,250,'LDR1.b','a','GND2'],['R','R1',{v:220},400,40,'D13','a'],['LED','LED1',{},520,40,'R1.b','a','GND']],extra:[['A0','LDR1.b']]},
+ temp:{n:'قياس الحرارة LM35',c:`// قراءة حساس LM35 على A0: كل 10 mV = 1 درجة مئوية
+void setup() {
+  Serial.begin(9600);
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  int raw = analogRead(A0);
+  float mv = raw * 5000.0 / 1023.0;
+  float tempC = mv / 10.0;
+  Serial.print("Temp = ");
+  Serial.print(tempC, 1);
+  Serial.println(" C");
+  digitalWrite(13, tempC > 30 ? HIGH : LOW);   // تنبيه فوق 30 درجة
+  delay(1000);
+}`,ckt:[['LM35','TS1',{tmp:25},420,220,null],['R','R1',{v:220},400,40,'D13','a'],['LED','LED1',{},520,40,'R1.b','a','GND']],extra:[['5V','TS1.+VS'],['A0','TS1.OUT'],['GND2','TS1.GND']]}};
+
+/* build an example's circuit around the selected board (undo restores the previous one) */
+function ardBuild(key,board){const S=wst(),E=ARD_EX[key];if(!E)return;const b=JSON.parse(JSON.stringify(board));b.x=40;b.y=b.t=='NANO'?80:100;const mega=b.t=='MEGA',I2C=WT[b.t].i2c||['A4','A5'],bp=k=>k=='A4'?I2C[0]:k=='A5'?I2C[1]:k=='GND3'&&!WT[b.t].pn.some(q=>q[0]=='GND3')?'GND2':k;b.r=0;b.mh=b.mv=false;b.code=E.c;
+  const parts=[b],wires=[],U=b.id;
+  E.ckt.forEach(r=>{const [t,id,o,x0,y0,from,pin,to]=r,T=WT[t],x=mega?Math.max(30,x0-300+(y0>200?250:0)):x0,y=mega?(y0>200?300:220):y0,p={id,t,r:0,x,y};(T.pr||[]).forEach(q=>p[q[0]]=q[3]);if(t=='LED')p.col='r';if(T.st)p.on=T.st[2];Object.assign(p,o);parts.push(p);
+    if(from)wires.push([from.includes('.')?from:U+'.'+bp(from),id+'.'+pin]);if(to)wires.push([id+'.'+(pin=='a'?'b':'a'),to.includes('.')?to:U+'.'+bp(to)])});
+  (E.extra||[]).forEach(w=>wires.push([w[0].includes('.')?w[0]:U+'.'+bp(w[0]),w[1]]));
+  S.C={parts,wires,bb:S.C.bb};S.sel=null;S.pick=null;S.off=false;S.pause=false;S.mem={t:0};S.trace={};S.ardSel=U;
+  const M=ARDRT[wKey()];if(M)delete M[U];wChanged();toast('🧩','بُنيت دائرة المثال. يمكنك التراجع بزر «رجوع خطوة»','ok',2600)}
+
+/* ---------- code panel under the board ---------- */
+function ardPins(p){const code=p.code||'',def={LED_BUILTIN:'13'};
+  code.replace(/(?:#define\s+(\w+)\s+(A?\d+))|(?:(?:const\s+)?(?:int|byte|uint8_t|short)\s+(\w+)\s*=\s*(A?\d+)\s*;)/g,(m,a,b,c,d)=>{def[a||c]=b||d;return m});
+  const ao=WT[p.t].aoff||14,R={},res=x=>{x=x.trim();x=def[x]||x;return /^A\d+$/.test(x)?x:/^\d+$/.test(x)?(+x>=ao?'A'+(+x-ao):'D'+x):null};
+  code.replace(/\b(pinMode|digitalWrite|digitalRead|analogRead|analogWrite|tone)\s*\(\s*([\w]+)\s*(?:,\s*(\w+))?/g,(m,f,a,b)=>{let k=f=='analogRead'&&/^\d$/.test(a)?'A'+a:res(a);if(!k)return m;const r=R[k]=R[k]||new Set();
+    r.add(f=='analogRead'?'تناظري':f=='analogWrite'?'PWM':f=='digitalRead'?'مدخل':f=='pinMode'?(b=='OUTPUT'?'مخرج':'مدخل'):f=='tone'?'صوت':'مخرج');return m});return R}
+function ardLinks(S,p){const R=ardPins(p),C=S.C;return Object.keys(R).map(k=>{const ends=C.wires.filter(w=>w[0]==p.id+'.'+k||w[1]==p.id+'.'+k).map(w=>(w[0]==p.id+'.'+k?w[1]:w[0]).split('.')[0]);
+  const ok=ends.length>0,bad=!WT[p.t].pn.some(q=>q[0]==k);return `<span class="wal ${bad?'bad':ok?'ok':'warn'}"><b dir="ltr">${k}</b> ${[...R[k]].join(' / ')} ${bad?'❌ غير موجود في اللوحة':ok?'← '+[...new Set(ends)].join('، '):'⚠️ غير موصول'}</span>`}).join('')||'<span class="nolab">لا يستخدم الكود أي طرف بعد.</span>'}
+function ardStat(S,p){const rt=ardRt(p),dirty=rt.code!=null&&(p.code!=null?p.code:ARD_EX.blink.c)!==rt.code;
+  return S.off?'⏹ متوقف. اضغط ▶ تشغيل أو ⬆ رفع وتشغيل.':rt.state=='err'?'🔴 '+esc(rt.err):rt.state=='run'?`🟢 البرنامج يعمل · millis() = ${Math.max(0,Math.floor((rt.wake-rt.t0)*1000))}${S.pause?' · ⏸ موقوف مؤقتًا':''}${dirty?' · <b>⚠️ عدّلت الكود: اضغط ⬆ رفع ليُطبَّق</b>':''}`:'⚪ جاهز'}
+function wArdPanel(S){const L=ardParts(S.C);if(!L.length)return '';const p=L.find(x=>x.id==S.ardSel)||L[0],rt=ardRt(p);if(p.code==null)p.code=ARD_EX.blink.c;
+  return `<section class="wcode" aria-label="كود الأردوينو"><div class="wch"><b>💻 كود ${p.id} · ${WT[p.t].n}</b>${L.length>1?`<select id="wardsel" aria-label="اختر اللوحة">${L.map(x=>`<option value="${x.id}"${x.id==p.id?' selected':''}>${x.id}</option>`).join('')}</select>`:''}
+    <button type="button" class="btn pri" data-ard="up">⬆ رفع وتشغيل</button></div>
+    <div class="wcex"><label>📚 الأمثلة <select id="wardex"><option value="">اختر مثالًا…</option>${Object.keys(ARD_EX).map(k=>`<option value="${k}">${ARD_EX[k].n}</option>`).join('')}</select></label><button type="button" class="btn" data-ard="build" title="ابنِ دائرة المثال المختار مع كوده">🧩 ابنِ دائرة المثال</button></div>
+    <textarea id="wcode" dir="ltr" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="كود الأردوينو" rows="16">${esc(p.code)}</textarea>
+    <div id="wcst" class="wcst" role="status">${ardStat(S,p)}</div>
+    <div class="wlinks"><b>🔗 الربط بين الكود والتوصيل</b><div>${ardLinks(S,p)}</div></div>
+    <div class="wserh"><b>🖥 الشاشة التسلسلية · Serial Monitor</b><button type="button" class="btn" data-ard="clr">مسح</button></div><pre id="wser" class="wser" dir="ltr" aria-live="off">${esc(rt.ser||'')}</pre>
+    <details class="whowp"><summary>💡 الأوامر المدعومة</summary><p dir="ltr" class="mono" style="text-align:left">pinMode · digitalWrite · digitalRead · analogRead · analogWrite (PWM: 3 5 6 9 10 11) · delay · millis · micros · map · constrain · random · tone/noTone · Serial.begin/print/println · if/else · for · while · do · switch · arrays · const · #define · functions</p><p>الكود يُترجم داخل المتصفح ويعمل بزمن المحاكاة. مداخل الأطراف تُقرأ من جهود الدائرة الفعلية، ومخارجها تغذي الدائرة: الطرف المخرج 5 V بمقاومة داخلية نحو 25 Ω، وINPUT_PULLUP مقاومة 35 kΩ إلى 5 V، والتيار الآمن لكل طرف 20 mA (الحد الأقصى 40 mA).</p></details></section>`}
+function ardTickUI(S){const L=ardParts(S.C);if(!L.length)return;const p=L.find(x=>x.id==S.ardSel)||L[0],rt=ardRt(p),se=$('#wser'),st=$('#wcst');
+  if(se&&se.textContent!==(rt.ser||'')){const end=se.scrollTop+se.clientHeight>=se.scrollHeight-8;se.textContent=rt.ser||'';if(end)se.scrollTop=se.scrollHeight}if(st)st.innerHTML=ardStat(S,p)}
+document.addEventListener('input',e=>{if(e.target.id!='wcode')return;const S=wst(),L=ardParts(S.C),p=L.find(x=>x.id==S.ardSel)||L[0];if(!p)return;p.code=e.target.value;store.set(wSKey(),S.C);const st=$('#wcst');if(st)st.innerHTML=ardStat(S,p)});
+document.addEventListener('keydown',e=>{if(e.target.id!='wcode'||e.key!='Tab'||e.shiftKey)return;e.preventDefault();const a=e.target,s=a.selectionStart;a.setRangeText('  ',s,a.selectionEnd,'end');a.dispatchEvent(new Event('input',{bubbles:true}))});
+document.addEventListener('change',e=>{const S=wst();if(e.target.id=='wardsel'){S.ardSel=e.target.value;wRefresh()}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-ard]');if(!b)return;const S=wst(),L=ardParts(S.C),p=L.find(x=>x.id==S.ardSel)||L[0];if(!p)return;const a=b.dataset.ard;
+  if(a=='up'){const ta=$('#wcode');if(ta)p.code=ta.value;S.off=false;S.pause=false;ardUpload(p,S.mem.t||0);store.set(wSKey(),S.C);wRefresh();const st=ardRt(p);toast(st.state=='err'?'⚠️':'⬆',st.state=='err'?'في الكود خطأ: اقرأ الرسالة تحت المحرر':'رُفع الكود ويعمل الآن',st.state=='err'?'no':'ok',2200)}
+  else if(a=='clr'){ardRt(p).ser='';const se=$('#wser');if(se)se.textContent=''}
+  else if(a=='build'){const k=($('#wardex')||{}).value;if(!k){toast('ℹ️','اختر مثالًا من القائمة أولًا','info',2000);return}ardBuild(k,p)}});
+document.addEventListener('change',e=>{if(e.target.id!='wardex'||!e.target.value)return;const S=wst(),L=ardParts(S.C),p=L.find(x=>x.id==S.ardSel)||L[0];if(!p)return;const k=e.target.value;
+  p.code=ARD_EX[k].c;S.off=false;S.pause=false;ardUpload(p,S.mem.t||0);wChanged();const sel=$('#wardex');if(sel)sel.value=k;toast('📚','حُمّل المثال. اضغط «🧩 ابنِ دائرة المثال» لتوصيل عناصره تلقائيًا','info',3000)});
+/* ---------- servo and LCD follow the board they are wired to (through any chain of wires) ---------- */
+function ardWiredTo(C,partId,pinName){const R=wNodes(C),n=R(partId+'.'+pinName);for(const b of ardParts(C))for(const q of wPins(b))if(R(b.id+'.'+q[0])==n)return [b,q[0]];return null}
+const SVANG={};
+function servoAngle(p){const S=wst(),live=S._live,pow=live&&Math.abs(live.V[p.id]||0)>=4,h=ardWiredTo(S.C,p.id,'SIG');let a=SVANG[p.id]!=null?SVANG[p.id]:90;
+  if(h&&pow){const rt=(ARDRT[wKey()]||{})[h[0].id];if(rt&&rt.state=='run'&&rt.servo&&rt.servo[h[1]]!=null)a=rt.servo[h[1]]}return SVANG[p.id]=a}
+WT_ART.servo=p=>{const a=servoAngle(p);return `<rect x="0" y="-30" width="80" height="44" rx="5" fill="#1565c0" stroke="#0d47a1" stroke-width="2"/><rect x="-6" y="-16" width="92" height="8" rx="2" fill="#1976d2" stroke="#0d47a1"/><circle cx="28" cy="-10" r="11" fill="#eceff1" stroke="#90a4ae"/><g transform="rotate(${(a-90).toFixed(1)} 28 -10)"><path d="M28-10V-44" stroke="#fafafa" stroke-width="8" stroke-linecap="round"/><path d="M28-12V-42" stroke="#b0bec5" stroke-width="1"/></g><circle cx="28" cy="-10" r="3" fill="#607d8b"/><text x="60" y="6" class="ardt s">SG90</text><text x="60" y="-20" class="ardt" style="font-size:11px">${Math.round(a)}°</text>`+[['#5d4037',20],['#d32f2f',40],['#ff9800',60]].map(c=>`<path d="M${c[1]} 14V30" stroke="${c[0]}" stroke-width="3"/>`).join('')};
+function lcdBuf(p){const S=wst(),live=S._live,pow=live&&Math.abs(live.V[p.id]||0)>=4;if(!pow)return null;const h=ardWiredTo(S.C,p.id,'SDA'),h2=ardWiredTo(S.C,p.id,'SCL'),blank=' '.repeat(16);
+  if(!h||!h2||h[0].id!=h2[0].id)return {rows:[blank,blank],bl:1,on:1};const I=WT[h[0].t].i2c||['A4','A5'];if(h[1]!=I[0]||h2[1]!=I[1])return {rows:['Check SDA / SCL ',(I[0]+' / '+I[1]).padEnd(16)],bl:1,on:1};
+  const rt=(ARDRT[wKey()]||{})[h[0].id];return rt&&rt.state=='run'&&rt.lcd?rt.lcd:{rows:[blank,blank],bl:0,on:1}}
+WT_ART.lcd=p=>{const L=lcdBuf(p),bl=L&&L.bl,on=L&&L.on,row=r=>[...((L&&on?L.rows[r]:'')||'').padEnd(16).slice(0,16)].map((c,i)=>`<rect x="${22+i*9.8}" y="${-21+r*21}" width="8.8" height="18" fill="${bl?'#aed581':'#4e6b33'}" opacity=".5"/><text x="${26.4+i*9.8}" y="${-7+r*21}" class="lcdt">${c==' '?'':esc(c)}</text>`).join('');
+  return `<rect x="0" y="-45" width="200" height="90" rx="4" fill="#1b5e20" stroke="#0d3d12" stroke-width="2"/><rect x="12" y="-28" width="176" height="56" rx="2" fill="${!L?'#2e3b23':bl?'#8bc34a':'#556b2f'}" stroke="#222"/>${row(0)}${row(1)}`+[20,40,60,80].map(x=>`<rect x="${x-4}" y="-43" width="8" height="8" fill="#c9a227"/>`).join('')+`<text x="150" y="-34" class="ardt s">I2C 0x27</text>`};
+ARD_EX.servo={n:'محرك سيرفو بمقاومة متغيرة',c:`// تحريك السيرفو على الطرف 9 حسب المقاومة المتغيرة على A0
+#include <Servo.h>
+Servo myServo;
+
+void setup() {
+  myServo.attach(9);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int value = analogRead(A0);              // 0 إلى 1023
+  int angle = map(value, 0, 1023, 0, 180); // 0 إلى 180 درجة
+  myServo.write(angle);
+  Serial.print("Angle = ");
+  Serial.println(angle);
+  delay(200);
+}`,ckt:[['RV','RV1',{v:10000},400,330,'5V','a'],['R','R2',{v:10000},520,330,'RV1.b','a','GND3'],['SERVO','SV1',{},470,40,null]],extra:[['A0','RV1.b'],['5V','SV1.5V'],['GND','SV1.GND'],['D9','SV1.SIG']]};
+ARD_EX.lcd={n:'عرض الجهد على شاشة LCD',c:`// قراءة A0 وعرضها على شاشة LCD 16x2 بواجهة I2C
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  lcd.print("Volt Meter");
+  delay(1000);
+}
+
+void loop() {
+  int value = analogRead(A0);
+  float volts = value * 5.0 / 1023.0;
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("A0 = ");
+  lcd.print(value);
+  lcd.setCursor(0, 1);
+  lcd.print("V  = ");
+  lcd.print(volts);
+  lcd.print(" V");
+  delay(500);
+}`,ckt:[['RV','RV1',{v:10000},400,330,'5V','a'],['R','R2',{v:10000},520,330,'RV1.b','a','GND3'],['LCD','LCD1',{},400,250,null]],extra:[['A0','RV1.b'],['5V','LCD1.VCC'],['GND2','LCD1.GND'],['A4','LCD1.SDA'],['A5','LCD1.SCL']]};
+/* ===== v27 wiring lab — compact PLC (24 VDC, sinking inputs, relay outputs): real terminal wiring + a ladder program built from menus, scanned in step with the simulator ===== */
+WT.PLC={n:'PLC مدمج 24 VDC (مخارج ريليه)',p:'PLC',b:'plc',box:[0,-60,340,120],only:['plc'],
+  pn:[['L+',20,-60],['M',40,-60],['1M',80,-60]].concat([0,1,2,3,4,5,6,7].map(i=>['I0.'+i,110+20*i,-60]),[['1L',20,60]],[0,1,2,3,4,5].map(i=>['Q0.'+i,40+20*i,60]),[['AI0',220,60],['2M',240,60]]),
+  g:'<rect x="0" y="-60" width="340" height="120" rx="4"/><text x="170" y="5">PLC</text>',
+  ico:`<svg class="wico" viewBox="-6 -40 72 80" aria-hidden="true"><rect x="0" y="-24" width="60" height="48" rx="3" fill="#dfe3e6" stroke="#455a64" stroke-width="2"/><rect x="4" y="-20" width="52" height="8" fill="#37474f"/><rect x="4" y="12" width="52" height="8" fill="#37474f"/><rect x="8" y="-6" width="18" height="12" fill="#00897b"/><text x="40" y="5" font-size="9" fill="#263238" text-anchor="middle" font-family="sans-serif" font-weight="800">PLC</text></svg>`};
+WEN.PLC='Compact PLC (24 VDC, relay outputs)';
+WLIB.plc=(WLIB.plc||[]).concat(['PLC','PSU','DC','PB','PBC','ESTOP','SW','LIM','PROX','K','PL','PUMP','MOT','BZ']).filter((t,i,a)=>a.indexOf(t)==i&&WT[t]);
+WT_ART.plc=p=>{const T=WT[p.t],rt=PLCRT[wKey()]&&PLCRT[wKey()][p.id],run=rt&&rt.run,I=rt?rt.I:[],Q=rt?rt.Q:[];
+  const term=(q)=>`<rect x="${q[1]-8}" y="${q[2]+(q[2]<0?0:-14)}" width="16" height="14" fill="#9e9e9e" stroke="#555"/><circle cx="${q[1]}" cy="${q[2]+(q[2]<0?7:-7)}" r="3.6" fill="#ddd" stroke="#666"/>`;
+  return `<rect x="0" y="-60" width="340" height="120" rx="5" fill="#e3e7ea" stroke="#455a64" stroke-width="2"/><rect x="6" y="-30" width="328" height="60" rx="3" fill="#cfd8dc"/>`+
+   `<rect x="14" y="-22" width="64" height="44" rx="3" fill="#263238"/><text x="46" y="-4" class="plct w">PLC</text><text x="46" y="12" class="plct w s">24 VDC</text>`+
+   `<circle cx="96" cy="-16" r="5" fill="${run?'#00e676':'#33691e'}" ${run?'style="filter:drop-shadow(0 0 4px #00e676)"':''}/><text x="106" y="-13" class="plct s l">RUN</text><circle cx="96" cy="0" r="5" fill="${rt&&rt.pwr&&!run?'#ffb300':'#5d4037'}"/><text x="106" y="3" class="plct s l">STOP</text><circle cx="96" cy="16" r="5" fill="${rt&&rt.err?'#e53935':'#4e342e'}"/><text x="106" y="19" class="plct s l">ERR</text>`+
+   [0,1,2,3,4,5,6,7].map(i=>`<rect x="${104+20*i}" y="-28" width="12" height="7" rx="1.5" fill="${I[i]?'#00e676':'#1b5e20'}"/>`).join('')+`<text x="250" y="-14" class="plct s">DI</text>`+
+   [0,1,2,3,4,5].map(i=>`<rect x="${34+20*i}" y="21" width="12" height="7" rx="1.5" fill="${Q[i]?'#ffab00':'#5d4037'}"/>`).join('')+`<text x="170" y="12" class="plct s">DQ (Relay)</text>`+
+   T.pn.map(term).join('')};
+
+/* ---------- ladder runtime ---------- */
+const PLCRT={};
+const plcParts=C=>C.parts.filter(p=>wB(p)=='plc');
+function plcRt(p){const k=wKey(),M=PLCRT[k]=PLCRT[k]||{};return M[p.id]=M[p.id]||{I:[0,0,0,0,0,0,0,0],Q:[0,0,0,0,0,0],M:{},T:{},C:{},AI:0,last:null,run:false,pwr:false,err:'',prev:{},flow:{}}}
+const plcReset=rt=>Object.assign(rt,{Q:[0,0,0,0,0,0],M:{},T:{},C:{},last:null,run:false,prev:{},flow:{}});
+function plcVal(rt,a){if(!a)return false;if(a[0]=='I')return !!rt.I[+a.split('.')[1]];if(a[0]=='Q')return !!rt.Q[+a.split('.')[1]];if(a[0]=='M')return !!rt.M[a];if(a[0]=='T')return !!(rt.T[a]&&rt.T[a].q);if(a[0]=='C')return !!(rt.C[a]&&rt.C[a].q);return false}
+function plcContact(rt,c,key){let v;if(c.t=='GT')v=rt.AI>(+c.v||0);else if(c.t=='LT')v=rt.AI<(+c.v||0);else{const x=plcVal(rt,c.a);v=c.t=='NC'?!x:c.t=='P'?(x&&!rt.prev[key]):x;rt.prev[key]=x}rt.flow[key]=v;return v}
+function plcScan(p,rt,dt){(p.lad||[]).forEach((r,ri)=>{const pw=(r.s||[]).every((blk,bi)=>blk.some((br,ki)=>{let ok=true;br.forEach((c,ci)=>{const v=plcContact(rt,c,ri+'.'+bi+'.'+ki+'.'+ci);ok=ok&&v});return ok}));
+    rt.flow['r'+ri]=pw;const o=r.o||{},a=o.a;
+    if(o.t=='OUT'){if(a[0]=='Q')rt.Q[+a.split('.')[1]]=pw?1:0;else rt.M[a]=pw?1:0}
+    else if(o.t=='S'&&pw){if(a[0]=='Q')rt.Q[+a.split('.')[1]]=1;else rt.M[a]=1}
+    else if(o.t=='R'&&pw){if(a[0]=='Q')rt.Q[+a.split('.')[1]]=0;else rt.M[a]=0}
+    else if(['TON','TOF','TP'].includes(o.t)){const T=rt.T[a]=rt.T[a]||{et:0,q:0,in:0,pt:+o.pt||1,ty:o.t};T.pt=+o.pt||1;T.ty=o.t;
+      if(o.t=='TON'){T.et=pw?Math.min(T.pt,T.et+dt):0;T.q=pw&&T.et>=T.pt?1:0}
+      else if(o.t=='TOF'){if(pw){T.q=1;T.et=0}else if(T.q){T.et=Math.min(T.pt,T.et+dt);if(T.et>=T.pt)T.q=0}}
+      else{if(pw&&!T.in&&!T.q){T.q=1;T.et=0}if(T.q){T.et+=dt;if(T.et>=T.pt){T.q=0;T.et=T.pt}}else if(!pw)T.et=0}T.in=pw?1:0}
+    else if(o.t=='CTU'){const K=rt.C[a]=rt.C[a]||{cv:0,q:0,in:0,pv:+o.pv||1};K.pv=+o.pv||1;if(pw&&!K.in)K.cv++;K.in=pw?1:0;K.q=K.cv>=K.pv?1:0}
+    else if(o.t=='RST'&&pw){if(a[0]=='C')rt.C[a]={cv:0,q:0,in:(rt.C[a]||{}).in||0,pv:(rt.C[a]||{}).pv||1};else rt.T[a]={et:0,q:0,in:0,pt:(rt.T[a]||{}).pt||1}}})}
+/* before each solve: power, RUN/STOP with the run bar, and one scan per simulator step using the last input image */
+function plcSync(S,t){plcParts(S.C).forEach(p=>{const rt=plcRt(p);if(S.off){plcReset(rt);rt.pwr=false;return}if(!rt.pwr){rt.run=false;rt.last=t;return}
+  if(!rt.run){plcReset(rt);rt.run=true;rt.last=t}if(S.pause){rt.last=t;return}const dt=Math.max(0,t-(rt.last==null?t:rt.last));rt.last=t;plcScan(p,rt,dt)})}
+function plcStates(S){const o={};plcParts(S.C).forEach(p=>{const rt=plcRt(p);o[p.id]={q:rt.run?rt.Q.slice():[0,0,0,0,0,0]}});return o}
+function plcFeed(S,live){plcParts(S.C).forEach(p=>{const rt=plcRt(p),pi=live&&live.plcIn&&live.plcIn[p.id];if(!pi){rt.pwr=false;return}rt.I=pi.I;rt.AI=pi.AI;const was=rt.pwr;rt.pwr=pi.pwr;if(was&&!rt.pwr)plcReset(rt)})}
+
+/* ---------- ready-made applications: circuit + ladder ---------- */
+const NO=a=>({t:'NO',a}),NC=a=>({t:'NC',a}),SER=(...c)=>c.map(x=>Array.isArray(x)?x.map(b=>Array.isArray(b)?b:[b]):[[x]]);
+const PLC_APP={
+ startstop:{n:'تشغيل وإيقاف محرك مع الإمساك (Start/Stop)',d:'زر التشغيل NO على I0.0 وزر الإيقاف NC على I0.1، والكونتاكتور على Q0.0 ولمبة «يعمل» على Q0.1. زر الإيقاف NC يُبرمج بتلامس NO لأنه موصل في الوضع العادي (أمان: انقطاع سلكه يوقف المحرك).',
+  dev:[['PB','PB1','I0.0'],['PBC','PS1','I0.1']],out:[['K','KM1','Q0.0'],['PL','PL1','Q0.1']],
+  lad:[{s:SER([NO('I0.0'),NO('Q0.0')],NO('I0.1')),o:{t:'OUT',a:'Q0.0'},c:'إمساك ذاتي: تشغيل بـI0.0 وإيقاف بـI0.1'},{s:SER(NO('Q0.0')),o:{t:'OUT',a:'Q0.1'},c:'لمبة المحرك يعمل'}]},
+ timer:{n:'تأخير تشغيل بالمؤقت TON',d:'عند غلق المفتاح على I0.0 يبدأ المؤقت T0 (5 ثوانٍ)، وبعد انتهائه تضيء اللمبة على Q0.0.',
+  dev:[['SW','S1','I0.0',0]],out:[['PL','PL1','Q0.0']],
+  lad:[{s:SER(NO('I0.0')),o:{t:'TON',a:'T0',pt:5},c:'تأخير 5 ثوانٍ'},{s:SER(NO('T0')),o:{t:'OUT',a:'Q0.0'},c:'التشغيل بعد التأخير'}]},
+ fwdrev:{n:'تشغيل أمامي وعكسي مع إقفال متبادل',d:'أمامي I0.0، عكسي I0.1، إيقاف NC على I0.2. الكونتاكتور الأمامي Q0.0 والعكسي Q0.1، وكل منهما يمنع الآخر بتلامس NC (Interlock).',
+  dev:[['PB','PB1','I0.0'],['PB','PB2','I0.1'],['PBC','PS1','I0.2']],out:[['K','KM1','Q0.0'],['K','KM2','Q0.1']],
+  lad:[{s:SER([NO('I0.0'),NO('Q0.0')],NO('I0.2'),NC('Q0.1')),o:{t:'OUT',a:'Q0.0'},c:'أمامي مع إقفال من العكسي'},{s:SER([NO('I0.1'),NO('Q0.1')],NO('I0.2'),NC('Q0.0')),o:{t:'OUT',a:'Q0.1'},c:'عكسي مع إقفال من الأمامي'}]},
+ stardelta:{n:'بادئ نجمة / دلتا',d:'تشغيل I0.0 وإيقاف NC على I0.1. الرئيسي KM1 على Q0.0، النجمة KM2 على Q0.1 أول 5 ثوانٍ، ثم الدلتا KM3 على Q0.2، مع إقفال متبادل بين النجمة والدلتا.',
+  dev:[['PB','PB1','I0.0'],['PBC','PS1','I0.1']],out:[['K','KM1','Q0.0'],['K','KM2','Q0.1'],['K','KM3','Q0.2']],
+  lad:[{s:SER([NO('I0.0'),NO('Q0.0')],NO('I0.1')),o:{t:'OUT',a:'Q0.0'},c:'الكونتاكتور الرئيسي'},{s:SER(NO('Q0.0')),o:{t:'TON',a:'T0',pt:5},c:'زمن النجمة'},{s:SER(NO('Q0.0'),NC('T0'),NC('Q0.2')),o:{t:'OUT',a:'Q0.1'},c:'نجمة'},{s:SER(NO('T0'),NC('Q0.1')),o:{t:'OUT',a:'Q0.2'},c:'دلتا'}]},
+ traffic:{n:'إشارة مرور بالمؤقتات',d:'مفتاح التشغيل على I0.0. أخضر Q0.2 لمدة 5 ثوانٍ، ثم أصفر Q0.1 لمدة 2، ثم أحمر Q0.0 لمدة 5، وتتكرر الدورة.',
+  dev:[['SW','S1','I0.0',1]],out:[['PL','PL1','Q0.0'],['PL','PL2','Q0.1'],['PL','PL3','Q0.2']],
+  lad:[{s:SER(NO('I0.0'),NC('T2')),o:{t:'TON',a:'T0',pt:5},c:'زمن الأخضر'},{s:SER(NO('T0')),o:{t:'TON',a:'T1',pt:2},c:'زمن الأصفر'},{s:SER(NO('T1')),o:{t:'TON',a:'T2',pt:5},c:'زمن الأحمر'},
+   {s:SER(NO('I0.0'),NC('T0')),o:{t:'OUT',a:'Q0.2'},c:'أخضر'},{s:SER(NO('T0'),NC('T1')),o:{t:'OUT',a:'Q0.1'},c:'أصفر'},{s:SER(NO('T1')),o:{t:'OUT',a:'Q0.0'},c:'أحمر'}]},
+ counter:{n:'عدّ القطع بحساس تقاربي (CTU)',d:'الحساس التقاربي على I0.0 يعدّ القطع، وعند 5 قطع تضيء لمبة «اكتمل» على Q0.0. زر التصفير على I0.1.',
+  dev:[['PROX','BP1','I0.0'],['PB','PB1','I0.1']],out:[['PL','PL1','Q0.0']],
+  lad:[{s:SER(NO('I0.0')),o:{t:'CTU',a:'C0',pv:5},c:'عدّ مع كل قطعة'},{s:SER(NO('I0.1')),o:{t:'RST',a:'C0'},c:'تصفير العداد'},{s:SER(NO('C0')),o:{t:'OUT',a:'Q0.0'},c:'اكتمل العدد'}]},
+ tank:{n:'التحكم في مستوى خزان (مضخة)',d:'عوامة المستوى المنخفض على I0.0 (تغلق عند وجود ماء)، والمرتفع على I0.1. تعمل المضخة Q0.0 عندما ينخفض الماء وتبقى حتى يصل للمستوى المرتفع.',
+  dev:[['LIM','LS1','I0.0',0],['LIM','LS2','I0.1',0]],out:[['PUMP','P1','Q0.0']],
+  lad:[{s:SER([NC('I0.0'),NO('Q0.0')],NC('I0.1')),o:{t:'OUT',a:'Q0.0'},c:'تشغيل عند الانخفاض وإيقاف عند الامتلاء'}]},
+ analog:{n:'مدخل تناظري 0–10 V ومقارنة',d:'إشارة 0–10 V (مثل حساس) على AI0. لمبة Q0.0 تضيء إذا زادت عن 5 V، ولمبة إنذار Q0.1 إذا قلت عن 2 V.',
+  dev:[],out:[['PL','PL1','Q0.0'],['PL','PL2','Q0.1']],ai:1,
+  lad:[{s:[[[{t:'GT',a:'AI0',v:5}]]],o:{t:'OUT',a:'Q0.0'},c:'أعلى من 5 V'},{s:[[[{t:'LT',a:'AI0',v:2}]]],o:{t:'OUT',a:'Q0.1'},c:'إنذار: أقل من 2 V'}]}};
+function plcBuild(key,plc){const S=wst(),A=PLC_APP[key];if(!A)return;const P=JSON.parse(JSON.stringify(plc));P.x=150;P.y=210;P.r=0;P.mh=P.mv=false;P.lad=JSON.parse(JSON.stringify(A.lad));
+  const U=P.id,mk=(t,id,x,y,o)=>{const T=WT[t],p={id,t,r:0,x,y};(T.pr||[]).forEach(q=>p[q[0]]=q[3]);if(T.st)p.on=T.st[2];return Object.assign(p,o||{})};
+  const parts=[P,mk('DC','B1',40,150,{v:24,r:90}),mk('GND','G1',40,250),mk('GND','G2',600,380)],W=[['B1.b','G1.⏚'],[U+'.L+','B1.a'],[U+'.M','G1.⏚'],[U+'.1M','G1.⏚'],[U+'.1L','B1.a']];
+  A.dev.forEach((d,i)=>{const [t,id,inp,on]=d,x=60+130*i,y=i%2?95:45;if(t=='PROX'){parts.push(mk(t,id,x+20,y,{}));W.push([id+'.+','B1.a'],[id+'.−','G1.⏚'],[id+'.OUT',U+'.'+inp])}
+    else{parts.push(mk(t,id,x+20,y,on!=null?{on}:{}));W.push(['B1.a',id+'.a'],[id+'.b',U+'.'+inp])}});
+  A.out.forEach((d,i)=>{const [t,id,q]=d,x=150+120*i;parts.push(mk(t,id,x,340,t=='PL'?{rv:24,w:2}:t=='K'?{rv:24}:t=='PUMP'?{rv:24,w:48}:{}));W.push([U+'.'+q,id+'.a'],[id+'.b','G2.⏚'])});
+  if(A.ai){parts.push(mk('DC','B2',560,120,{v:6,r:90}),mk('GND','G3',560,200));W.push(['B2.a',U+'.AI0'],['B2.b','G3.⏚'],[U+'.2M','G3.⏚'])}
+  S.C={parts,wires:W,bb:S.C.bb};S.sel=null;S.pick=null;S.off=false;S.pause=false;S.mem={t:0};S.trace={};S.plcSel=U;const M=PLCRT[wKey()];if(M)delete M[U];wChanged();
+  toast('🧩','بُني التطبيق: التوصيل والبرنامج. شغّل ▶ واضغط الأزرار من خيارات كل عنصر','ok',3200)}
+
+/* ---------- ladder editor built from menus, with live power-flow monitoring ---------- */
+const PLC_ADR={I:[0,1,2,3,4,5,6,7].map(i=>'I0.'+i),Q:[0,1,2,3,4,5].map(i=>'Q0.'+i),M:[0,1,2,3,4,5,6,7].map(i=>'M0.'+i),T:['T0','T1','T2','T3'],C:['C0','C1','C2','C3']};
+const PLC_CT={NO:'┤ ├ مفتوح عادة NO',NC:'┤/├ مغلق عادة NC',P:'┤P├ حافة صاعدة',GT:'┤>├ تناظري أكبر من',LT:'┤<├ تناظري أصغر من'};
+const PLC_OT={OUT:'( ) خرج',S:'(S) تثبيت Set',R:'(R) إلغاء Reset',TON:'TON مؤقت تأخير تشغيل',TOF:'TOF مؤقت تأخير إيقاف',TP:'TP نبضة',CTU:'CTU عدّاد تصاعدي',RST:'RST تصفير مؤقت/عدّاد'};
+const plcOpts=(L,v)=>L.map(a=>`<option${a==v?' selected':''}>${a}</option>`).join('');
+const plcAdrFor=t=>['TON','TOF','TP'].includes(t)?PLC_ADR.T:t=='CTU'?PLC_ADR.C:t=='RST'?PLC_ADR.T.concat(PLC_ADR.C):PLC_ADR.Q.concat(PLC_ADR.M);
+const plcSym=t=>({NO:'┤ ├',NC:'┤/├',P:'┤P├',GT:'┤>├',LT:'┤<├'})[t];
+function plcRungHtml(r,ri,n){const blocks=(r.s||[]).map((blk,bi)=>`<div class="lblk">${blk.map((br,ki)=>`<div class="lbr">${br.map((c,ci)=>{const path=[ri,bi,ki,ci].join(',');
+      return `<div class="lct" data-lc="${ri}.${bi}.${ki}.${ci}"><span class="lsym">${plcSym(c.t)}</span><select data-lf="${path},t" aria-label="نوع التلامس">${Object.keys(PLC_CT).map(k=>`<option value="${k}"${c.t==k?' selected':''}>${PLC_CT[k]}</option>`).join('')}</select>
+        ${c.t=='GT'||c.t=='LT'?`<span class="mono">AI0</span><input data-lf="${path},v" type="text" inputmode="decimal" value="${c.v}" aria-label="قيمة المقارنة بالفولت" size="3"> V`:`<select data-lf="${path},a" aria-label="العنوان">${plcOpts(PLC_ADR.I.concat(PLC_ADR.Q,PLC_ADR.M,PLC_ADR.T,PLC_ADR.C),c.a)}</select>`}
+        <button type="button" class="lx" data-lad="delc:${path}" aria-label="حذف التلامس">✕</button></div>`}).join('')}</div>`).join('')}<button type="button" class="ladd" data-lad="par:${ri},${bi}" title="أضف فرعًا موازيًا (OR)">+ موازٍ</button></div>`).join('');
+  const o=r.o||{t:'OUT',a:'Q0.0'};
+  return `<div class="lrung" data-lr="${ri}"><div class="lrh"><b>Network ${ri+1}</b><input class="lcm" data-lf="${ri},c" value="${esc(r.c||'')}" placeholder="تعليق الشبكة" aria-label="تعليق"><span class="lrb">${ri>0?`<button type="button" data-lad="up:${ri}" aria-label="لأعلى">↑</button>`:''}${ri<n-1?`<button type="button" data-lad="dn:${ri}" aria-label="لأسفل">↓</button>`:''}<button type="button" data-lad="delr:${ri}" aria-label="حذف الشبكة">🗑</button></span></div>
+    <div class="lline" dir="ltr"><span class="lrail"></span>${blocks}<button type="button" class="ladd" data-lad="ser:${ri}" title="أضف تلامسًا على التوالي (AND)">+ توالي</button><span class="lwire"></span>
+      <div class="lco" data-lo="${ri}"><span class="lsym">${o.t=='OUT'?'( )':o.t=='S'?'(S)':o.t=='R'?'(R)':'['+o.t+']'}</span><select data-lf="${ri},o,t" aria-label="نوع الخرج">${Object.keys(PLC_OT).map(k=>`<option value="${k}"${o.t==k?' selected':''}>${PLC_OT[k]}</option>`).join('')}</select><select data-lf="${ri},o,a" aria-label="عنوان الخرج">${plcOpts(plcAdrFor(o.t),o.a)}</select>
+        ${['TON','TOF','TP'].includes(o.t)?`<label>PT <input data-lf="${ri},o,pt" type="text" inputmode="decimal" value="${o.pt||1}" size="3"> s</label><span class="lmon" data-lt="${o.a}"></span>`:o.t=='CTU'?`<label>PV <input data-lf="${ri},o,pv" type="text" inputmode="numeric" value="${o.pv||1}" size="3"></label><span class="lmon" data-lk="${o.a}"></span>`:''}</div><span class="lrail"></span></div></div>`}
+function wPlcPanel(S){const L=plcParts(S.C);if(!L.length)return '';const p=L.find(x=>x.id==S.plcSel)||L[0];if(!p.lad)p.lad=[{s:[[[NO('I0.0')]]],o:{t:'OUT',a:'Q0.0'},c:''}];
+  return `<section class="wplc" aria-label="برنامج الـPLC"><div class="wch"><b>🪜 برنامج السلّم (Ladder) · ${p.id}</b>${L.length>1?`<select id="wplcsel">${L.map(x=>`<option${x.id==p.id?' selected':''}>${x.id}</option>`).join('')}</select>`:''}<span id="wplst" class="wplst"></span></div>
+    <div class="wcex"><label>🏭 التطبيقات <select id="wplcapp"><option value="">اختر تطبيقًا…</option>${Object.keys(PLC_APP).map(k=>`<option value="${k}">${PLC_APP[k].n}</option>`).join('')}</select></label><button type="button" class="btn pri" data-lad="build">🧩 ابنِ التطبيق (توصيل + برنامج)</button></div>
+    <p class="nolab">أنشئ كل شبكة من القوائم: اختر نوع التلامس وعنوانه، وأضف تلامسات على التوالي (AND) أو فروعًا متوازية (OR)، ثم اختر الخرج. أثناء التشغيل يظهر سريان القدرة باللون الأخضر كما في المراقبة الحية (Online) في برامج الـPLC.</p>
+    <div class="lad">${p.lad.map((r,ri)=>plcRungHtml(r,ri,p.lad.length)).join('')}</div><button type="button" class="btn" data-lad="addr">+ شبكة جديدة (Network)</button>
+    <div class="wpvt"><b>📊 جدول المتغيرات (مراقبة حية)</b><div id="wpvars" class="wpvars"></div></div>
+    <details class="whowp"><summary>💡 التوصيل الفعلي للـPLC</summary><p>🔌 <b>التغذية:</b> L+ إلى +24 V وM إلى 0 V. <b>المداخل:</b> مشترك المداخل 1M إلى 0 V، وكل زر أو حساس من +24 V إلى مدخله (I0.x)؛ المدخل ON إذا وصله 15 V أو أكثر. <b>المخارج (ريليه):</b> مشترك المخارج 1L إلى +24 V (أو طور 220 V)، وكل حمل من Qx إلى 0 V؛ التلامس يتحمل 2 A. <b>التناظري:</b> إشارة 0–10 V بين AI0 و2M.</p><p>🛠 ▶ = RUN (يبدأ المسح)، ⏸ = تجميد المسح، ⏹ = STOP وتصفير كل الذاكرة والمؤقتات والعدادات. اضغط العناصر (الأزرار والمفاتيح والحساسات) على اللوحة ثم ⏻ لتغيير حالتها.</p></details></section>`}
+function plcTickUI(S){const L=plcParts(S.C);if(!L.length)return;const p=L.find(x=>x.id==S.plcSel)||L[0],rt=plcRt(p);
+  document.querySelectorAll('.wplc [data-lc]').forEach(e=>e.classList.toggle('on',!!rt.run&&!!rt.flow[e.dataset.lc]));
+  document.querySelectorAll('.wplc [data-lo]').forEach(e=>e.classList.toggle('on',!!rt.run&&!!rt.flow['r'+e.dataset.lo]));
+  document.querySelectorAll('.wplc [data-lt]').forEach(e=>{const T=rt.T[e.dataset.lt];e.textContent=T?`ET = ${T.et.toFixed(1)} s`:''});
+  document.querySelectorAll('.wplc [data-lk]').forEach(e=>{const K=rt.C[e.dataset.lk];e.textContent=K?`CV = ${K.cv}`:''});
+  const st=$('#wplst');if(st){st.className='wplst '+(S.off?'stop':!rt.pwr?'nopw':rt.run?(S.pause?'stop':'run'):'stop');st.textContent=S.off?'⏹ STOP':!rt.pwr?'⚠️ لا تغذية 24 V':S.pause?'⏸ مجمّد':'🟢 RUN'}
+  const v=$('#wpvars');if(v){const b=(n,x)=>`<span class="pv ${x?'on':''}"><b dir="ltr">${n}</b>${x?1:0}</span>`;
+    v.innerHTML=`<div>${PLC_ADR.I.map((a,i)=>b(a,rt.I[i])).join('')}</div><div>${PLC_ADR.Q.map((a,i)=>b(a,rt.Q[i])).join('')}</div><div>${Object.keys(rt.M).map(a=>b(a,rt.M[a])).join('')}${Object.keys(rt.T).map(a=>`<span class="pv ${rt.T[a].q?'on':''}"><b dir="ltr">${a}</b>${rt.T[a].ty||'TON'} ${rt.T[a].et.toFixed(1)}/${rt.T[a].pt}s</span>`).join('')}${Object.keys(rt.C).map(a=>`<span class="pv ${rt.C[a].q?'on':''}"><b dir="ltr">${a}</b>${rt.C[a].cv}/${rt.C[a].pv}</span>`).join('')}<span class="pv"><b dir="ltr">AI0</b>${(rt.AI||0).toFixed(2)} V</span></div>`}}
+/* editing */
+function plcProg(){const S=wst(),L=plcParts(S.C);return L.find(x=>x.id==S.plcSel)||L[0]}
+function plcSet(path,val){const p=plcProg();if(!p)return;const k=path.split(','),ri=+k[0];const r=p.lad[ri];if(!r)return;
+  if(k[1]=='c'){r.c=val;store.set(wSKey(),wst().C);return}
+  if(k[1]=='o'){r.o=r.o||{};r.o[k[2]]=k[2]=='pt'||k[2]=='pv'?(+String(val).replace(',','.')||1):val;if(k[2]=='t'){const L=plcAdrFor(val);if(!L.includes(r.o.a))r.o.a=L[0]}}
+  else{const c=r.s[+k[1]][+k[2]][+k[3]];c[k[4]]=k[4]=='v'?(+String(val).replace(',','.')||0):val;if(k[4]=='t'&&(val=='GT'||val=='LT')){c.a='AI0';if(c.v==null)c.v=5}else if(k[4]=='t'&&c.a=='AI0')c.a='I0.0'}
+  wChanged()}
+document.addEventListener('change',e=>{const f=e.target.dataset&&e.target.dataset.lf;if(f!=null){plcSet(f,e.target.value);return}
+  if(e.target.id=='wplcsel'){wst().plcSel=e.target.value;wRefresh()}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-lad]');if(!b)return;const S=wst(),p=plcProg();if(!p)return;const [a,arg]=b.dataset.lad.split(':'),x=(arg||'').split(',').map(Number);
+  if(a=='build'){const k=($('#wplcapp')||{}).value;if(!k){toast('ℹ️','اختر تطبيقًا من القائمة أولًا','info',2000);return}plcBuild(k,p);return}
+  if(a=='addr')p.lad.push({s:[[[NO('I0.0')]]],o:{t:'OUT',a:'Q0.0'},c:''});
+  else if(a=='delr')p.lad.splice(x[0],1);
+  else if(a=='up'){const t=p.lad[x[0]];p.lad[x[0]]=p.lad[x[0]-1];p.lad[x[0]-1]=t}else if(a=='dn'){const t=p.lad[x[0]];p.lad[x[0]]=p.lad[x[0]+1];p.lad[x[0]+1]=t}
+  else if(a=='ser')p.lad[x[0]].s.push([[NO('I0.0')]]);
+  else if(a=='par')p.lad[x[0]].s[x[1]].push([NO('I0.0')]);
+  else if(a=='delc'){const r=p.lad[x[0]],blk=r.s[x[1]],br=blk[x[2]];br.splice(x[3],1);if(!br.length)blk.splice(x[2],1);if(!blk.length)r.s.splice(x[1],1);if(!r.s.length)r.s.push([[NO('I0.0')]])}
+  wChanged()});
+document.addEventListener('change',e=>{if(e.target.id!='wplcapp'||!e.target.value)return;const A=PLC_APP[e.target.value];toast('🏭',A.d,'info',5000)});
 /* ===== v15 wiring lab — state, drawing and interaction. Exercise mode (per lesson) and free simulation mode (per course). ===== */
 const W5={},W5M={};
 const wFree=()=>W5M[ST.c]=='free';
@@ -12767,8 +13532,10 @@ const wireDone=()=>!!(store.get('wire.'+ST.c,{})[ST.l]);
 const wPart0=(C,id)=>C.parts.find(p=>p.id==id);
 const wPinXY=(p,s)=>{const q=wPins(p).find(x=>x[0]==s);if(!q)return null;const d=wLoc(p,q[1],q[2]);return [p.x+d[0],p.y+d[1]]};
 const wTerm=(C,t)=>{const i=t.indexOf('.'),p=wPart0(C,t.slice(0,i));return p?wPinXY(p,t.slice(i+1)):null};
-const wCtr=p=>{const d=wRp(p.r,30,0);return [p.x+d[0],p.y+d[1]]};
-function wClamp(p){const pts=[[0,-30],[60,30]].concat(wPins(p).map(q=>[q[1],q[2]])).map(q=>wLoc(p,q[0],q[1])),xs=pts.map(q=>p.x+q[0]),ys=pts.map(q=>p.y+q[1]);
+/* local centre of a part: boards declare their own body box */
+const wCo=p=>{const b=WT[p.t].box;return b?[b[0]+b[2]/2,b[1]+b[3]/2]:[30,0]};
+const wCtr=p=>{const c=wCo(p),d=wLoc(p,c[0],c[1]);return [p.x+d[0],p.y+d[1]]};
+function wClamp(p){const bx=WT[p.t].box,pts=(bx?[[bx[0],bx[1]],[bx[0]+bx[2],bx[1]+bx[3]]]:[[0,-30],[60,30]]).concat(wPins(p).map(q=>[q[1],q[2]])).map(q=>wLoc(p,q[0],q[1])),xs=pts.map(q=>p.x+q[0]),ys=pts.map(q=>p.y+q[1]);
   p.x+=Math.max(0,20-Math.min(...xs))-Math.max(0,Math.max(...xs)-620);p.y+=Math.max(0,20-Math.min(...ys))-Math.max(0,Math.max(...ys)-380)}
 function wChanged(nohist){const S=wst(),now=JSON.stringify(S.C);if(!nohist&&S.last!=null&&S.last!==now){S.hist.push(S.last);if(S.hist.length>60)S.hist.shift();S.fut=[]}S.last=now;S.res=null;S.hint=null;S.hl=[];store.set(wSKey(),S.C);wRefresh()}
 /* library: the course's own parts first, then every group of the main library page, then lab helpers */
@@ -12778,7 +13545,8 @@ function wLibGroups(){const deps=wDepsOf(ST.c),W=lesson().wire||{need:[]},own=ne
   const G=[['⭐ عناصر هذه المادة',Object.keys(WT).filter(t=>own.has(t))]];const seen=new Set();
   SYMGRP.forEach(g=>{const L=[];g[1].forEach(k=>{const t=wT(k);if(WT[t]&&!L.includes(t)){L.push(t);seen.add(t)}});if(L.length)G.push([g[0],L])});
   const rest=Object.keys(SYMS).map(wT).filter(t=>WT[t]&&!seen.has(t));if(rest.length)G.push(['رموز أخرى',[...new Set(rest)]]);
-  G.push(['عناصر مساعدة للمختبر',Object.keys(WT).filter(t=>!SYMS[t]&&!Object.values(WSYM2T).includes(t)).concat(['TX','LI','K','KNO','KNC','PB','PBC','RV','BZ']).filter((t,i,a)=>a.indexOf(t)==i)]);return G}
+  G.forEach(g=>g[1]=g[1].filter(tp=>!WT[tp].only||WT[tp].only.includes(ST.c)));
+  G.push(['عناصر مساعدة للمختبر',Object.keys(WT).filter(t=>!SYMS[t]&&!Object.values(WSYM2T).includes(t)).concat(['TX','LI','K','KNO','KNC','PB','PBC','RV','BZ']).filter((t,i,a)=>a.indexOf(t)==i&&(!WT[t].only||WT[t].only.includes(ST.c)))]);return G}
 const wRecK=()=>'wrec.'+ST.c,wRec=()=>(store.get(wRecK(),[])||[]).filter(t=>WT[t]);
 function wRecPush(t){store.set(wRecK(),[t].concat(wRec().filter(x=>x!==t)).slice(0,6))}
 function wRecBar(){const L=wRec();if(!L.length)return '';const l=L[0];
@@ -12788,7 +13556,7 @@ function wAdd(t){const W=wFree()?{}:lesson().wire||{},S=wst(),C=S.C,T0=WT[t];if(
   (T0.pr||[]).forEach(q=>p[q[0]]=d0[q[0]]!=null?d0[q[0]]:q[3]);if(t=='DMM')p.v=d0.v||'V';if(t=='LED')p.col=d0.col||'r';if(T0.st)p.on=T0.st[2];if(T0.b=='io')p.q=[0,0,0,0];
   const coils=C.parts.filter(x=>['coil','relay','ton'].includes(wB(x)));if(['no','nc','kmc'].includes(T0.b))p.link=coils.length?coils[0].id:'KM1';
   const cs=(p.r==90?[[50,150],[50,280]]:[]).concat([70,170,270,350].flatMap(y=>[130,250,370,490].map(x=>[x,y]))).concat([[560,170],[560,270]]),used=C.parts.map(wCtr),c=cs.find(q=>used.every(u=>Math.hypot(u[0]-q[0],u[1]-q[1])>85))||[320,200];
-  const d=wRp(p.r,30,0);p.x=wSnap(c[0]-d[0]);p.y=wSnap(c[1]-d[1]);wClamp(p);C.parts.push(p);S.sel={k:'c',id:p.id};S.pick=null;wChanged();
+  if(T0.box){p.x=40;p.y=T0.box[3]/2+30}else{const d=wRp(p.r,30,0);p.x=wSnap(c[0]-d[0]);p.y=wSnap(c[1]-d[1])}if(T0.b=='ard'){p.code=ARD_EX.blink.c;S.ardSel=p.id}wClamp(p);C.parts.push(p);S.sel={k:'c',id:p.id};S.pick=null;wChanged();
   if(T0.b=='sym')toast('ℹ️','هذا رمز توضيحي للمخطط ولا يدخل في الحسابات الكهربائية','info',2600);
   const cv=$('.wcanvas'),n=document.querySelector(`[data-wpart="${p.id}"]`);if(cv&&n){const r=n.getBoundingClientRect(),cr=cv.getBoundingClientRect();if(r.left<cr.left||r.right>cr.right)cv.scrollLeft+=r.left-cr.left-40}}
 function wWire(a,b){const S=wst(),C=S.C;S.pick=null;if(a==b){wRefresh();return}if(!C.wires.some(w=>(w[0]==a&&w[1]==b)||(w[0]==b&&w[1]==a)))C.wires.push([a,b]);S.sel=null;wChanged()}
@@ -12821,7 +13589,7 @@ function wPartSvg(p,live,S){const T=WT[p.t],two=W2L(p),cxy=wCtr(p),cx=cxy[0],cy=
     if(['bjt','mos','scr','opto'].includes(B)&&/ON|تشبع|موصل|يضيء/.test(live.info[p.id]||''))fx=`<circle cx="${cx}" cy="${cy}" r="24" class="wglow grn" style="opacity:.35"/>`;
     const L=(live.L||{})[p.id];
     if(B=='logic'&&L){const k=WLIN[T.fn];wPins(p).slice(k).forEach((q,j)=>{const [x,y]=P(q[1]-7,q[2]-7);fx+=`<circle cx="${x}" cy="${y}" r="4" class="wlv${L[j]?' hi':''}"/>`})}
-    if(B=='io'&&L){wPins(p).slice(0,4).forEach((q,j)=>{const [x,y]=P(q[1]+6,q[2]-6);fx+=`<circle cx="${x}" cy="${y}" r="3.5" class="wlv${L[j]?' hi':''}"/>`});(p.q||[]).forEach((b,j)=>{const q=wPins(p)[4+j],[x,y]=P(q[1]-6,q[2]-6);fx+=`<circle cx="${x}" cy="${y}" r="3.5" class="wlv${b?' hi':''}"/>`})}
+    if(B=='io'&&L){wPins(p).slice(0,4).forEach((q,j)=>{const [x,y]=P(q[1]+6,q[2]-6);fx+=`<circle cx="${x}" cy="${y}" r="3.5" class="wlv${L[j]?' hi':''}"/>`});((live.QO&&live.QO[p.id])||p.q||[]).forEach((b,j)=>{const q=wPins(p)[4+j],[x,y]=P(q[1]-6,q[2]-6);fx+=`<circle cx="${x}" cy="${y}" r="3.5" class="wlv${b?' hi':''}"/>`})}
     if(B=='seg7'&&L){const [x,y]=P(30,0);bd=`<text class="w7seg" x="${x}" y="${y+12}" text-anchor="middle">${L[0]<10?L[0]:'–'}</text>`}
     if(B=='tl'&&L){['#ff3b3b','#ffc400','#2bd46b'].forEach((c,j)=>{const [x,y]=P(30,-14+14*j);if(L[j])fx+=`<circle cx="${x}" cy="${y}" r="7" style="fill:${c};stroke:none;filter:drop-shadow(0 0 4px ${c})"/>`})}
     if(B=='t555'&&L){const [x,y]=P(66,-8);bd=`<text class="wst" x="${x}" y="${y}">${L[0]?'⎍ 1':'⎍ 0'}</text>`}}
@@ -12834,18 +13602,19 @@ function wPartSvg(p,live,S){const T=WT[p.t],two=W2L(p),cxy=wCtr(p),cx=cxy[0],cy=
     if(B=='led'&&live.I[p.id]>5e-4){const q=P(30,-4);fx='';up+=`<circle cx="${q[0]}" cy="${q[1]}" r="${(9+5*Math.min(1,I/.02)).toFixed(1)}" fill="${WLEDC[p.col||'r'][2]}" opacity="${(.25+.4*Math.min(1,I/.02)).toFixed(2)}" class="wglow"/>`}
     if(T.mot&&V>=.3*p.rv){const q=P(30,-24),sp=Math.max(.15,1.2/(V/p.rv));bd='';up+=`<g class="wfan" style="transform-origin:${q[0]}px ${q[1]}px;animation-duration:${sp.toFixed(2)}s;animation-direction:${(live.I[p.id]||0)<0&&!live.ac?'reverse':'normal'}"><path d="M${q[0]} ${q[1]}l-12-4a3 3 0 0 1 0 8zM${q[0]} ${q[1]}l12 4a3 3 0 0 1 0-8z" fill="#607d8b" stroke="#37474f"/></g>`}
     if(T.mot&&!live.ac){const q=P(30,26),cw=(live.I[p.id]||0)>=0;if(Math.abs(live.I[p.id]||0)>1e-3)up+=`<text class="wdir" x="${q[0]}" y="${q[1]+6}" text-anchor="middle">${cw?'↻':'↺'}</text>`}
+    if(B=='res'&&p.pw&&wFree()){const Pd=Math.abs((live.V[p.id]||0)*(live.I[p.id]||0)),h=Pd/p.pw;if(h>.8)up+=`<circle cx="${cx}" cy="${cy}" r="${(16+6*Math.min(2,h)).toFixed(1)}" fill="#ff6d00" opacity="${Math.min(.7,.2+.2*h).toFixed(2)}" class="wglow"/><text class="wbad" x="${cx}" y="${cy-18}" text-anchor="middle">🔥</text>`}
     if(B=='coil'&&live.K[p.id])up+=`<circle cx="${cx}" cy="${cy}" r="22" class="wglow grn" style="opacity:.35"/>`;
 }
   if(art!=null&&wIsMtr(p)){const q=P(30,-12.5);up+=wLcdText(q[0],q[1]+3.5,wMtrTxt(p,live,S.off),35)}
   if(art!=null&&st=='burn')up+=`<g class="wsmoke"><circle cx="${cx}" cy="${cy-14}" r="7"/><circle cx="${cx+6}" cy="${cy-24}" r="9"/><circle cx="${cx-5}" cy="${cy-34}" r="11"/></g>`;
   if(art!=null&&p.t=='FUSE'&&st=='blown')up+=`<path d="M${cx-6} ${cy-4}l12 8" stroke="#3e2723" stroke-width="5" opacity=".6"/>`;
   if(art==null&&T.pol&&two&&!G.tx.some(t=>t.t=='+')&&B!='led'&&B!='diode'){const q=P(wPins(p)[0][1]+5,wPins(p)[0][2]-15);up+=`<text class="wplus" x="${q[0]}" y="${q[1]+4}" text-anchor="middle">+</text>`}
-  if(!two)wPins(p).forEach(q=>{if(q[0]=='⏚')return;const dx=q[1]<=5?-1:q[1]>=55?1:0,dy=dx?0:(q[2]<0?-1:1),[x,y]=P(q[1]+dx*9,q[2]+dy*10-(dx?6:0));up+=`<text class="wpin" x="${x}" y="${y+3}" text-anchor="middle">${q[0]}</text>`});
-  const lo=two?30:42,an=n[0]>.5?'start':n[0]<-.5?'end':'middle',lx=cx+n[0]*lo,ly=cy+n[1]*lo+4;
+  if(!two)wPins(p).forEach(q=>{if(q[0]=='⏚')return;const dx=T.box?0:q[1]<=5?-1:q[1]>=55?1:0,dy=dx?0:(q[2]<0?-1:1),[x,y]=P(q[1]+dx*9,q[2]+dy*10-(dx?6:0));up+=`<text class="wpin${T.box?' wpb':''}" x="${x}" y="${y+3}" text-anchor="middle">${(T.pwm&&T.pwm.includes(q[0])?'~':'')+q[0].replace(/^(GND)\d$/,'$1')}</text>`});
+  const lo=two?30:T.box?T.box[3]/2+30:42,an=n[0]>.5?'start':n[0]<-.5?'end':'middle',lx=cx+n[0]*lo,ly=cy+n[1]*lo+4;
   let rd='';if(art==null&&wIsMtr(p))rd=wLcdTag(cx-n[0]*(two?40:50),cy-n[1]*(two?40:50)+4,wMtrTxt(p,live,S.off),n[0]>.5?'end':n[0]<-.5?'start':'middle');
   const tm=wPins(p).map(q=>{const [tx,ty]=P(q[1],q[2]),id=p.id+'.'+q[0];return `<circle class="wterm${S.pick==id?' pk':S.pick&&!S.pick.startsWith(p.id+'.')?' tg':''}" cx="${tx}" cy="${ty}" r="5.5"/><circle data-wt="${id}" class="wthit" cx="${tx}" cy="${ty}" r="${WHIT}"/>`}).join('');
-  const hb=two?'x="5" y="-20" width="50" height="40"':'x="4" y="-28" width="52" height="56"';
-  const sel1=S.sel&&S.sel.k=='c'&&S.sel.id==p.id,mvh=sel1?(()=>{const q=[cx+n[0]*(two?52:64),cy+n[1]*(two?52:64)];return `<g class="wmvh"><circle data-wc="${p.id}" cx="${q[0]}" cy="${q[1]}" r="${WHIT>13?17:12}"/><text x="${q[0]}" y="${q[1]+5}" text-anchor="middle">✥</text></g>`})():'';
+  const hb=T.box?`x="${T.box[0]}" y="${T.box[1]}" width="${T.box[2]}" height="${T.box[3]}"`:two?'x="5" y="-20" width="50" height="40"':'x="4" y="-28" width="52" height="56"';
+  const sel1=S.sel&&S.sel.k=='c'&&S.sel.id==p.id,mvh=sel1?(()=>{const mo=T.box?T.box[3]/2+46:two?52:64,q=[cx+n[0]*mo,cy+n[1]*mo];return `<g class="wmvh"><circle data-wc="${p.id}" cx="${q[0]}" cy="${q[1]}" r="${WHIT>13?17:12}"/><text x="${q[0]}" y="${q[1]+5}" text-anchor="middle">✥</text></g>`})():'';
   return `<g class="${cls}" data-wpart="${p.id}">${fx}<g transform="translate(${p.x},${p.y}) rotate(${p.r})${p.mh?' translate(60 0) scale(-1 1)':''}${p.mv?' scale(1 -1)':''}">${G.g}<rect data-wc="${p.id}" class="whit" ${hb}/></g><g class="wup">${up}</g>${bd}<text class="wlbl" data-wedit="${p.id}" x="${lx}" y="${ly}" text-anchor="${an}"><tspan class="wid">${p.id}</tspan> ${wVal(p)}</text>${rd}${tm}${mvh}</g>`}
 /* right-angle wire: leave each pin in its outward direction first */
 /* both L-shapes are scored by how many part bodies and already-drawn wires they would run over; the cleaner one wins */
@@ -12858,7 +13627,7 @@ function wRoute(C,t1,t2,drawn){const a=wTerm(C,t1),b=wTerm(C,t2);if(!a||!b)retur
   const e1=[b[0],a[1]],e2=[a[0],b[1]],s1=hit(a,e1)+hit(e1,b)+(hz?0:.5),s2=hit(a,e2)+hit(e2,b)+(hz?.5:0),useH=s1<=s2,e=useH?e1:e2;
   if(drawn)drawn.push([a,e],[e,b]);return useH?`M${a[0]} ${a[1]}H${b[0]}V${b[1]}`:`M${a[0]} ${a[1]}V${b[1]}H${b[0]}`}
 /* flexible wire for the realistic view: leaves each pin outward, then curves to the other pin */
-function wPinDir(C,term){const i=term.indexOf('.'),p=wPart0(C,term.slice(0,i));if(!p)return [0,0];const q=wPins(p).find(x=>x[0]==term.slice(i+1))||[0,0,0],d=q[1]<=5?[-1,0]:q[1]>=55?[1,0]:q[2]<0?[0,-1]:[0,1];return wRp(p.r,p.mh?-d[0]:d[0],p.mv?-d[1]:d[1])}
+function wPinDir(C,term){const i=term.indexOf('.'),p=wPart0(C,term.slice(0,i));if(!p)return [0,0];const q=wPins(p).find(x=>x[0]==term.slice(i+1))||[0,0,0],d=WT[p.t].box?(q[2]<0?[0,-1]:[0,1]):q[1]<=5?[-1,0]:q[1]>=55?[1,0]:q[2]<0?[0,-1]:[0,1];return wRp(p.r,p.mh?-d[0]:d[0],p.mv?-d[1]:d[1])}
 function wCurve(C,t1,t2){const a=wTerm(C,t1),b=wTerm(C,t2);if(!a||!b)return null;const L=Math.min(45,Math.hypot(b[0]-a[0],b[1]-a[1])/2.2+8),d1=wPinDir(C,t1),d2=wPinDir(C,t2);
   return `M${a[0]} ${a[1]}C${(a[0]+d1[0]*L).toFixed(1)} ${(a[1]+d1[1]*L).toFixed(1)} ${(b[0]+d2[0]*L).toFixed(1)} ${(b[1]+d2[1]*L).toFixed(1)} ${b[0]} ${b[1]}`}
 function wWireCol(C,w){const k=t=>{const i=t.indexOf('.'),p=wPart0(C,t.slice(0,i));return p&&['src','pv'].includes(wB(p))&&wPins(p).length==2?t.slice(i+1):''};const s=[k(w[0]),k(w[1])];return s.includes('a')?'#d32f2f':s.includes('b')?'#263238':'#c86a2a'}
@@ -12876,7 +13645,7 @@ function wBoard(S,live){const C=S.C,sel=S.sel||{},real=WV!='sch',bb=WV=='bb';
   return h+'<line id="wrub" class="wrub" x1="0" y1="0" x2="0" y2="0" style="display:none"/>'}
 /* component symbol for the library (same schematic symbol as the main library page) */
 const WICO={};
-function wIcon(tp){if(WICO[tp])return WICO[tp];const T=WT[tp],d={t:tp,r:0,x:0,y:0,on:T.st?T.st[2]:0,v:'V',col:'r',q:[0,0,0,0]};let g='';try{g=wGlyphRaw(d,false)}catch(e){}
+function wIcon(tp){if(WICO[tp])return WICO[tp];if(WT[tp]&&WT[tp].ico)return WICO[tp]=WT[tp].ico;const T=WT[tp],d={t:tp,r:0,x:0,y:0,on:T.st?T.st[2]:0,v:'V',col:'r',q:[0,0,0,0]};let g='';try{g=wGlyphRaw(d,false)}catch(e){}
   const pn=wPins(d),ys=pn.map(q=>q[2]).concat([-30,30]),y1=Math.min(...ys)-4,y2=Math.max(...ys)+4;
   return WICO[tp]=`<svg class="wico" viewBox="-6 ${y1} 72 ${y2-y1}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${g}</svg>`}
 function wLib(){const S=wst(),G=wLibGroups(),n=new Set(G.flatMap(g=>g[1])).size,open=!!S.libOpen;
@@ -12895,13 +13664,21 @@ function wPanel(S){const C=S.C;
   const sel=S.sel;if(sel&&sel.k=='w'&&C.wires[sel.i]){const w=C.wires[sel.i];return `<div class="wpan">سلك بين <b>${w[0]}</b> و<b>${w[1]}</b> <button type="button" class="btn" data-wp="delw">🗑 حذف السلك</button></div>`}
   const p=sel&&sel.k=='c'&&wPart0(C,sel.id);if(!p)return '<div class="wpan muted">👆 اضغط أي عنصر على اللوحة لتظهر خصائصه هنا وتكتب قيمه بنفسك. لتوصيل سلك: اضغط طرفًا (الدائرة الصغيرة) ثم طرفًا آخر، أو اسحب من طرف إلى طرف.</div>';
   const T0=WT[p.t];if(T0.b=='sym')return `<div class="wpan"><div class="wph"><b>${p.id}</b><span>${T0.n} · <i dir="ltr">${wEn(p.t)}</i></span></div>${wHowBox(p)}<p class="nolab wtip">رمز توضيحي للمخطط (سلامة، لحام، هواء مضغوط، أدوات قياس يدوية…) ولا يدخل في الحسابات الكهربائية.</p><div class="wpb"><button type="button" class="btn" data-wp="rot">↻ تدوير</button><button type="button" class="btn" data-wp="del">🗑 حذف</button></div></div>`;
-  const prs=(T0.pr||[]).map(q=>{const ch=wChips(q,p);return `<div class="wvl2"><span class="wvn">${q[1]}</span><div class="wvr"><button type="button" class="wstep" data-wstep="${q[0]}:-1" aria-label="أنقص">▼</button><input type="text" inputmode="decimal" autocomplete="off" value="${+p[q[0]]}" data-wpr="${q[0]}" aria-label="${q[1]}"><button type="button" class="wstep" data-wstep="${q[0]}:1" aria-label="زد">▲</button><span class="wu">${q[2]}</span></div>${ch?`<div class="wchips">${ch}</div>`:''}</div>`}).join('');
+  const W2ND=['pw','vr','il'],prv=q=>{const ch=wChips(q,p);return `<div class="wvl2"><span class="wvn">${q[1]}</span><div class="wvr" title="يُقبل: 4.7k = 4700، 220m = 0.22، والأرقام العربية"><button type="button" class="wstep" data-wstep="${q[0]}:-1" aria-label="أنقص">▼</button><input type="text" inputmode="decimal" autocomplete="off" value="${+p[q[0]]}" data-wpr="${q[0]}" aria-label="${q[1]}"><button type="button" class="wstep" data-wstep="${q[0]}:1" aria-label="زد">▲</button><span class="wu">${q[2]}</span></div>${ch?`<div class="wchips">${ch}</div>`:''}</div>`},prs=(T0.pr||[]).filter(q=>!W2ND.includes(q[0])).map(prv).join(''),prs2=(T0.pr||[]).filter(q=>W2ND.includes(q[0])).map(prv).join('');
   const mode=p.t=='DMM'?`<label class="wvl">الوضع <select id="wmode">${Object.keys(WMODE).map(m=>`<option value="${m}"${p.v==m?' selected':''}>${WMODE[m]}</option>`).join('')}</select></label>`:'';
   const col=p.t=='LED'?`<label class="wvl">اللون <select id="wcol">${Object.keys(WLEDC).map(c=>`<option value="${c}"${(p.col||'r')==c?' selected':''}>${WLEDC[c][0]} (${WLEDC[c][1]} V)</option>`).join('')}</select></label>`:'';
   const ks=C.parts.filter(x=>['coil','relay','ton'].includes(wB(x))),link=['no','nc','kmc'].includes(T0.b)?`<label class="wvl">تابع للملف <select id="wlink">${ks.length?ks.map(k=>`<option${p.link==k.id?' selected':''}>${k.id}</option>`).join(''):'<option value="">أضف ملف كونتاكتور أو مرحّلًا أولًا</option>'}</select></label>`:'';
-  const tog=T0.tg?(p.on?T0.tg[0]:T0.tg[1]):'',qs=T0.b=='io'?(p.q||[0,0,0,0]).map((b,j)=>`<button type="button" class="btn${b?' pri':''}" data-wp="q${j}">Q${j} ${b?'⏻ ON':'OFF'}</button>`).join(''):'';
+  const prog=T0.b=='io'?`<label class="wvl">البرنامج <select id="wprog">${Object.keys(WPROG).map(m=>`<option value="${m}"${(p.prog||'man')==m?' selected':''}>${WPROG[m]}</option>`).join('')}</select></label>`:'';
+  const tog=T0.tg?(p.on?T0.tg[0]:T0.tg[1]):'',qs=T0.b=='io'&&(p.prog||'man')=='man'?(p.q||[0,0,0,0]).map((b,j)=>`<button type="button" class="btn${b?' pri':''}" data-wp="q${j}">Q${j} ${b?'⏻ ON':'OFF'}</button>`).join(''):'';
   const pins=W2L(p)?'':`<p class="nolab wtip">الأطراف: ${wPins(p).map(q=>q[0]).join(' · ')}${['logic','io','uln','l293','seg7'].includes(T0.b)?' — المداخل والمخارج المنطقية تُقاس بالنسبة للطرف السالب للمصدر (الأرضي).':''}</p>`;
-  return `<div class="wpan"><div class="wph"><b>${p.id}</b><span>${T0.n} · <i dir="ltr">${wEn(p.t)}</i></span></div>${wHowBox(p)}<div class="wpf">${prs}${mode}${col}${link}</div>${pins}${prs?'<p class="nolab wtip">اكتب الرقم فيُطبّق تلقائيًا، أو استخدم ▲▼، أو اختر قيمة جاهزة. يُقبل: 4.7k = 4700، 220m = 0.22، والأرقام العربية.</p>':''}<div class="wpb"><span class="wnud" role="group" aria-label="تحريك العنصر"><button type="button" class="btn" data-wnud="-1:0" aria-label="يمين">→</button><button type="button" class="btn" data-wnud="0:-1" aria-label="أعلى">↑</button><button type="button" class="btn" data-wnud="0:1" aria-label="أسفل">↓</button><button type="button" class="btn" data-wnud="1:0" aria-label="يسار">←</button></span>${tog?`<button type="button" class="btn" data-wp="tog">${tog}</button>`:''}${qs}${WPOL.includes(p.t)?'<button type="button" class="btn" data-wp="flip">⇄ اعكس الاتجاه</button>':''}<button type="button" class="btn" data-wp="mh" aria-pressed="${!!p.mh}">⇋ مرآة أفقية</button><button type="button" class="btn" data-wp="mv" aria-pressed="${!!p.mv}">⇵ مرآة رأسية</button><button type="button" class="btn" data-wp="rot">↻ تدوير</button><button type="button" class="btn" data-wp="del">🗑 حذف</button></div>${wQC(S,p)}</div>`}
+  /* compact sheet, ordered by what this part needs first: its state control or mode, then its values; everything else folds away */
+  const ctl=tog||qs?`<div class="wctl">${tog?`<button type="button" class="btn${p.on?' pri':''}" data-wp="tog">${tog}</button>`:''}${qs}</div>`:'';
+  const nud=`<span class="wnud" role="group" aria-label="تحريك العنصر"><button type="button" class="btn" data-wnud="-1:0" aria-label="يمين">→</button><button type="button" class="btn" data-wnud="0:-1" aria-label="أعلى">↑</button><button type="button" class="btn" data-wnud="0:1" aria-label="أسفل">↓</button><button type="button" class="btn" data-wnud="1:0" aria-label="يسار">←</button></span>`;
+  return `<div class="wpan"><div class="wph"><b>${p.id}</b><span>${T0.n} · <i dir="ltr">${wEn(p.t)}</i></span></div>${ctl}${mode||prog||prs||col||link?`<div class="wpf">${mode}${prog}${prs}${col}${link}</div>`:''}${prs2?wSec('x2','⚙ خصائص إضافية (القدرة المقننة، جهد التحمل…)',`<div class="wpf">${prs2}</div>`):''}${wSpecBox(p,S._live,S)}${wSec('qc','🔗 توصيل سريع',wQC(S,p))}${wSec('mv','✥ تحريك دقيق',nud)}${wHowBox(p)}${pins}</div>`}
+/* folding sections in the sheet remember whether the trainee left them open */
+const WDET={};
+const wSec=(k,ttl,body,open)=>`<details class="wsec" data-wsec="${k}"${(WDET[k]!=null?WDET[k]:open)?' open':''}><summary>${ttl}</summary><div class="wsecb">${body}</div></details>`;
+document.addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.wsec)WDET[d.dataset.wsec]=d.open},true);
 const wPinNm=(p,n)=>W2L(p)?(n=='a'?(WT[p.t].pol?'الطرف 1 (+)':'الطرف 1'):(WT[p.t].pol?'الطرف 2 (−)':'الطرف 2')):n;
 /* quick connect: pick a pin of this part and any other pin from a list — no precise tapping needed on phones */
 function wQC(S,p){const C=S.C,mine=wPins(p).map(q=>`<option value="${p.id}.${q[0]}">${wPinNm(p,q[0])}</option>`).join('');
@@ -12912,7 +13689,7 @@ function wQC(S,p){const C=S.C,mine=wPins(p).map(q=>`<option value="${p.id}.${q[0
 /* common values per unit, and the standard E12 ladder for the ▲▼ steppers */
 const WPRE={'Ω':[10,47,100,220,330,470,1000,2200,4700,10000,100000],'V':[1.5,3,5,9,12,24,48,110,220,380],'W':[1,3,5,10,25,60,100,500,1000,2000],'A':[.5,1,2,5,10,16,20,32],'µF':[1,10,47,100,470,1000,2200],'mH':[1,10,50,100,500,1000],'Hz':[50,60,100,1000],'mA':[4,8,12,16,20],'°C':[0,25,50,100,150],'s':[1,2,3,5,10],'VA':[10,50,100,500,1000]};
 const WE12=[1,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2];
-function wChips(q,p){const L=(WPRE[q[2]]||[]).filter(v=>v>=q[4]&&v<=q[5]);if(q[0]=='pf')return [.7,.75,.8,.85,.9,1].map(v=>`<button type="button" class="wchip${p.pf==v?' on':''}" data-wset="${q[0]}:${v}">${v}</button>`).join('');return L.map(v=>`<button type="button" class="wchip${p[q[0]]==v?' on':''}" data-wset="${q[0]}:${v}">${wN(v)} ${q[2]}</button>`).join('')}
+function wChips(q,p){const L=(q[0]=='pw'?[.125,.25,.5,1,2,5,10,25,50]:q[0]=='vr'?[6.3,10,16,25,35,50,63,100,250,400,630]:WPRE[q[2]]||[]).filter(v=>v>=q[4]&&v<=q[5]);if(q[0]=='pf')return [.7,.75,.8,.85,.9,1].map(v=>`<button type="button" class="wchip${p.pf==v?' on':''}" data-wset="${q[0]}:${v}">${v}</button>`).join('');return L.map(v=>`<button type="button" class="wchip${p[q[0]]==v?' on':''}" data-wset="${q[0]}:${v}">${wN(v)} ${q[2]}</button>`).join('')}
 function wStepV(v,dir,q){if(q[2]=='Ω'||q[2]=='µF'||q[2]=='mH'){const e=Math.floor(Math.log10(v)+1e-9),m=v/Math.pow(10,e);let i=WE12.findIndex(x=>x>=m-1e-9);if(i<0)i=0;if(dir>0){if(Math.abs(WE12[i]-m)<1e-9)i++;return i>=12?Math.pow(10,e+1):WE12[i]*Math.pow(10,e)}else{if(i==0)return WE12[11]*Math.pow(10,e-1);const j=Math.abs(WE12[i]-m)<1e-9?i-1:i-1;return WE12[j]*Math.pow(10,e)}}
   if(q[0]=='pf')return Math.round((v+dir*.05)*100)/100;const st=q[2]=='V'&&v<20?.5:q[2]=='mA'?1:q[2]=='°C'?5:Math.max(Math.pow(10,Math.floor(Math.log10(Math.abs(v)||1))-1),.01);return +(v+dir*st).toPrecision(6)}
 function wSetPr(p,k,v){const q=(WT[p.t].pr||[]).find(x=>x[0]==k);if(!q)return;v=+(+v).toPrecision(6);if(!(v>=q[4]&&v<=q[5])){toast('⚠️',`${q[1]} بين ${wN(q[4])} و${wN(q[5])} ${q[2]}`,'no',2000);return}p[k]=v;wChanged()}
@@ -12940,15 +13717,15 @@ function wFb(W,S){const r=S.res;if(S.hint)return `<div class="wfb hintm">${S.hin
   const n=r.G.filter(x=>x.ok).length;return `<div class="wfb nom"><h4>🔍 حققت ${n} من ${wTitles(W).length}. راجع البنود المعلَّمة بالأحمر في «المطلوب».</h4><p class="nolab">كل خطأ هنا درس قبل الورشة الحقيقية. عدّل الدائرة ثم اضغط «تحقق» مرة أخرى، أو استعن بالتلميح.</p></div>`}
 let WTICK=null;
 const wHasT=C=>C.parts.some(p=>['cap','ind'].includes(wB(p)))&&!C.parts.some(p=>WT[p.t].ac);
-const wTimed=C=>wHasT(C)||C.parts.some(p=>p.t=='T555'||p.t=='TON');
+const wTimed=C=>wHasT(C)||C.parts.some(p=>p.t=='T555'||p.t=='TON'||(wB(p)=='io'&&['blink','cnt'].includes(p.prog))||wB(p)=='ard'||wB(p)=='plc');
 const wSpeed=S=>S.tsp&&S.tsp!='auto'?+S.tsp:(wHasT(S.C)?.1:1);
 /* paused: a vanishing time step makes capacitors and inductors hold their state, and nothing is stored back — the circuit is frozen as it was */
-function wLiveSim(S,dt){if(S.off)return null;const tr=wHasT(S.C),fr=!!S.pause,live=wSim(S.C,{},{mem:S.mem,dt:tr?(fr?1e-9:(dt||1e-5)):0,t:S.mem.t||0});if(live&&!fr)S.mem=Object.assign({},live.mem,{t:S.mem.t||0});return live}
+function wLiveSim(S,dt){const hasA=S.C.parts.some(p=>wB(p)=='ard'),hasP=S.C.parts.some(p=>wB(p)=='plc');if(hasA)ardSync(S,S.mem.t||0);if(hasP)plcSync(S,S.mem.t||0);if(S.off&&hasP)plcFeed(S,null);if(S.off)return null;const tr=wHasT(S.C),fr=!!S.pause,so={mem:S.mem,dt:tr?(fr?1e-9:(dt||1e-5)):0,t:S.mem.t||0,rate:wFree(),plc:hasP?plcStates(S):null},live=hasA?ardPwmSim(S.C,so,ardStates(S)):wSim(S.C,{},so);if(hasA)ardFeed(S,live);if(hasP)plcFeed(S,live);if(live&&!fr)S.mem=Object.assign({},live.mem,{t:S.mem.t||0});return live}
 function wTickSet(S){const need=wTimed(S.C)&&!S.off&&!S.pause;if(need&&!WTICK)WTICK=setInterval(()=>{if(ST.v!='course'||ST.t!='wire'||!$('#wbd')){clearInterval(WTICK);WTICK=null;return}const s=wst();if(!wTimed(s.C)||s.off||s.pause){clearInterval(WTICK);WTICK=null;return}
   if(WD)return;const ae=document.activeElement;if(ae&&/INPUT|SELECT|TEXTAREA/.test(ae.tagName)&&ae.closest('#wpan'))return;
-  const tot=.1*wSpeed(s),n=5;let live=null;for(let k=0;k<n;k++){s.mem.t=(s.mem.t||0)+tot/n;live=wLiveSim(s,tot/n)}
+  const tot=.1*wSpeed(s),n=5;let live=null;for(let k=0;k<n;k++){s.mem.t=(s.mem.t||0)+tot/n;live=wLiveSim(s,tot/n)}s._live=live;
   if(live){s.trace=s.trace||{};s.C.parts.forEach(p=>{const b=wB(p);if(b=='cap'||b=='ind'){const L=s.trace[p.id]=s.trace[p.id]||[];L.push(b=='cap'?live.V[p.id]||0:live.I[p.id]||0);if(L.length>150)L.shift()}})}
-  const bd=$('#wbd'),rd=$('.wread'),stt=$('.wstat');if(bd)bd.innerHTML=wBoard(s,live);if(rd){const d=document.createElement('div');d.innerHTML=wRead(s.C,live);rd.replaceWith(d.firstElementChild)}if(stt){const d=document.createElement('div');d.innerHTML=wStat(s.C,live,s);if(d.firstElementChild)stt.replaceWith(d.firstElementChild)}},100);if(!need&&WTICK){clearInterval(WTICK);WTICK=null}}
+  const bd=$('#wbd'),rd=$('.wread'),stt=$('.wstat');if(bd)bd.innerHTML=wBoard(s,live);if(rd){const d=document.createElement('div');d.innerHTML=wRead(s.C,live);rd.replaceWith(d.firstElementChild)}if(stt){const d=document.createElement('div');d.innerHTML=wStat(s.C,live,s);if(d.firstElementChild)stt.replaceWith(d.firstElementChild)}ardTickUI(s);plcTickUI(s)},100);if(!need&&WTICK){clearInterval(WTICK);WTICK=null}}
 const wRunSt=S=>S.off?'stop':S.pause?'pause':'play';
 function wRunBar(S){const m=wRunSt(S),b=(k,ic,tx,ti)=>`<button type="button" data-wrun="${k}" class="${m==k?'on':''}" aria-pressed="${m==k}" title="${ti}"><i aria-hidden="true">${ic}</i><span>${tx}</span></button>`;
   return `<div class="wgrp wrun" role="group" aria-label="تشغيل الدائرة">${b('play','▶','تشغيل','شغّل الدائرة (مسافة)')}${b('pause','⏸','إيقاف مؤقت','جمّد الدائرة والزمن والقراءات كما هي (مسافة)')}${b('stop','⏹','إيقاف تام','افصل كل شيء وأعد الزمن والمكثفات للصفر')}</div>`}
@@ -12960,10 +13737,10 @@ document.addEventListener('keydown',e=>{if(e.key!==' '||ST.v!='course'||ST.t!='w
 function wStat(C,live,S){if(!C.parts.length)return '';if(S.off)return '<div class="wstat off">⏹ الدائرة متوقفة تمامًا: لا يمر تيار، وأُعيد الزمن والمكثفات إلى الصفر. اضغط ▶ تشغيل.</div>';if(!live)return '';
   const src=C.parts.filter(p=>['src','pv'].includes(wB(p)));if(!src.length)return '';const I=src.reduce((s,p)=>s+Math.abs(live.I[p.id]||0),0),P=src.reduce((s,p)=>s+(live.ac&&live.P[p.id]!=null?Math.abs(live.P[p.id]):Math.abs((live.V[p.id]||0)*(live.I[p.id]||0))),0);
   return `<div class="wstat${S.pause?' pz':''}">${S.pause?'⏸ <b>إيقاف مؤقت</b>: القراءات مجمّدة. اضغط ▶ للمتابعة · ':''}⚡ تيار المصادر: <b>${wfA(I)}</b> · القدرة الكلية: <b>${wN(+P.toFixed(2))} W</b>${wTimed(C)?` · ⏱ الزمن t = <b>${(S.mem.t||0).toFixed(2)} s</b>`:''}${C.bb?' · 🧱 شرائح اللوحة مفعّلة':''}</div>`}
-function wBody(){const free=wFree(),W=lesson().wire,S=wst(),C=S.C,live=wLiveSim(S);setTimeout(()=>wTickSet(S),0);
+function wBody(){const free=wFree(),W=lesson().wire,S=wst(),C=S.C,live=wLiveSim(S);S._live=live;setTimeout(()=>wTickSet(S),0);
   const src=live&&C.parts.find(p=>wB(p)=='src'&&Math.abs(live.V[p.id])<.3*Math.abs(wSrcV(p)));
   const warn=live&&live.short?`<div class="wwarn">⚠️ قصر في الدائرة!${src?` تيار ${src.id} ${wfA(Math.abs(live.I[src.id]))}.`:''} في الواقع تسخن الأسلاك بسرعة وقد تحترق.</div>`:live&&Object.values(live.st).includes('burn')?'<div class="wwarn">💥 احترق عنصر! الجهد أو التيار أكبر من المسموح. غيّر القيم أو التوصيل.</div>':live&&live.mblown?'<div class="wwarn">💥 احترق فيوز الأفوميتر: مر فيه تيار كبير على وضع A.</div>':live&&live.acDiode?'<div class="wwarn">ℹ️ أشباه الموصلات والدوائر المنطقية تُحاكى مع المصدر المستمر. مع المتردد استخدم قنطرة التقويم لتحويله إلى مستمر أولًا.</div>':'';
-  return `${free?'':wReq(W,S)}${wLib()}<div id="wpan">${wPanel(S)}</div>${warn}<div class="wbar" role="toolbar" aria-label="أدوات مختبر التوصيل">
+  return `${free?'':wReq(W,S)}${wLib()}${wPanHost(S)}${warn}<div class="wbar" role="toolbar" aria-label="أدوات مختبر التوصيل">
   ${wRunBar(S)}
   <div class="wgrp wundo" role="group" aria-label="التراجع"><button type="button" data-wtool="undo"${S.hist.length?'':' disabled'} title="رجوع خطوة (Ctrl+Z)"><i aria-hidden="true">↶</i><span>رجوع خطوة</span></button><button type="button" data-wtool="redo"${S.fut.length?'':' disabled'} title="إعادة الخطوة (Ctrl+Y)"><i aria-hidden="true">↷</i><span>إعادة</span></button></div>
   <div class="wgrp wviews" role="group" aria-label="طريقة العرض"><button type="button" class="${WV=='real'?'on':''}" data-wview="real" aria-pressed="${WV=='real'}">🖼 واقعي</button><button type="button" class="${WV=='bb'?'on':''}" data-wview="bb" aria-pressed="${WV=='bb'}">🧱 لوحة تجارب</button><button type="button" class="${WV=='sch'?'on':''}" data-wview="sch" aria-pressed="${WV=='sch'}">📐 مخطط</button></div>
@@ -12971,9 +13748,9 @@ function wBody(){const free=wFree(),W=lesson().wire,S=wst(),C=S.C,live=wLiveSim(
   <div class="wgrp"><button type="button" data-wtool="zout" title="تصغير" aria-label="تصغير"${S.zoom<=1?' disabled':''}>➖</button><span class="wz">${Math.round(S.zoom*100)}%</span><button type="button" data-wtool="zin" title="تكبير" aria-label="تكبير"${S.zoom>=2.5?' disabled':''}>➕</button></div>
   ${wTimed(C)?`<div class="wgrp"><label class="wflow">⏱<select id="wtsp" aria-label="سرعة المحاكاة"><option value="auto"${!S.tsp||S.tsp=='auto'?' selected':''}>سرعة تلقائية</option><option value="1"${S.tsp=='1'?' selected':''}>زمن حقيقي</option><option value="0.1"${S.tsp=='0.1'?' selected':''}>أبطأ ×10</option><option value="0.01"${S.tsp=='0.01'?' selected':''}>أبطأ ×100</option></select></label></div>`:''}
   ${WV=='bb'?`<label class="wgrp wbbc"><input type="checkbox" id="wbbc"${C.bb?' checked':''}> توصيل تلقائي عبر شرائح اللوحة</label>`:''}</div>
-  ${wStat(C,live,S)}<div class="wcanvas"><svg id="wbd" class="wsvg${S.pause||S.off?' paused':''}${WV!='sch'?' real':''}${WV=='bb'?' bb':''}" style="width:${S.zoom*100}%;min-width:${S.zoom>1?Math.round(600*S.zoom)+'px':'0'}" viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="لوحة التوصيل">${wBoard(S,live)}</svg></div><p class="wswipe">➕ للتكبير، ثم حرّك اللوحة بإصبعك · أو استخدم «🔗 توصيل سريع» من خصائص العنصر</p>
-  ${S.pick?`<div class="wpickbar" role="status">🔗 اختر الطرف الثاني لتوصيل <b>${S.pick}</b> (الأطراف المضيئة) <button type="button" data-wpk="x">إلغاء</button></div>`:''}${wRead(C,live)}<div class="wbtns">${free?'':'<button type="button" class="btn pri" data-wdo="check">✔ تحقق من التوصيل</button><button type="button" class="btn" data-wdo="hint">💡 تلميح</button>'}<button type="button" class="btn" data-wdo="reset">↺ ابدأ من جديد</button></div>
-  <div id="wfbx" aria-live="polite">${free?'':wFb(W,S)}</div>`}
+  ${wStat(C,live,S)}<div class="wcanvas"><svg id="wbd" class="wsvg${S.pause||S.off?' paused':''}${WV!='sch'?' real':''}${WV=='bb'?' bb':''}" style="width:${S.zoom*100}%;min-width:${S.zoom>1?Math.round(600*S.zoom)+'px':'var(--wmw,0px)'}" viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="لوحة التوصيل">${wBoard(S,live)}</svg></div><p class="wswipe">➕ للتكبير، ثم حرّك اللوحة بإصبعك · أو استخدم «🔗 توصيل سريع» من خصائص العنصر</p>
+  ${S.pick?`<div class="wpickbar" role="status">🔗 اختر الطرف الثاني لتوصيل <b>${S.pick}</b> (الأطراف المضيئة) <button type="button" data-wpk="x">إلغاء</button></div>`:''}${wArdPanel(S)}${wPlcPanel(S)}${wRead(C,live)}<div class="wbtns">${free?'':'<button type="button" class="btn pri" data-wdo="check">✔ تحقق من التوصيل</button><button type="button" class="btn" data-wdo="hint">💡 تلميح</button>'}<button type="button" class="btn" data-wdo="reset">↺ ابدأ من جديد</button></div>
+  <div id="wfbx" aria-live="polite">${free?'':wFb(W,S)}</div>${wSheet(S)}`}
 function wireHtml(){const W=lesson().wire;if(!W)return '<div class="empty">لا يوجد تمرين توصيل لهذه اللوحة بعد.</div>';const free=wFree();
   return `<div class="wire"><div class="wmodes" role="tablist"><button type="button" role="tab" aria-selected="${!free}" class="${free?'':'on'}" data-wmode="ex">🎯 تمرين اللوحة</button><button type="button" role="tab" aria-selected="${free}" class="${free?'on':''}" data-wmode="free">🧪 محاكاة حرة</button></div>
   ${free?`<div class="whead"><span class="eyebrow">🧪 محاكاة حرة · ${curC().ar}</span><h3>مختبرك الخاص</h3><p class="wtask">ابنِ أي دائرة من مكتبة المادة، واكتب قيم العناصر بنفسك، وجرّب المفاتيح والأزرار، وراقب الجهد والتيار والإضاءة كما في الورشة. لا توجد متطلبات هنا؛ دائرتك تُحفظ لهذه المادة.</p></div>`:
@@ -12982,9 +13759,30 @@ function wireHtml(){const W=lesson().wire;if(!W)return '<div class="empty">لا 
   <details class="whow"><summary>كيف أستخدم المختبر؟</summary><ol><li>اختر العنصر من «مكتبة المادة» فيظهر على اللوحة وتظهر خصائصه فوقها.</li><li>اكتب القيمة في خانتها فتُطبَّق تلقائيًا، أو استخدم ▲▼ والقيم الجاهزة. ستجد تحت اسم العنصر «💡 طريقة التوصيل والاستخدام».</li><li>تحكم في الدائرة من شريط التشغيل: ▶ تشغيل، ⏸ إيقاف مؤقت يجمّد القراءات، ⏹ إيقاف تام يفصل كل شيء ويعيد الزمن للصفر. زر المسافة يبدّل بين التشغيل والإيقاف المؤقت.</li><li>لتوصيل سلك: اضغط طرفًا (الدائرة الصغيرة) ثم طرفًا آخر، أو اسحب من طرف إلى طرف. النقطة السوداء تعني تفرعًا (أكثر من سلك على الطرف).</li><li>اضغط العنصر لتعديله أو تدويره أو عكسه أو حذفه، واسحبه لتحريكه. اضغط السلك لحذفه.</li><li>جرّب الأزرار والمفاتيح من خصائصها، وراقب القراءات مباشرة${free?'':'، ثم اضغط «تحقق»'}.</li></ol></details>
   <div id="wbox">${wBody()}</div></div>`}
 /* keep whatever the user just touched (board or panel) still on screen when the panel above grows/shrinks */
-let WANC='#wbd';document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('#wbox'))WANC=e.target.closest('#wpan')?'#wpan':'#wbd'},true);
-function wRefresh(){const b=$('#wbox');if(!b)return;const c=$('.wcanvas'),sl=c?c.scrollLeft:0,ae=document.activeElement,fo=ae&&ae.dataset&&ae.dataset.wpr,a0=$(WANC),t0=a0&&a0.getBoundingClientRect().top;b.innerHTML=wBody();const n=$('.wcanvas');if(n)n.scrollLeft=sl;const a1=$(WANC);if(a1&&t0!=null){const d=a1.getBoundingClientRect().top-t0;if(Math.abs(d)>2)scrollBy(0,d)}if(fo){const i=document.querySelector(`[data-wpr="${fo}"]`);if(i){i.focus();const L=i.value.length;try{i.setSelectionRange(L,L)}catch(e){}}}}
+let WANC='#wbd';document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('#wbox'))WANC=e.target.closest('#wpan')&&!e.target.closest('.wsheet')?'#wpan':'#wbd'},true);
+function wRefresh(){const b=$('#wbox');if(!b)return;const c=$('.wcanvas'),sl=c?c.scrollLeft:0,ae=document.activeElement,fo=ae&&ae.dataset&&ae.dataset.wpr,ce=ae&&ae.id=='wcode'?[ae.selectionStart,ae.selectionEnd,ae.scrollTop]:null,shs=($('.wsheet')||{}).scrollTop||0,a0=$(WANC),t0=a0&&a0.getBoundingClientRect().top;b.innerHTML=wBody();const n=$('.wcanvas');if(n)n.scrollLeft=sl;const a1=$(WANC);if(a1&&t0!=null){const d=a1.getBoundingClientRect().top-t0;if(Math.abs(d)>2)scrollBy(0,d)}const sh=$('.wsheet');if(sh)sh.scrollTop=shs;if(fo){const i=document.querySelector(`[data-wpr="${fo}"]`);if(i){i.focus();const L=i.value.length;try{i.setSelectionRange(L,L)}catch(e){}}}if(ce){const ta=$('#wcode');if(ta){ta.focus();ta.setSelectionRange(ce[0],ce[1]);ta.scrollTop=ce[2]}}}
 
+/* ---------- action sheet: every option of the tapped part in one place (bottom sheet on phones, floating card on wide screens) ---------- */
+const wSelPart=S=>S.sel&&S.sel.k=='c'?wPart0(S.C,S.sel.id):null;
+function wPanHost(S){const on=S.pick||wSelPart(S)||(S.sel&&S.sel.k=='w'&&S.C.wires[S.sel.i]);return on?'<div class="wpan muted wpanph">👇 خيارات العنصر المحدد في اللوحة المنبثقة. اضغط ✕ لإغلاقها.</div>':`<div id="wpan">${wPanel(S)}</div>`}
+function wSheet(S){const p=wSelPart(S),w=S.sel&&S.sel.k=='w'&&S.C.wires[S.sel.i];if(!S.pick&&!p&&!w)return '';
+  const b=(at,ic,tx)=>`<button type="button" ${at}><i aria-hidden="true">${ic}</i><span>${tx}</span></button>`;let A='',ttl='';
+  if(p&&!S.pick){const T=WT[p.t];ttl=`<b>${p.id}</b> <small>${T.n}</small>`;
+    A=(T.pr&&T.pr.length?b('data-wsh="val"','✏️','القيمة'):'')+(T.tg?b('data-wp="tog"','🔘',p.on?'إيقاف':'تشغيل'):'')+(T.b=='ard'?b('data-wsh="code"','💻','الكود'):'')+b('data-wsh="qc"','🔗','توصيل')+b('data-wp="rot"','↻','تدوير')+b('data-wp="mh"','⇋','مرآة')+b('data-wp="mv"','⇵','قلب')
+      +(WPOL.includes(p.t)?b('data-wp="flip"','⇄','عكس'):'')+b('data-wsh="dup"','⧉','نسخ')+b('data-wsh="how"','💡','الشرح')+b('data-wp="del" class="dang"','🗑','حذف')}
+  else if(w&&!S.pick){ttl=`<b>سلك</b> <small dir="ltr">${w[0]} ↔ ${w[1]}</small>`;A=b('data-wp="delw" class="dang"','🗑','حذف السلك')}
+  else ttl='<b>🔗 توصيل</b>';
+  return `<div id="wpan" class="wsheet${S.shMin?' min':''}" role="dialog" aria-label="خيارات العنصر"><div class="wshh"><button type="button" class="wshg" data-wsh="min" aria-label="${S.shMin?'توسيع اللوحة':'تصغير اللوحة'}">${S.shMin?'▴':'▾'}</button><span class="wsht">${ttl}</span><button type="button" class="wshx" data-wsh="x" aria-label="إغلاق">✕</button></div>${A?`<div class="wsha" role="toolbar" aria-label="أوامر سريعة">${A}</div>`:''}<div class="wshb">${wPanel(S)}</div></div><div class="wshpad${S.shMin?' min':''}"></div>`}
+function wDup(p){const S=wst(),C=S.C,T0=WT[p.t];if(C.parts.filter(x=>x.t==p.t).length>=WMAX){toast('ℹ️',`الحد الأقصى ${WMAX} من «${T0.n}»`,'info',2000);return}let k=1;while(C.parts.some(x=>x.id==T0.p+k))k++;
+  const q=JSON.parse(JSON.stringify(p));q.id=T0.p+k;q.x+=20;q.y+=20;wClamp(q);C.parts.push(q);S.sel={k:'c',id:q.id};wRecPush(p.t);wChanged()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-wsh]');if(!b)return;const S=wst(),p=wSelPart(S),a=b.dataset.wsh;
+  if(a=='x'){S.sel=null;S.pick=null;wRefresh();return}if(a=='min'){S.shMin=!S.shMin;wRefresh();return}
+  if(a=='dup'&&p){wDup(p);return}
+  if(S.shMin){S.shMin=false;wRefresh()}
+  const go=(sel,f)=>setTimeout(()=>{const el=document.querySelector(sel);if(el){el.scrollIntoView({behavior:'smooth',block:'nearest'});if(f)f(el)}},60);
+  if(a=='val')wFocusVal();else if(a=='qc')go('.wsheet [data-wsec="qc"]',el=>{el.open=true;const s=el.querySelector('#wqt');if(s)s.focus()});else if(a=='how')go('.wsheet [data-wsec="how"]',el=>{el.open=true});
+  else if(a=='code'&&p){S.ardSel=p.id;S.shMin=true;wRefresh();setTimeout(()=>{const ta=$('#wcode');if(ta){ta.scrollIntoView({behavior:'smooth',block:'center'});ta.focus({preventScroll:true})}},80)}});
+document.addEventListener('keydown',e=>{if(e.key!=='Escape'||!$('.wsheet'))return;const a=document.activeElement;if(a&&a.id=='wcode')return;const S=wst();S.sel=null;S.pick=null;wRefresh()});
 /* ---------- checking + hints ---------- */
 function wRun(){const W=lesson().wire,S=wst(),X=wCtx(S.C),G=wGoals(W,X);return {G,X,ok:G.length==wTitles(W).length&&G.every(x=>x.ok)}}
 function wHint(){const S=wst(),W=lesson().wire,r=wRun(),i=r.G.findIndex(x=>!x.ok);S.res=null;
@@ -13060,10 +13858,10 @@ document.addEventListener('change',e=>{if(ST.v!='course'||ST.t!='wire')return;co
   if(t.id=='wbbc'){S.C.bb=t.checked?1:0;wChanged();toast('🧱',t.checked?'الآن كل 5 ثقوب في العمود متصلة، وكل خط تغذية متصل بطوله':'أُلغي التوصيل عبر الشرائح','info',2600);return}
   const p=S.sel&&S.sel.k=='c'&&wPart0(S.C,S.sel.id);if(!p)return;
   if(t.dataset&&t.dataset.wpr){wApply(true);return}
-  if(t.id=='wmode'){p.v=t.value;wChanged();return}if(t.id=='wcol'){p.col=t.value;wChanged();return}
+  if(t.id=='wmode'){p.v=t.value;wChanged();return}if(t.id=='wprog'){p.prog=t.value;S.mem.t=S.mem.t||0;wChanged();return}if(t.id=='wcol'){p.col=t.value;wChanged();return}
   if(t.id=='wlink'&&t.value){p.link=t.value;wChanged()}});
 let WTYP=null;
-function wFocusVal(){const i=document.querySelector('[data-wpr]');const pn=$('#wpan');if(pn)pn.scrollIntoView({behavior:'smooth',block:'center'});if(i)setTimeout(()=>{i.focus();i.select()},250)}
+function wFocusVal(){const i=document.querySelector('[data-wpr]');const pn=$('#wpan');if(pn&&!pn.classList.contains('wsheet'))pn.scrollIntoView({behavior:'smooth',block:'center'});else if(i)i.scrollIntoView({block:'nearest'});if(i)setTimeout(()=>{i.focus();i.select()},250)}
 document.addEventListener('dblclick',e=>{if(ST.t!='wire')return;const b=e.target.closest('[data-wc]');if(b){const S=wst();S.sel={k:'c',id:b.dataset.wc};wRefresh();wFocusVal()}});
 document.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.wpr){e.target.classList.remove('err');clearTimeout(WTYP);const el=e.target;WTYP=setTimeout(()=>{const S=wst(),p=S.sel&&S.sel.k=='c'&&wPart0(S.C,S.sel.id),q=p&&(WT[p.t].pr||[]).find(x=>x[0]==el.dataset.wpr),v=wNum(el.value);if(p&&q&&v>=q[4]&&v<=q[5]&&v!==p[q[0]]){p[q[0]]=v;wChanged()}},650)}if(e.target.id=='wlibq')wLibShow(e.target.value)});
 document.addEventListener('keydown',e=>{if(ST.v!='course'||ST.t!='wire'||!$('#wbd'))return;const S=wst();
